@@ -1,0 +1,160 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  font-size: 13px;
+  gap: 20px;
+
+  @media screen and (max-width: 1040px) {
+    div {
+      &:nth-of-type(1) {
+        order: 3;
+      }
+      &:nth-of-type(3) {
+        order: 1;
+      }
+    }
+  }
+
+  &__price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    input {
+      width: 100px;
+      height: 35px;
+      padding-left: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  &__sort {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &_list {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      button {
+        height: 35px;
+        width: 170px;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 1rem;
+        font-size: 13px;
+        background: transparent;
+        border: 1px solid #ccc;
+        cursor: pointer;
+
+        > div {
+          transition: all 0.3s;
+        }
+      }
+
+      ul {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: #fff;
+        padding: 0 1rem;
+        z-index: 99;
+        width: 100%;
+        height: 250px;
+        overflow-y: auto;
+        transform-origin: top;
+        transition: all 0.2s;
+        border: 1px solid #ccc;
+        border-top: none;
+
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background-color: #fafafa;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-image: linear-gradient(-45deg, #d9d8eb, #c0c0c0);
+          border-radius: 50px;
+        }
+
+        li {
+          height: 40px;
+          font-size: 13px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+
+          a {
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+
+            svg {
+              width: 16px;
+              height: 16px;
+              margin-right: -5px;
+              margin-top: -3px;
+            }
+          }
+
+          &:hover {
+            font-weight: 600;
+            .check {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__priceBtns_wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__priceBtns {
+    display: flex;
+    align-items: center;
+    background: transparent !important;
+  }
+}
+
+.tooltip_btn {
+  position: relative;
+  width: 30px;
+  height: 35px;
+  cursor: pointer;
+  background: transparent;
+
+  span {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 98%;
+    background: #ff00005f;
+  }
+
+  &:hover {
+    span {
+      background: red;
+    }
+  }
+}
