@@ -16,7 +16,7 @@ export default function FeaturedCategories({ featuredCategories }) {
   return (
     <div className={styled.featuredCategories}>
       <div className={styled.featuredCategories__title}>
-        <h3>Featured categories</h3>
+        <h3>Популярные Категории</h3>
         <img src='/images/top-categories.png' alt='Official' />
       </div>
       <CommonSwiper2>

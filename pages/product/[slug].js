@@ -24,6 +24,7 @@ import {
 import { Category } from '@/models/Category';
 import { Product } from '@/models/Product';
 import { SubCategory } from '@/models/SubCategory';
+import Header from '@/components/Header';
 
 const ProductPage = ({ product }) => {
   const [activeImg, setActiveImg] = useState('');
@@ -66,6 +67,7 @@ const ProductPage = ({ product }) => {
         <title>{product.name}</title>
         <meta name='description' content={product?.description} />
       </Head>
+      {/* <Header /> */}
       <CartHeader
         text='Вернуться в продукты'
         link='/browse'

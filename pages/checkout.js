@@ -15,7 +15,7 @@ const Checkout = ({ user }) => {
   const [addresses, setAddresses] = useState(
     localStorage.getItem('addresses')
       ? JSON.parse(localStorage.getItem('addresses'))
-      : []
+      : null
   );
   const [selectedAddress, setSelectedAddress] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');

@@ -237,8 +237,11 @@
 }
 
 //Top------------------------------------------------
+// styles.module.scss
+// SHOW DRAWER ONLY ON MOBILE DEVICES OR TABLETS (MAX WIDTH: 950PX)
 
 //Main------------------------------------------------
+
 .main {
   position: relative;
   height: 70px;
@@ -698,6 +701,107 @@
           font-family: 'Poppins', sans-serif;
         }
       }
+    }
+  }
+  @media screen and (max-width: 950px) {
+    .search {
+      display: none;
+    }
+
+    .cart__dropdown {
+      display: none;
+    }
+
+    .orderStatus__dropdown {
+      display: none;
+    }
+
+    .wishlist__dropdown {
+      display: none;
+    }
+
+    .profile__dropdown {
+      display: none;
+    }
+
+    .browse {
+      display: none;
+    }
+
+    // logo on center
+    .logo {
+      position: absolute;
+      align-items: center;
+      justify-content: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .orderStatus,
+    .cart,
+    .wishlist,
+    .profile {
+      display: none;
+    }
+  }
+}
+
+.drawer {
+  &__container {
+    width: 280px;
+    padding: 1rem;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ccc;
+  }
+
+  &__header__logo {
+    width: 100px; /* Adjust width as needed */
+  }
+
+  &__body {
+    h1 {
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      padding: 1rem 0;
+    }
+    padding: 1rem 0;
+    border-bottom: 1px solid #ccc;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    span {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    img {
+      width: 32px;
+      height: 32px;
+      position: relative;
     }
   }
 }

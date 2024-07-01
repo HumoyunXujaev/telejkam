@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import NextImage from '../NextImage';
+import { Drawer, IconButton } from '@mui/material';
 
 import styled from './styles.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,8 +21,12 @@ import SearchResults from './SearchResults/';
 import axios from 'axios';
 import { BiLoader } from 'react-icons/bi';
 import { signIn, useSession } from 'next-auth/react';
-import { MdDashboard } from 'react-icons/md';
+import { MdClose, MdDashboard, MdMenu } from 'react-icons/md';
+import { useMediaQuery } from 'react-responsive';
+import Image from 'next/image';
 const Main = ({ searchHandler2 }) => {
+  const isSmall = useMediaQuery({ maxWidth: 950 });
+
   const { data: session } = useSession();
 
   const { cart } = useSelector((state) => ({ ...state }));
@@ -30,6 +35,7 @@ const Main = ({ searchHandler2 }) => {
   const [products, setProducts] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const searchChangeHandler = (e) => {
     setQuery(e.target.value);
@@ -54,12 +60,8 @@ const Main = ({ searchHandler2 }) => {
     e.preventDefault();
 
     if (router.pathname == '/browse') {
-      //Value của input tại Browse page cho phép bằng rỗng
       searchHandler2(query);
     } else {
-      //Đối với các trang ngoài /Browse
-      //Sau khi submit search form, chuyển hướng người dùng về Browse page
-      //Value của input phải khác rỗng, nếu bằng rỗng thi return
       if (query && query.trim().length > 0) {
         router.push(`/browse?search=${query}`);
       } else {
@@ -71,6 +73,143 @@ const Main = ({ searchHandler2 }) => {
   return (
     <div className={styled.main}>
       <div className={styled.main__container}>
+        {isSmall && (
+          <div className={styled.drawer}>
+            <IconButton onClick={() => setDrawerOpen(true)}>
+              <MdMenu size={20} />
+            </IconButton>
+            <Drawer
+              anchor='left'
+              open={drawerOpen}
+              onClose={() => setDrawerOpen(false)}
+            >
+              <div className={styled.drawer__container}>
+                <div className={styled.drawer__header}>
+                  {/* <div className={styled.drawer__header__logo}> */}
+                  <Image
+                    src='/telejkam.png'
+                    alt='Logo Telejkam'
+                    width='85'
+                    height='85'
+                  />
+                  {/* </div> */}
+                  <IconButton onClick={() => setDrawerOpen(false)}>
+                    <MdClose />
+                  </IconButton>
+                </div>
+                <div className={styled.drawer__body}>
+                  <Link href='browse'>
+                    <div className={styled.drawer__item}>
+                      <MdDashboard size={20} />
+                      <span>Каталог</span>
+                    </div>
+                  </Link>
+                  <Link href='/order-status/'>
+                    <div className={styled.drawer__item}>
+                      <FaBox />
+                      <span>Статус заказа</span>
+                    </div>
+                  </Link>
+                  <Link href='cart'>
+                    <div className={styled.drawer__item}>
+                      <FaOpencart />
+                      <span>Корзина</span>
+                    </div>
+                  </Link>
+                  <Link href={`wishlist`}>
+                    <div className={styled.drawer__item}>
+                      <FaHeart />
+                      <span>Избранное</span>
+                    </div>
+                  </Link>
+                  {session ? (
+                    <Link href={`profile`}>
+                      <div className={styled.drawer__item}>
+                        <FaUser />
+                        <span>Аккаунт</span>
+                      </div>
+                    </Link>
+                  ) : (
+                    <div className={styled.drawer__item}>
+                      <FaUser onClick={() => signIn()} />
+                      <span>Войти</span>
+                    </div>
+                  )}
+                </div>
+                <div className={styled.drawer__body}>
+                  <h1>Контакты</h1>
+                  <Link href={`tel:+32213213312`}>
+                    <div className={styled.drawer__item}>
+                      <Image
+                        src={`icons/phone.png`}
+                        alt='phone'
+                        width='85'
+                        height='85'
+                      />
+                      <span>Телефон</span>
+                    </div>
+                  </Link>
+                  <Link href={`mailto:hujaevhumoyun01@gmail.com`}>
+                    <div className={styled.drawer__item}>
+                      <Image
+                        src={`icons/email.png`}
+                        alt='phone'
+                        width='85'
+                        height='85'
+                      />
+                      <span>Почта</span>
+                    </div>
+                  </Link>
+                  <Link href={`https://www.google.com/maps/place/`}>
+                    <div className={styled.drawer__item}>
+                      <Image
+                        src={`icons/address.png`}
+                        alt='phone'
+                        width='85'
+                        height='85'
+                      />
+                      <span>Адресс</span>
+                    </div>
+                  </Link>
+                  <Link href={`https://www.facebook.com/`}>
+                    <div className={styled.drawer__item}>
+                      <Image
+                        src={`icons/facebook.png`}
+                        alt='phone'
+                        width='85'
+                        height='85'
+                      />
+                      <span>Facebook</span>
+                    </div>
+                  </Link>
+                  <Link href={`https://www.instagram.com/`}>
+                    <div className={styled.drawer__item}>
+                      <Image
+                        src={`icons/insta.png`}
+                        alt='phone'
+                        width='85'
+                        height='85'
+                      />
+                      <span>Instagram</span>
+                    </div>
+                  </Link>
+                  <Link href={`https://www.youtube.com/`}>
+                    <div className={styled.drawer__item}>
+                      <Image
+                        src={`icons/yt.png`}
+                        alt='phone'
+                        width='85'
+                        height='85'
+                      />
+                      <span>Youtube</span>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            </Drawer>
+          </div>
+        )}
+
         {/* logo */}
         <Link href='/'>
           <div className={styled.logo}>

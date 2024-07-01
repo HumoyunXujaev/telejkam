@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Button from '@mui/material/Button';
@@ -93,10 +93,10 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
   };
 
   const saveShippingHandler = async () => {
-    const res = saveAddress(shipping);
-    console.log(res);
-    // setAddresses(res);
+    saveAddress(shipping);
     setShipping(initialValues);
+    Router.reload();
+
     Swal.fire({
       icon: 'success',
       title: 'Успешно!',
@@ -104,38 +104,20 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
       showConfirmButton: false,
       timer: 2000,
     });
-    Router.reload();
   };
 
-  // const changeDefaultAddressHandler = () => {
-  //   Popup(
-  //     'Are you sure?',
-  //     "We'll set this address as your default address!",
-  //     'question',
-  //     'Yes',
-  //     async () => {
-  //       const res = changeDefaultAddress();
-  //       // setAddresses(res);
-  //     },
-  //     'Done!',
-  //     'Set new default address successfully.'
-  //   );
-  // };
-
-  // const deleteAddressHandler = () => {
-  //   Popup(
-  //     'Are you sure?',
-  //     "You won't be able to revert this!",
-  //     'warning',
-  //     'Yes, delete it!',
-  //     async () => {
-  //       await deleteAddress();
-  //       // setAddresses(res);
-  //     },
-  //     'Done!',
-  //     'Address has been deleted.'
-  //   );
-  // };
+  // if no address is saved or address is null or address length < 1, show the form to add a new address by default
+  // if no address set visible to true
+  useEffect(() => {
+    if (
+      !addresses ||
+      addresses.length < 1 ||
+      addresses === null ||
+      addresses === undefined
+    ) {
+      setVisible(true);
+    }
+  }, [addresses]);
 
   return (
     <div className={`${styled.shipping} ${styled.card}`}>
@@ -144,63 +126,48 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
       ) : (
         <h1 className={styled.profileHeading}>Мои Адреса</h1>
       )}
-      <div className={styled.shipping__addresses}>
-        <div
-          className={`${styled.shipping__address} ${
-            addresses?.active && styled?.active
-          }`}
-        >
-          <div className={styled.shipping__address_name}>
-            {addresses?.firstName} {addresses?.lastName}
+
+      {addresses ? (
+        <div className={styled.shipping__addresses}>
+          <div
+            className={`${styled.shipping__address} ${
+              addresses?.active && styled?.active
+            }`}
+          >
+            <div className={styled.shipping__address_name}>
+              {addresses?.firstName} {addresses?.lastName}
+            </div>
+
+            <div className={styled.shipping__address_addressLine}>
+              <VscDebugBreakpointFunction />
+              <p>
+                Адресс <span>: {addresses?.address1}</span>
+              </p>
+            </div>
+
+            <div className={styled.shipping__address_addressLine}>
+              <VscDebugBreakpointFunction />{' '}
+              <p>
+                Номер Телефона <span>: {addresses?.phoneNumber}</span>
+              </p>
+            </div>
+
+            <div className={styled.shipping__address_addressLine}>
+              <VscDebugBreakpointFunction />{' '}
+              <p>
+                Почтовый Индекс <span>: {addresses?.zipCode}</span>
+              </p>
+            </div>
+
+            <span className={styled.default}>По умолчанию</span>
           </div>
-
-          <div className={styled.shipping__address_addressLine}>
-            <VscDebugBreakpointFunction />
-            <p>
-              Адресс <span>: {addresses?.address1}</span>
-            </p>
-          </div>
-
-          <div className={styled.shipping__address_addressLine}>
-            <VscDebugBreakpointFunction />{' '}
-            <p>
-              Номер Телефона <span>: {addresses?.phoneNumber}</span>
-            </p>
-          </div>
-
-          <div className={styled.shipping__address_addressLine}>
-            <VscDebugBreakpointFunction />{' '}
-            <p>
-              Почтовый Индекс <span>: {addresses?.zipCode}</span>
-            </p>
-          </div>
-
-          {/* {addresses?.active && ( */}
-          <span className={styled.default}>По умолчанию</span>
-          {/* )} */}
-          {/* {!addresses.active && ( */}
-          {/* <div className={styled.shipping__address_actions}> */}
-          {/* <Button
-                variant='contained'
-                className={styled.shipping__address_set}
-                onClick={() => changeDefaultAddressHandler()}
-              >
-                Set as default
-              </Button> */}
-
-          {/* <Button
-              variant='contained'
-              color='error'
-              className={styled.shipping__address_remove}
-              onClick={() => deleteAddressHandler()}
-            >
-              Delete
-            </Button>
-          </div> */}
-          {/* )} */}
         </div>
-        {/* ))} */}
-      </div>
+      ) : (
+        <div>
+          <p style={{ textAlign: 'center' }}>У вас нет сохраненных адресов.</p>
+        </div>
+      )}
+
       <div className={styled.shipping__address_add}>
         <Button
           variant='contained'
@@ -213,9 +180,13 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
             <span>
               Закрыть форму адресса <BsFillCaretDownFill />
             </span>
-          ) : (
+          ) : addresses || !addresses === null ? (
             <span>
               Изменить Адресс <BsFillCaretUpFill />
+            </span>
+          ) : (
+            <span>
+              Добавить Адресс <BsFillCaretUpFill />
             </span>
           )}
         </Button>

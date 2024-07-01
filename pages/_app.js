@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import StyledDotLoader from '@/components/Loaders/DotLoader';
+import Header from '@/components/Header';
 
 NProgress.configure({
   minimum: 0.3,
@@ -62,31 +63,34 @@ export default function App({
         <link rel='icon' href='/telejkam1.png' />
       </Head>
       {/* <Chatbot /> */}
-      {loading ? (
+
+      {/* {loading ? (
         <StyledDotLoader />
-      ) : (
-        <SessionProvider session={session}>
-          <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-              <PayPalScriptProvider deferLoading={true}>
-                <ToastContainer
-                  position='top-right'
-                  autoClose={2000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                  theme='colored'
-                />
-                <Component {...pageProps} />
-              </PayPalScriptProvider>
-            </PersistGate>
-          </Provider>
-        </SessionProvider>
-      )}
+      ) : ( */}
+
+      <SessionProvider session={session}>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <PayPalScriptProvider deferLoading={true}>
+              <ToastContainer
+                position='top-right'
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme='colored'
+              />
+              {/* <Header /> */}
+              <Component {...pageProps} />
+            </PayPalScriptProvider>
+          </PersistGate>
+        </Provider>
+      </SessionProvider>
+      {/* )} */}
     </>
   );
 }
