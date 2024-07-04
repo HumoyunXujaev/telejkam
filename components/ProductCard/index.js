@@ -10,8 +10,13 @@ import { priceAfterDiscount, sortPricesArr } from '@/utils/productUltils';
 // import Ratings from '../Ratings';
 import Actions from '../Actions';
 import Router from 'next/router';
+import { FaOpencart } from 'react-icons/fa';
+import { addToCartHandler } from '@/utils/productUltils';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ProductCard = ({ product, className, remove }) => {
+  const { cart } = useSelector((state) => ({ ...state }));
+  const dispatch = useDispatch();
   const [active, setActive] = useState(0);
   const [sizeActive, setSizeActive] = useState(0);
   const [showActions, setShowActions] = useState(false);
@@ -145,6 +150,17 @@ const ProductCard = ({ product, className, remove }) => {
                 <Ratings value={product.rating} />
               </div> */}
             </div>
+            <button
+              className={styled.flashDeals__item_btn}
+              onClick={(e) =>
+                addToCartHandler(e, product._id, 0, 0, cart, dispatch)
+              }
+            >
+              <span>
+                <FaOpencart />
+              </span>
+              <span>Добавить в корзину</span>
+            </button>
           </div>
         </Link>
         {Router.pathname === '/wishlist' && (
