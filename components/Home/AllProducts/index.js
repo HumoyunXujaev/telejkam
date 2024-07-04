@@ -33,6 +33,17 @@ export default function AllProducts({ products }) {
 
   return (
     <>
+      <h1
+        style={{
+          textAlign: 'center',
+          color: '#1976d2',
+          fontSize: '34px',
+          fontWeight: '1000',
+          paddingTop: '15px',
+        }}
+      >
+        Все Продукты
+      </h1>
       <div className={styled.allProducts__container}>
         <div className={styled.allProducts__content}>
           {products.slice(0, visible).map((product, index) => (

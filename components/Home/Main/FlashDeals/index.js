@@ -16,7 +16,7 @@ const FlashDeals = ({ flashDeals }) => {
       <div className={styled.flashDeals__title}>
         <Countdown date={new Date(2024, 6, 22)} />
         <h3>
-          <span>FLASH SALE</span>
+          <span>Распродажа</span>
           <img src='/images/limited.png' alt='' />
         </h3>
       </div>

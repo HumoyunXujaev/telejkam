@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { MdDashboard } from 'react-icons/md';
+import { MdCategory, MdContactEmergency } from 'react-icons/md';
 import styled from './styles.module.scss';
 import { AiFillCloseSquare } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
@@ -14,7 +14,7 @@ const Menu = ({ categories }) => {
       <div className={styled.menu}>
         <ul>
           <a className={styled.menu__header}>
-            <MdDashboard size={25} />
+            <MdCategory size={25} />
             Категории
             <button
               className={styled.menu__header_btn}
@@ -51,7 +51,7 @@ const Menu = ({ categories }) => {
       <div className={styled.menu}>
         <ul>
           <a className={styled.menu__header}>
-            <MdDashboard size={25} />
+            <MdContactEmergency size={25} />
             Контакты
             <button
               className={styled.menu__header_btn}

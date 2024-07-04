@@ -1,25 +1,35 @@
 /* eslint-disable @next/next/no-img-element */
-import { AiFillSafetyCertificate, AiOutlineMenuUnfold } from "react-icons/ai";
-import { HiHeart } from "react-icons/hi";
-import { FaHandsHelping } from "react-icons/fa";
+import { AiFillSafetyCertificate, AiOutlineMenuUnfold } from 'react-icons/ai';
+import { HiHeart } from 'react-icons/hi';
+import {
+  FaBuilding,
+  FaCar,
+  FaComment,
+  FaHandsHelping,
+  FaInfo,
+  FaStore,
+  FaTruck,
+} from 'react-icons/fa';
 import {
   RiCustomerServiceFill,
   RiAccountPinCircleFill,
   RiArrowDropDownFill,
-} from "react-icons/ri";
-import { useSession } from "next-auth/react";
-import { useMediaQuery } from "react-responsive";
-import Link from "next/link";
+  RiPhoneCameraFill,
+} from 'react-icons/ri';
+import { useSession } from 'next-auth/react';
+import { useMediaQuery } from 'react-responsive';
+import Link from 'next/link';
 
-import styled from "./styles.module.scss";
-import UserMenu from "./UserMenu";
-import { useDispatch } from "react-redux";
-import { toggleMobileCate } from "@/store/mobileCateSlice";
+import styled from './styles.module.scss';
+import UserMenu from './UserMenu';
+import { useDispatch } from 'react-redux';
+import { toggleMobileCate } from '@/store/mobileCateSlice';
+import { MdCall } from 'react-icons/md';
 
 const Top = ({ country }) => {
   const { data: session } = useSession();
-  const isSmallScreen = useMediaQuery({ query: "(max-width: 816px)" });
-  const isExtraSmallScreen = useMediaQuery({ query: "(max-width: 386px)" });
+  const isSmallScreen = useMediaQuery({ query: '(max-width: 816px)' });
+  const isExtraSmallScreen = useMediaQuery({ query: '(max-width: 386px)' });
   const dispatch = useDispatch();
 
   return (
@@ -33,40 +43,54 @@ const Top = ({ country }) => {
             <AiOutlineMenuUnfold size={24} />
           </div>
         </div>
+
         <ul className={styled.top__list}>
-          {!isExtraSmallScreen && (
-            <li className={styled.li}>
-              <img src={country?.flag} alt={country?.name} />
-              <span>{country?.name} / VND</span>
-            </li>
-          )}
+          {/* welcome text at left top corner */}
+          <li className={styled.li_left}>
+            <span>Добро пожаловать в TELEJKAM</span>
+          </li>
+
+          <li className={styled.li}>
+            <img src='icons/insta.png' alt='instagram' />
+          </li>
+          <li className={styled.li}>
+            <img src='icons/tg.png' alt='instagram' />
+          </li>
+          <li className={styled.li}>
+            <img src='icons/facebook.png' alt='facebook' />
+          </li>
+
           {!isSmallScreen && (
             <>
               <li className={styled.li}>
-                <AiFillSafetyCertificate />
-                <span>Buyer Protection</span>
+                <MdCall style={{ fill: 'white' }} />
+                <span>+998 99 191 11 36</span>
               </li>
               <li className={styled.li}>
-                <RiCustomerServiceFill />
-                <span>Customer Service</span>
+                <RiCustomerServiceFill
+                  style={{ color: 'black', fill: 'white' }}
+                />
+                <span>ПН-ВС, 9:00-21:00</span>
               </li>
               <li className={styled.li}>
-                <FaHandsHelping />
-                <span>Help</span>
+                <FaTruck style={{ fill: 'white' }} />
+                <span>Доставка</span>
               </li>
               <li className={styled.li}>
-                <HiHeart />
-                <Link href="/profile/wishlist?tab=2&q=wishlist">
-                  <span>Wishlist</span>
-                </Link>
+                <FaComment style={{ fill: 'white' }} />
+                <span>О Нас</span>
+              </li>
+              <li className={styled.li}>
+                <FaStore style={{ fill: 'white' }} />
+                <span>Магазины</span>
               </li>
             </>
           )}
 
-          <li className={styled.li}>
+          {/* <li className={styled.li}>
             {session ? (
               <div className={styled.flex}>
-                <img src={session.user.image} alt="Avatar" />
+                <img src={session.user.image} alt='Avatar' />
                 <span>{session.user.name}</span>
                 <RiArrowDropDownFill />
               </div>
@@ -78,7 +102,7 @@ const Top = ({ country }) => {
               </div>
             )}
             <UserMenu session={session} />
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>

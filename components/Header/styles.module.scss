@@ -5,9 +5,9 @@
 
 //Top------------------------------------------------
 .top {
-  background-color: #fff;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+  background-color: $admin-text;
+  // border-top: 1px solid #eee;
+  // border-bottom: 1px solid #eee;
 
   &__container {
     max-width: 1200px;
@@ -40,13 +40,25 @@
     display: flex;
     gap: 15px;
 
+    // only welcome text is displayed on the left side of the top bar in the header component
+    .li_left {
+      position: absolute;
+      left: 77px;
+      color: #ffffff;
+
+      span {
+        font-size: 15px;
+        font-weight: 550;
+      }
+    }
+
     .li {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 4px;
-      color: #666;
+      color: #ffffff;
       cursor: pointer;
 
       .flex {
@@ -66,8 +78,8 @@
       }
 
       img {
-        width: 28px;
-        height: 28px;
+        width: 26px;
+        height: 26px;
         border-radius: 50%;
         object-fit: cover;
       }
@@ -108,24 +120,20 @@
         &::after {
           display: none;
         }
-
-        &:hover {
-          .menu {
-            display: flex;
-            opacity: 1;
-            z-index: 9999;
-          }
-        }
       }
+    }
+  }
+}
 
-      &:hover {
-        color: #222;
+@media screen and (max-width: 950px) {
+  .top {
+    display: none;
+    .container {
+      display: none;
+    }
 
-        svg {
-          fill: #666;
-          transition: $transition-1;
-        }
-      }
+    .menu {
+      display: none;
     }
   }
 }
@@ -277,18 +285,37 @@
     position: relative;
   }
 
-  .browse {
+  // style for link to catalog with mdmenu icon
+  .catalog {
     display: flex;
     align-items: center;
     gap: 10px;
-    width: 100%;
-    height: 45px;
     color: #ffffff;
-    font-size: 14px;
     cursor: pointer;
-    border: 2px solid $admin-text;
-    border-radius: 15px;
+    font-size: 10px;
+    font-weight: 600;
+    position: relative;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease;
     background-color: $admin-text;
+    border-radius: 7px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: #fff;
+    }
+
+    span {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    img {
+      width: 32px;
+      height: 32px;
+      position: relative;
+    }
   }
 
   .search {
@@ -298,7 +325,8 @@
     flex: 1;
     background-color: #eeeeeebc;
     height: 40px;
-    border-radius: 3px;
+    border-radius: 7px;
+    border: 1px solid #ccc;
     z-index: 96;
 
     input {
@@ -455,7 +483,8 @@
   .profile__text {
     margin-top: 0.5rem; // Adjust this value to control the spacing between the icon and text
     font: optional;
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 500;
   }
 
   .cart,
@@ -704,7 +733,11 @@
     }
   }
   @media screen and (max-width: 950px) {
-    .search {
+    // .search {
+    //   display: none;
+    // }
+
+    .top {
       display: none;
     }
 
@@ -724,7 +757,7 @@
       display: none;
     }
 
-    .browse {
+    .catalog {
       display: none;
     }
 
@@ -736,6 +769,16 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+    }
+
+    // search is below the logo
+    .search {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      z-index: 99;
     }
 
     .orderStatus,

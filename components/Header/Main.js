@@ -78,6 +78,7 @@ const Main = ({ searchHandler2 }) => {
             <IconButton onClick={() => setDrawerOpen(true)}>
               <MdMenu size={20} />
             </IconButton>
+
             <Drawer
               anchor='left'
               open={drawerOpen}
@@ -92,6 +93,7 @@ const Main = ({ searchHandler2 }) => {
                     width='85'
                     height='85'
                   />
+
                   {/* </div> */}
                   <IconButton onClick={() => setDrawerOpen(false)}>
                     <MdClose />
@@ -217,10 +219,12 @@ const Main = ({ searchHandler2 }) => {
           </div>
         </Link>
 
+        {/* link to catalog with mdmenu icon */}
+
         <Link href='browse'>
-          <div className={styled.browse}>
-            <MdDashboard size={20} />
-            <span>Каталог</span>
+          <div className={styled.catalog}>
+            <MdMenu />
+            <span className={styled.catalog__text}>Каталог</span>
           </div>
         </Link>
 

@@ -19,7 +19,7 @@ export default function FreeShippingProducts({ freeShippingProducts }) {
           <img src='/images/free-ship.png' alt='' />
         </div>
         <Link href='/browse?shipping=Free'>
-          Смотреть
+          Смотреть все
           <MdOutlineKeyboardDoubleArrowRight />
         </Link>
       </div>

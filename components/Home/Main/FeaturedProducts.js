@@ -15,7 +15,7 @@ export default function FeaturedProducts({ featuredProducts }) {
     <div className={styled.featuredProducts}>
       <div className={styled.featuredProducts__title}>
         <div className={styled.flex}>
-          <h3>Избранные продукты</h3>
+          <h3>Рекомендуемые продукты</h3>
           <img src='/images/featured-products.png' alt='' />
         </div>
         <Link href='/browse?sort=popular'>

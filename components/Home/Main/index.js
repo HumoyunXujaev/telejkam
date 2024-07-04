@@ -24,6 +24,8 @@ const Main = ({
 
   return (
     <>
+      <MainSwiper />
+
       <div className={styled.main}>
         <div
           className={`${styled.main__backdrop} ${
@@ -38,6 +40,7 @@ const Main = ({
         >
           {isSmallScreen && <Menu />}
         </div>
+
         <AnimateWrapper origin='left'>
           <div className={styled.main__left}>
             <Menu categories={featuredCategories} />
@@ -45,9 +48,9 @@ const Main = ({
         </AnimateWrapper>
 
         <div className={styled.main__right}>
-          <AnimateWrapper>
+          {/* <AnimateWrapper>
             <MainSwiper />
-          </AnimateWrapper>
+          </AnimateWrapper> */}
 
           {/* <AnimateWrapper origin='right'>
             <FeaturedBrands featuredBrands={featuredBrands} />
@@ -60,6 +63,7 @@ const Main = ({
           <AnimateWrapper origin='right'>
             <FeaturedProducts featuredProducts={featuredProducts} />
           </AnimateWrapper>
+
           <AnimateWrapper origin='right'>
             <FreeShippingProducts freeShippingProducts={freeShippingProducts} />
           </AnimateWrapper>
