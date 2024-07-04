@@ -1,16 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-import { getSession } from "next-auth/react";
-import Head from "next/head";
-import React from "react";
-import Link from "next/link";
-import slugify from "slugify";
-import { useRouter } from "next/router";
-import { FiExternalLink } from "react-icons/fi";
+import { getSession } from 'next-auth/react';
+import Head from 'next/head';
+import React from 'react';
+import Link from 'next/link';
+import slugify from 'slugify';
+import { useRouter } from 'next/router';
+import { FiExternalLink } from 'react-icons/fi';
 
-import styled from "@/styles/Profile.module.scss";
-import Layout from "@/components/Profile/Layout";
-import { Order } from "@/models/Order";
-import { ordersLinks } from "@/data/profile";
+import styled from '@/styles/Profile.module.scss';
+import Layout from '@/components/Profile/Layout';
+import { Order } from '@/models/Order';
+import { ordersLinks } from '@/data/profile';
 
 export default function ProfileOrder({ user, tab, orders }) {
   const router = useRouter();
@@ -31,17 +31,17 @@ export default function ProfileOrder({ user, tab, orders }) {
                   key={i}
                   className={
                     slugify(link.name, { lower: true }) ==
-                    router.query.q.split("__")[0]
+                    router.query.q.split('__')[0]
                       ? styled.active
-                      : ""
+                      : ''
                   }
                 >
                   <Link
                     href={`orders?tab=${tab}&q=${slugify(link.name, {
                       lower: true,
-                    })}${link.filter ? `__${link.filter}` : ""}`}
+                    })}${link.filter ? `__${link.filter}` : ''}`}
                   >
-                    {link.name.replace("Orders", "")}
+                    {link.name.replace('Orders', '')}
                   </Link>
                 </li>
               ))}
@@ -66,31 +66,31 @@ export default function ProfileOrder({ user, tab, orders }) {
                   <td>{order._id}</td>
                   <td className={styled.orders__images}>
                     {order.products.map((p) => (
-                      <img key={p._id} alt="" src={p.image} />
+                      <img key={p._id} alt='' src={p.image} />
                     ))}
                   </td>
                   <td>
-                    {order.paymentMethod == "paypal"
-                      ? "Paypal"
-                      : order.paymentMethod == "credit_card"
-                      ? "Credit card"
-                      : "Cash on delivery"}
+                    {order.paymentMethod == 'uzum_nasiya'
+                      ? 'Uzum Nasiya'
+                      : order.paymentMethod == 'credit_card'
+                      ? 'Credit card'
+                      : 'Cash on delivery'}
                   </td>
                   <td>${order.total}</td>
                   <td className={styled.orders__paid}>
                     {order.isPaid ? (
                       <div className={styled.ver}>
-                        <img src="/images/verified.png" alt="" /> Paid
+                        <img src='/images/verified.png' alt='' /> Paid
                       </div>
                     ) : (
                       <div className={styled.unver}>
-                        <img src="/images/unverified.png" alt="" /> Unpaid
+                        <img src='/images/unverified.png' alt='' /> Unpaid
                       </div>
                     )}
                   </td>
                   <td>{order.status}</td>
                   <td>
-                    <Link href={`/order/${order._id}`} target="_blank">
+                    <Link href={`/order/${order._id}`} target='_blank'>
                       <FiExternalLink />
                     </Link>
                   </td>
@@ -109,25 +109,25 @@ export async function getServerSideProps(ctx) {
   const session = await getSession(ctx);
   const tab = query.tab || 0;
 
-  let filter = query.q.split("__")[1];
+  let filter = query.q.split('__')[1];
 
   let orders = [];
 
   switch (filter) {
-    case "processing":
-      filter = "Processing";
+    case 'processing':
+      filter = 'Processing';
       break;
-    case "not_processed":
-      filter = "Not Processed";
+    case 'not_processed':
+      filter = 'Not Processed';
       break;
-    case "dispatched":
-      filter = "Dispatched";
+    case 'dispatched':
+      filter = 'Dispatched';
       break;
-    case "completed":
-      filter = "Completed";
+    case 'completed':
+      filter = 'Completed';
       break;
-    case "canceled":
-      filter = "Canceled";
+    case 'canceled':
+      filter = 'Canceled';
       break;
   }
 
@@ -140,7 +140,7 @@ export async function getServerSideProps(ctx) {
       .lean();
 
     //Filter ra những order đã thanh toán
-  } else if (filter == "paid") {
+  } else if (filter == 'paid') {
     orders = await Order.find({ user: session?.user.id, isPaid: true })
       .sort({
         createdAt: -1,
@@ -148,7 +148,7 @@ export async function getServerSideProps(ctx) {
       .lean();
 
     //Filter ra những order chưa thanh toán
-  } else if (filter == "unpaid") {
+  } else if (filter == 'unpaid') {
     orders = await Order.find({ user: session?.user.id, isPaid: false })
       .sort({
         createdAt: -1,

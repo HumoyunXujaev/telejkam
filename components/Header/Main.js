@@ -149,7 +149,7 @@ const Main = ({ searchHandler2 }) => {
                       <span>Телефон</span>
                     </div>
                   </Link>
-                  <Link href={`mailto:hujaevhumoyun01@gmail.com`}>
+                  {/* <Link href={`mailto:hujaevhumoyun01@gmail.com`}>
                     <div className={styled.drawer__item}>
                       <Image
                         src={`icons/email.png`}
@@ -159,7 +159,7 @@ const Main = ({ searchHandler2 }) => {
                       />
                       <span>Почта</span>
                     </div>
-                  </Link>
+                  </Link> */}
                   <Link href={`https://www.google.com/maps/place/`}>
                     <div className={styled.drawer__item}>
                       <Image
@@ -171,15 +171,15 @@ const Main = ({ searchHandler2 }) => {
                       <span>Адресс</span>
                     </div>
                   </Link>
-                  <Link href={`https://www.facebook.com/`}>
+                  <Link href={`https://www.telegram.com/`}>
                     <div className={styled.drawer__item}>
                       <Image
-                        src={`icons/facebook.png`}
+                        src={`icons/tg.png`}
                         alt='phone'
                         width='85'
                         height='85'
                       />
-                      <span>Facebook</span>
+                      <span>Telegram</span>
                     </div>
                   </Link>
                   <Link href={`https://www.instagram.com/`}>
@@ -193,7 +193,7 @@ const Main = ({ searchHandler2 }) => {
                       <span>Instagram</span>
                     </div>
                   </Link>
-                  <Link href={`https://www.youtube.com/`}>
+                  {/* <Link href={`https://www.youtube.com/`}>
                     <div className={styled.drawer__item}>
                       <Image
                         src={`icons/yt.png`}
@@ -203,7 +203,7 @@ const Main = ({ searchHandler2 }) => {
                       />
                       <span>Youtube</span>
                     </div>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </Drawer>

@@ -100,8 +100,8 @@ function Row(props) {
               onChange={handleChange}
               displayEmpty
             >
-              <MenuItem value='Credit Card'>Credit Card</MenuItem>
-              <MenuItem value='PayPal'>PayPal</MenuItem>
+              {/* <MenuItem value='Credit Card'>Credit Card</MenuItem> */}
+              <MenuItem value='uzum_nasiya'>Uzum Nasiya</MenuItem>
               <MenuItem value='COD'>Cash on delivery</MenuItem>
             </Select>
           ) : (

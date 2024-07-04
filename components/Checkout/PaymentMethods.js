@@ -65,7 +65,7 @@ const PaymentMethods = ({
             <img src={`/images/checkout/${pm.id}.webp`} alt={pm.name} />
           </div>
           <div className={styled.payment__item_col}>
-            <span>Pay with {pm.name}</span>
+            <span>Оплатите с {pm.name}</span>
             <div className={styled.payment__item_creditImg}>
               {pm.images.length > 0
                 ? pm.images.map((img, index) => (

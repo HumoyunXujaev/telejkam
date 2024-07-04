@@ -80,7 +80,7 @@ const Menu = ({ categories }) => {
                 </span>
               </Link>
             </li>
-            <li className={styled.menu__item}>
+            {/* <li className={styled.menu__item}>
               <Link href={'mailto:hujaevhumoyun01@gmail.com'}>
                 <div className={styled.menu__item_img}>
                   <Image
@@ -92,7 +92,7 @@ const Menu = ({ categories }) => {
                 </div>
                 <span>Почта</span>
               </Link>
-            </li>
+            </li> */}
 
             <li className={styled.menu__item}>
               <Link
@@ -114,19 +114,19 @@ const Menu = ({ categories }) => {
 
             <li className={styled.menu__item}>
               <Link
-                href={`https://www.facebook.com/`}
+                href={`https://www.telegram.com/`}
                 onClick={() => dispatch(toggleMobileCate())}
               >
                 <div className={styled.menu__item_img}>
                   <Image
                     fill={true}
                     style={{ objectFit: 'cover' }}
-                    src={`icons/facebook.png`}
-                    alt='instagram'
+                    src={`icons/tg.png`}
+                    alt='telegram'
                   />
                 </div>
 
-                <span>FACEBOOK</span>
+                <span>TELEGRAM</span>
               </Link>
             </li>
 
@@ -148,7 +148,7 @@ const Menu = ({ categories }) => {
               </Link>
             </li>
 
-            <li className={styled.menu__item}>
+            {/* <li className={styled.menu__item}>
               <Link
                 href={`https://www.twitter.com/`}
                 onClick={() => dispatch(toggleMobileCate())}
@@ -163,9 +163,9 @@ const Menu = ({ categories }) => {
                 </div>
                 <span>TWITTER</span>
               </Link>
-            </li>
+            </li> */}
 
-            <li className={styled.menu__item}>
+            {/* <li className={styled.menu__item}>
               <Link
                 href={`https://www.youtube.com/`}
                 onClick={() => dispatch(toggleMobileCate())}
@@ -180,7 +180,7 @@ const Menu = ({ categories }) => {
                 </div>
                 <span>YOUTUBE</span>
               </Link>
-            </li>
+            </li> */}
           </div>
         </ul>
       </div>

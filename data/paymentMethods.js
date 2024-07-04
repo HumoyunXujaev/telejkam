@@ -1,30 +1,16 @@
 export const paymentMethods = [
   {
-    name: "Paypal",
-    id: "paypal",
+    name: 'Uzum Nasiya',
+    id: 'uzum_nasiya',
     description:
-      "If you don't have a paypal account, you can also pay via paypal with your credit card or bank debit card.",
+      "Naqd pul orqali to'lov qilish uchun, mahsulotni olib kelishda to'lov qilishingiz mumkin.",
     images: [],
   },
   {
-    name: "Credit Card",
-    id: "credit_card",
-    description: "",
-    images: [
-      "visa",
-      "mastercard",
-      "paypal",
-      "maestro",
-      "american_express",
-      // "cb",
-      // "jcb",
-    ],
-  },
-  {
-    name: "Cash",
-    id: "cash",
+    name: 'Наличные',
+    id: 'cash',
     description:
-      "If you don't have a paypal account, you can also pay via paypal with your credit card or bank debit card.",
+      'Можно оплатить весь товар полностью наличными при получении товара.',
     images: [],
   },
 ];

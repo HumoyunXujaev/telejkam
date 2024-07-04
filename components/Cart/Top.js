@@ -80,7 +80,9 @@ const Top = ({ cartItems, selected, setSelected }) => {
     if (selected?.length === cartItems.length) {
       setActive(true);
     }
-  }, [selected]);
+    setSelected(cartItems);
+    setActive(true);
+  }, [selected, cartItems]);
 
   return (
     <div className={`${styled.cart__top} ${styled.card}`}>

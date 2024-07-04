@@ -1,4 +1,4 @@
-import { addToCart, updateCart } from '@/store/cartSlice';
+import { addToCart, emptyCart, updateCart } from '@/store/cartSlice';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -70,6 +70,11 @@ export const addToCartHandler = async (e, id, style, size, cart, dispatch) => {
       toast.success('Продукт успешно добавлен в корзину!');
     }
   }
+};
+
+// empty cart
+export const emptyCartHandler = (cart, dispatch) => {
+  dispatch(emptyCart(cart));
 };
 
 export const calculateSubPrice = (items) => {

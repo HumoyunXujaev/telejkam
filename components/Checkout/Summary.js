@@ -10,7 +10,8 @@ import styled from './styles.module.scss';
 // import { applyCoupon } from '@/utils/request';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { calculateTotal } from '@/utils/productUltils';
+import { calculateTotal, emptyCartHandler } from '@/utils/productUltils';
+import { useDispatch } from 'react-redux';
 
 const Summary = ({
   totalAfterDiscount,
@@ -24,6 +25,7 @@ const Summary = ({
   const [discount, setDiscount] = useState('');
   const [error, setError] = useState('');
   const [orderError, setOrderError] = useState('');
+  const dispatch = useDispatch();
 
   const Router = useRouter();
 
@@ -143,6 +145,10 @@ const Summary = ({
       await axios.post('/api/telegram', {
         message: message,
       });
+
+      // clear cart
+      localStorage.removeItem('cart');
+      emptyCartHandler(cart, dispatch);
 
       Router.push(`/order/${data.order_id}`);
     } catch (error) {

@@ -4,6 +4,7 @@ import React from 'react';
 import { MdPlayArrow } from 'react-icons/md';
 
 import styled from './styles.module.scss';
+import Image from 'next/image';
 
 const Header = ({ link, text, link2, text2 }) => {
   return (
@@ -11,7 +12,7 @@ const Header = ({ link, text, link2, text2 }) => {
       <div className={styled.header__container}>
         <div className={styled.header__left}>
           <Link href='/'>
-            <img src='/telejkam.png' alt='' />
+            <Image src='/telejkam.png' alt='' width='170' height='200' />
           </Link>
         </div>
         <div className={styled.header__right}>
