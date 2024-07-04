@@ -16,6 +16,7 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import StyledDotLoader from '@/components/Loaders/DotLoader';
 import Header from '@/components/Header';
+import { Analytics } from '@vercel/analytics/react';
 
 NProgress.configure({
   minimum: 0.3,
@@ -86,6 +87,7 @@ export default function App({
               />
               {/* <Header /> */}
               <Component {...pageProps} />
+              <Analytics />
             </PayPalScriptProvider>
           </PersistGate>
         </Provider>
