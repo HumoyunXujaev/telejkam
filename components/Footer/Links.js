@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 
 import styled from './styles.module.scss';
+import Image from 'next/image';
 
 const Links = () => {
   return (
@@ -11,16 +12,8 @@ const Links = () => {
         return (
           <ul key={index}>
             {/* Heading */}
-            {index === 0 ? (
-              <img
-                src='/telejkam1.png'
-                alt='Logo footer'
-                width='300px'
-                height='50px'
-              />
-            ) : (
-              <b>{link.heading}</b>
-            )}
+
+            <b>{link.heading}</b>
 
             {/* Items */}
             {link.links.map((link, index) => (

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Pagination } from '@mui/material';
+import { Button, Drawer, IconButton, Pagination } from '@mui/material';
 
 import styled from '@/styles/Browse.module.scss';
 import db from '@/utils/db';
@@ -32,6 +32,8 @@ import AnimateWrapper from '@/components/AnimateWrapper';
 import { IoIosArrowDown } from 'react-icons/io';
 import { FcCheckmark } from 'react-icons/fc';
 import SortFilter from '@/components/Browse/PriceFilter';
+import { MdClose, MdFilter, MdSort, MdSortByAlpha } from 'react-icons/md';
+import { FaSort } from 'react-icons/fa';
 
 export default function BrowsePage({
   categories,
@@ -49,8 +51,12 @@ export default function BrowsePage({
 
   const isMedium = useMediaQuery({ query: '(max-width: 1023px)' });
   const isLarge = useMediaQuery({ query: '(min-width: 1024px)' });
+  const isSmall = useMediaQuery({ query: '(max-width: 950px)' });
   const sortQuery = router.query.sort || '';
   const [show, setShow] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const [sortdrawer, setSortDrawer] = useState(false);
 
   const filter = ({
     search,
@@ -209,6 +215,75 @@ export default function BrowsePage({
 
         <div className={styled.browse__store}>
           <AnimateWrapper origin='left'>
+            {/* on mobile devices show an icon to open a drawer */}
+            {isSmall && (
+              <div className={styled.browse__drawerIcon}>
+                <div className={styled.browse__drawerIcon_item}>
+                  <IconButton onClick={() => setDrawerOpen(true)}>
+                    Фильтры <FaSort />
+                  </IconButton>
+                </div>
+                <div className={styled.browse__drawerIcon_item}>
+                  <IconButton onClick={() => setSortDrawer(true)}>
+                    Сортировать <MdSort />
+                  </IconButton>
+                </div>
+
+                {/* drawer for sort */}
+                <Drawer
+                  anchor='top'
+                  open={sortdrawer}
+                  onClose={() => setSortDrawer(false)}
+                >
+                  <div className={styled.browse__drawer}>
+                    <IconButton onClick={() => setSortDrawer(false)}>
+                      <MdClose />
+                    </IconButton>
+                    <SortFilter
+                      sortHandler={sortHandler}
+                      sortQuery={sortQuery}
+                      sortingOptions={sortingOptions}
+                    />
+                  </div>
+                </Drawer>
+
+                <Drawer
+                  anchor='top'
+                  open={drawerOpen}
+                  onClose={() => setDrawerOpen(false)}
+                >
+                  <div className={styled.browse__drawer}>
+                    <IconButton onClick={() => setDrawerOpen(false)}>
+                      <MdClose />
+                    </IconButton>
+                    <SortFilter
+                      sortHandler={sortHandler}
+                      sortQuery={sortQuery}
+                      sortingOptions={sortingOptions}
+                    />
+
+                    <CategoryFilter
+                      categories={categories}
+                      subCategories={subCategories}
+                      categoryHandler={categoryHandler}
+                      checkChecked={checkChecked}
+                    />
+
+                    <ColorsFilter
+                      colors={colors}
+                      colorHandler={colorHandler}
+                      checkChecked={checkChecked}
+                    />
+
+                    <BrandsFilter
+                      brands={brands}
+                      brandHandler={brandHandler}
+                      checkChecked={checkChecked}
+                    />
+                  </div>
+                </Drawer>
+              </div>
+            )}
             <div
               className={`${styled.browse__store_filters} ${styled.scrollbar}`}
             >

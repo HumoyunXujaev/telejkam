@@ -7,9 +7,9 @@
     width: 100%;
     display: grid;
     grid-template-areas:
-      "links"
-      "socials"
-      "newsletter";
+      'links'
+      'socials'
+      'newsletter';
 
     column-gap: 2rem;
     padding: 2rem 1rem;
@@ -17,7 +17,7 @@
     margin: auto;
 
     @media screen and (min-width: 769px) {
-      grid-template-areas: "links links links socials" "links links links newsletter";
+      grid-template-areas: 'links links links socials' 'links links links newsletter';
     }
   }
 
@@ -36,12 +36,6 @@
     font-size: 12px;
     font-weight: 600;
     color: #222;
-  }
-
-  img {
-    width: 90px;
-    height: 26px;
-    object-fit: contain;
   }
 
   &__links {
@@ -188,7 +182,7 @@
         position: relative;
 
         &::after {
-          content: "";
+          content: '';
           width: 1px;
           height: 15px;
           background-color: rgb(168, 168, 168);

@@ -8,7 +8,7 @@ export default function HeadingFilters({ priceHandler, multiPriceHandler }) {
   return (
     <div className={styled.filters}>
       <div className={styled.filters__priceBtns_wrap}>
-        <span>Price range :</span>
+        <span>Цена :</span>
         <div className={styled.filters__priceBtns}>
           <Tooltip
             title={<h4>Смотреть продукты между 1,000,000 - 3,000,000</h4>}

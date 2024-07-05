@@ -297,28 +297,26 @@ const Main = ({ searchHandler2 }) => {
                   </div>
                   <div className={styled.cart__priceComponent}>
                     <p>
-                      <span>Subtotal :</span>
+                      <span>Цена :</span>
                       <span>${calculateSubPrice(cart.cartItems)}</span>
                     </p>
                     <p>
-                      <span>Shipping :</span>
+                      <span>Доставка :</span>
                       <span>${calculateTotalShipping(cart.cartItems)}</span>
                     </p>
                   </div>
                   <div className={styled.cart__total}>
-                    <span>Total :</span>
+                    <span>Сумма :</span>
                     <span>{calculateTotal(cart.cartItems)}$</span>
                   </div>
-                  <div className={styled.cart__seeAll}>
-                    See all items in cart
-                  </div>
+                  <div className={styled.cart__seeAll}>Смотреть все</div>
                 </div>
               ) : (
                 <div className={styled.cart__empty}>
                   <div className={styled.cart__empty_img}>
                     <NextImage src='/images/empty.png' />
                   </div>
-                  <p>Cart is empty!</p>
+                  <p>Корзина пустая!</p>
                   <div className={styled.cart__empty_btn}>
                     <Button
                       variant='contained'
@@ -328,7 +326,7 @@ const Main = ({ searchHandler2 }) => {
                         router.push('/browse');
                       }}
                     >
-                      SHOP NOW
+                      Начать покупки
                     </Button>
                   </div>
                 </div>
