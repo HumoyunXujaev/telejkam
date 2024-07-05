@@ -4,90 +4,30 @@ import React from 'react';
 
 import styled from './styles.module.scss';
 import Image from 'next/image';
+import { FaAddressCard, FaInstagram, FaTelegram } from 'react-icons/fa';
+
+import { MdPhone } from 'react-icons/md';
 
 const Links = () => {
+  // only show the logo and address
   return (
     <div className={styled.footer__links}>
-      {links.map((link, index) => {
-        return (
-          <ul key={index}>
-            {/* Heading */}
-
-            <b>{link.heading}</b>
-
-            {/* Items */}
-            {link.links.map((link, index) => (
-              <li key={index}>
-                <Link href={link.link}>{link.name}</Link>
-              </li>
-            ))}
-          </ul>
-        );
-      })}
+      {/* copyright icon with text 2024 telejkam */}
+      ©2024
+      <span
+        style={{
+          color: 'black',
+          fontWeight: '800',
+          fontSize: '25',
+          fontFamily: 'sans-serif',
+        }}
+      >
+        Telejkam
+      </span>
+      <h1></h1>
     </div>
   );
 };
 
-const links = [
-  {
-    heading: 'TELEJKAM',
-    links: [
-      {
-        name: 'О Нас',
-        link: '',
-      },
-      {
-        name: 'Контакты',
-        link: '',
-      },
-      {
-        name: 'Карьера',
-        link: '',
-      },
-    ],
-  },
-  {
-    heading: 'Помощь',
-    links: [
-      {
-        name: 'Доставка',
-        link: '',
-      },
-      {
-        name: 'Оплата/Возврат',
-        link: '',
-      },
-      {
-        name: 'Как заказать',
-        link: '',
-      },
-      {
-        name: 'Как отследить заказ',
-        link: '',
-      },
-    ],
-  },
-  {
-    heading: 'Партнерам',
-    links: [
-      {
-        name: 'Стать партнером',
-        link: '',
-      },
-      {
-        name: 'Партнерская программа',
-        link: '',
-      },
-      {
-        name: 'Партнерский кабинет',
-        link: '',
-      },
-      {
-        name: 'Партнерский договор',
-        link: '',
-      },
-    ],
-  },
-];
-
+//
 export default Links;

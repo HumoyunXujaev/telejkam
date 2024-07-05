@@ -15,13 +15,17 @@ const Footer = ({ country }) => {
     <AnimateWrapper className='load-hidden'>
       <footer className={styled.footer}>
         <div className={styled.footer__container}>
-          <Links />
-          <Socials />
-          <Newsletter />
-        </div>
-        <div className={styled.footer__container2}>
-          <Payment />
-          <Policy country={country} />
+          {/* logo right in the middle of the footer */}
+
+          <div className={styled.footer__left}>
+            <Links />
+          </div>
+          <div className={styled.footer__center}>
+            <Image src='/telejkam.png' alt='logo' width={130} height={130} />
+          </div>
+          <div className={styled.footer__right}>
+            <Socials />
+          </div>
         </div>
         <Copyright />
       </footer>
