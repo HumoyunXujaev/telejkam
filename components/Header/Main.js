@@ -184,7 +184,7 @@ const Main = ({ searchHandler2 }) => {
                       <span>Telegram</span>
                     </div>
                   </Link>
-                  <Link href={`https://www.instagram.com/`}>
+                  <Link href={`https://www.instagram.com/telejkam.uz/`}>
                     <div className={styled.drawer__item}>
                       <Image
                         src={`icons/insta.png`}

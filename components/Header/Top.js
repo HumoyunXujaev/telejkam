@@ -51,20 +51,23 @@ const Top = ({ country }) => {
           </li>
 
           <li className={styled.li}>
-            <img src='icons/insta.png' alt='instagram' />
+            <a href='https://www.instagram.com/telejkam.uz/' target='_blank'>
+              <img src='icons/insta.png' alt='instagram' />
+            </a>
           </li>
           <li className={styled.li}>
-            <img src='icons/tg.png' alt='instagram' />
-          </li>
-          <li className={styled.li}>
-            <img src='icons/facebook.png' alt='facebook' />
+            <a href='https://t.me/telejkam' target='_blank'>
+              <img src='icons/tg.png' alt='instagram' />
+            </a>
           </li>
 
           {!isSmallScreen && (
             <>
               <li className={styled.li}>
                 <MdCall style={{ fill: 'white' }} />
-                <span>+998 99 191 11 36</span>
+                <a href='tel:+998991911136'>
+                  <span>+998 99 191 11 36</span>
+                </a>
               </li>
               <li className={styled.li}>
                 <RiCustomerServiceFill

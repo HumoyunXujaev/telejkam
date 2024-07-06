@@ -132,7 +132,7 @@ const Menu = ({ categories }) => {
 
             <li className={styled.menu__item}>
               <Link
-                href={`https://www.instagram.com/`}
+                href={`https://www.instagram.com/telejkam.uz/`}
                 onClick={() => dispatch(toggleMobileCate())}
               >
                 <div className={styled.menu__item_img}>
