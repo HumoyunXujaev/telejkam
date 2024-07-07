@@ -32,7 +32,7 @@ export default function Wishlist() {
     const updatedWishlist = wishlist.filter((item) => item._id !== id);
     localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
     setWishlist(updatedWishlist);
-    toast.success('Removed from wishlist');
+    toast.success('Удалено с избранного');
   };
 
   return (

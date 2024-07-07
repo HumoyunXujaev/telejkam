@@ -140,7 +140,7 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                     </div>
                     <div className={styled.product__infos_total}>
                       <span>Сумма :</span>
-                      {(product.price * product.qty).toFixed(2)}сум
+                      {(product.price * product.qty).toLocaleString('ru-RU')}сум
                     </div>
                   </div>
                 </div>
@@ -151,12 +151,17 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                   <>
                     <div className={styled.order__total_sub}>
                       <span>Сумма</span>
-                      <span>{orderData.totalBeforeDiscount} сум</span>
+                      <span>
+                        {orderData.totalBeforeDiscount.toLocaleString('ru-RU')}{' '}
+                        сум
+                      </span>
                     </div>
 
                     <div className={styled.order__total_sub}>
                       <span>Доставка</span>
-                      <span>{orderData.shippingPrice.toFixed(2)} сум</span>
+                      <span>
+                        {orderData.shippingPrice.toLocaleString('ru-RU')} сум
+                      </span>
                     </div>
                     {/* <div className={styled.order__total_sub}>
                       <span>Tax price</span>
@@ -164,7 +169,7 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                     </div> */}
                     <div className={styled.order__total_sub2}>
                       <span>Общая сумма для оплаты</span>
-                      <span>{orderData.total} сум</span>
+                      <span>{orderData.total.toLocaleString('ru-RU')} сум</span>
                     </div>
                   </>
                 ) : (
@@ -175,7 +180,7 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                     </div> */}
                     <div className={styled.order__total_sub}>
                       <span>Общая сумма для оплаты</span>
-                      <span>{orderData.total} сум</span>
+                      <span>{orderData.total.toLocaleString('ru-RU')} сум</span>
                     </div>
                   </>
                 )}
@@ -216,11 +221,6 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                     {orderData.shippingAddress.city}
                   </span>
                 </div>
-
-                <div className={styled.order__address_line}>
-                  <span>Почтовый Индекс : </span>
-                  <span>{orderData.shippingAddress.zipCode}</span>
-                </div>
               </div>
 
               <div className={styled.order__address_shipping}>
@@ -244,11 +244,6 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                     {orderData.shippingAddress.state},{' '}
                     {orderData.shippingAddress.city}
                   </span>
-                </div>
-
-                <div className={styled.order__address_line}>
-                  <span>Почтовый Индекс : </span>
-                  <span>{orderData.shippingAddress.zipCode}</span>
                 </div>
               </div>
             </div>

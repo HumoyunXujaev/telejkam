@@ -10,7 +10,7 @@ export const sortPricesArr = (products) => {
 };
 
 export const priceAfterDiscount = (beforePrice, discount) => {
-  return (beforePrice - (beforePrice * discount) / 100).toFixed(2);
+  return beforePrice - (beforePrice * discount) / 100;
 };
 
 export const findAllSizes = (subProducts) => {
@@ -79,12 +79,12 @@ export const emptyCartHandler = (cart, dispatch) => {
 
 export const calculateSubPrice = (items) => {
   const newSubTotal = items.reduce((a, c) => a + Number(c.price) * c.qty, 0);
-  return Number(newSubTotal).toFixed(2);
+  return Number(newSubTotal);
 };
 
 export const calculateTotalShipping = (items) => {
   const newShippingFee = items?.reduce((a, c) => a + Number(c.shipping), 0);
-  return Number(newShippingFee).toFixed(2);
+  return Number(newShippingFee);
 };
 
 export const calculateTotal = (items) => {
@@ -92,5 +92,5 @@ export const calculateTotal = (items) => {
     (a, c) => a + Number(c.shipping) + Number(c.price) * c.qty,
     0
   );
-  return Number(newTotal).toFixed(2);
+  return Number(newTotal);
 };

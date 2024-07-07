@@ -111,11 +111,11 @@ const Infos = ({ product, setActiveImg, setImages }) => {
           )}
           {!size ? (
             <h3 className={styled.infos__price_range}>
-              {product.priceRange} сум/мес
+              {product.priceRange.toLocaleString('ru-RU')} сум/мес
             </h3>
           ) : (
             <h3 className={styled.infos__price_single}>
-              {product.price} сум/мес
+              {product.price.toLocaleString('ru-RU')} сум/мес
             </h3>
           )}
           {product.discount > 0 && size && (

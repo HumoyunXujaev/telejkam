@@ -26,7 +26,6 @@ const initialValues = {
   phoneNumber: '',
   state: '',
   city: '',
-  zipCode: '',
   address1: '',
   address2: '',
   country: '',
@@ -42,7 +41,6 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
     phoneNumber,
     state,
     city,
-    zipCode,
     address1,
     address2,
     country,
@@ -69,10 +67,6 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
       .required('City name is required.')
       .min(2, 'City name should contain 2-60 characters.')
       .max(60, 'City name should contain 2-60 characters.'),
-    zipCode: Yup.string()
-      .required('ZipCode/Postal is required.')
-      .min(2, 'ZipCode/Postal should contain 2-30 characters.')
-      .max(30, 'ZipCode/Postal should contain 2-30 characters.'),
     address1: Yup.string()
       .required('Address Line 1 is required.')
       .min(5, 'Address Line 1 should contain 5-100 characters.')
@@ -201,7 +195,6 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
             phoneNumber,
             state,
             city,
-            zipCode,
             address1,
             address2,
             country,
@@ -238,15 +231,6 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
                   id='phoneNumber'
                   name='phoneNumber'
                   label='Phone number'
-                  fullWidth
-                  onChange={changeInputHandler}
-                  icon='number'
-                />
-                <ShippingInput
-                  required
-                  id='zipCode'
-                  name='zipCode'
-                  label='Zip / Postal code'
                   fullWidth
                   onChange={changeInputHandler}
                   icon='number'

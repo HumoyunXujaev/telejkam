@@ -30,10 +30,10 @@ export default function Wishlist({ user, tab }) {
 
   const removeFromWishlistHandler = (id) => {
     Popup(
-      'Are you sure?',
-      `This item will be removed from your wishlist.`,
+      'Вы уверены?',
+      `Этот предмет будет удален из вашего избранного листа`,
       'question',
-      'Yes, remove it!',
+      'Да, удалить!',
 
       async () => {
         setLoading(true);
@@ -43,7 +43,7 @@ export default function Wishlist({ user, tab }) {
         setLoading(false);
       },
       'Succesfully!',
-      'Removed item from wishlist successfully.'
+      'Продукт успешно удален из избранного'
     );
   };
 

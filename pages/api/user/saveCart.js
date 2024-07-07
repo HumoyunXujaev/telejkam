@@ -1,10 +1,10 @@
-import Cart from "@/models/Cart";
-import { Product } from "@/models/Product";
-import { User } from "@/models/User";
-import db from "@/utils/db";
+import Cart from '@/models/Cart';
+import { Product } from '@/models/Product';
+import { User } from '@/models/User';
+import db from '@/utils/db';
 
 async function handler(req, res) {
-  if (req.method === "POST") {
+  if (req.method === 'POST') {
     try {
       await db.connectDb();
 
@@ -44,8 +44,11 @@ async function handler(req, res) {
         tempProduct.shipping = Number(dbProduct.shipping);
         tempProduct.price =
           subProduct.discount > 0
-            ? (price - (price * Number(subProduct.discount)) / 100).toFixed(2)
-            : price.toFixed(2);
+            ? (
+                price -
+                (price * Number(subProduct.discount)) / 100
+              ).toLocaleString('ru-RU')
+            : price.toLocaleString('ru-RU');
 
         products.push(tempProduct);
       }
@@ -56,11 +59,11 @@ async function handler(req, res) {
 
       await new Cart({
         products,
-        cartTotal: cartTotal.toFixed(2),
+        cartTotal: cartTotal.toLocaleString('ru-RU'),
         user: user_id,
       }).save();
 
-      res.status(201).json({ message: "Save cart successfully" });
+      res.status(201).json({ message: 'Save cart successfully' });
 
       await db.disConnectDb();
     } catch (error) {

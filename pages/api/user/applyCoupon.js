@@ -1,7 +1,7 @@
-import Cart from "@/models/Cart";
-import { Coupon } from "@/models/Coupon";
-import { User } from "@/models/User";
-import db from "@/utils/db";
+import Cart from '@/models/Cart';
+import { Coupon } from '@/models/Coupon';
+import { User } from '@/models/User';
+import db from '@/utils/db';
 
 async function handler(req, res) {
   try {
@@ -11,7 +11,7 @@ async function handler(req, res) {
     const checkCoupon = await Coupon.findOne({ coupon });
 
     if (checkCoupon == null) {
-      return res.json({ message: "Invalid coupon!" });
+      return res.json({ message: 'Invalid coupon!' });
     }
 
     const { cartTotal } = await Cart.findOne({ user: user._id });
@@ -23,7 +23,7 @@ async function handler(req, res) {
     await Cart.findOneAndUpdate({ user: user._id }, { totalAfterDiscount });
 
     res.json({
-      totalAfterDiscount: Number(totalAfterDiscount.toFixed(2)),
+      totalAfterDiscount: Number(totalAfterDiscount.toLocaleString('ru-RU')),
       discount: Number(checkCoupon.discount),
     });
 

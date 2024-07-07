@@ -236,7 +236,7 @@ function Row(props) {
                       </p>
                       <p>
                         <span>Почтовый Индекс:</span>&nbsp;
-                        {row.shippingAddress.zipCode}
+                        {row.shippingAddress?.zipCode}
                       </p>
                       <p>
                         <span>Телефон:</span>&nbsp;

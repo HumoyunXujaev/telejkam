@@ -1,29 +1,29 @@
-import mongoose, { models, model } from "mongoose";
+import mongoose, { models, model } from 'mongoose';
 const { ObjectId } = mongoose.Schema;
 
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: "Please enter your full name",
+      required: 'Please enter your full name',
     },
     email: {
       type: String,
-      required: "Please enter your email address",
+      required: 'Please enter your email address',
       trim: true,
     },
     password: {
       type: String,
-      required: "Please enter your password",
+      required: 'Please enter your password',
     },
     //  Role mặc định là user
     role: {
       type: String,
-      default: "user",
+      default: 'user',
     },
     image: {
       type: String,
-      default: "/images/default-avt.png",
+      default: '/images/default-avt.png',
     },
     emailVerified: {
       type: Boolean,
@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema(
     },
     defaultPaymentMethod: {
       type: String,
-      default: "",
+      default: '',
     },
     address: [
       {
@@ -53,9 +53,7 @@ const userSchema = new mongoose.Schema(
         city: {
           type: String,
         },
-        zipCode: {
-          type: String,
-        },
+
         state: {
           type: String,
         },
@@ -72,7 +70,7 @@ const userSchema = new mongoose.Schema(
       {
         product: {
           type: ObjectId,
-          ref: "Product",
+          ref: 'Product',
         },
         style: {
           type: String,
@@ -86,4 +84,4 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const User = models?.User || model("User", userSchema);
+export const User = models?.User || model('User', userSchema);

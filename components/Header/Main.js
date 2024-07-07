@@ -301,16 +301,16 @@ const Main = ({ searchHandler2 }) => {
                   <div className={styled.cart__priceComponent}>
                     <p>
                       <span>Цена :</span>
-                      <span>${calculateSubPrice(cart.cartItems)}</span>
+                      <span>{calculateSubPrice(cart.cartItems)}</span>
                     </p>
                     <p>
                       <span>Доставка :</span>
-                      <span>${calculateTotalShipping(cart.cartItems)}</span>
+                      <span>{calculateTotalShipping(cart.cartItems)}</span>
                     </p>
                   </div>
                   <div className={styled.cart__total}>
                     <span>Сумма :</span>
-                    <span>{calculateTotal(cart.cartItems)}$</span>
+                    <span>{calculateTotal(cart.cartItems)}</span>
                   </div>
                   <div className={styled.cart__seeAll}>Смотреть все</div>
                 </div>

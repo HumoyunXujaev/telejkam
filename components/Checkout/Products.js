@@ -66,7 +66,10 @@ const Products = ({ cart }) => {
                   </p>
                   <div className={styled.product__total}>
                     <BsArrowReturnRight />{' '}
-                    <p>{(product?.price * product?.qty)?.toFixed(2)} сум/мес</p>
+                    <p>
+                      {(product?.price * product?.qty)?.toLocaleString('ru-RU')}{' '}
+                      сум/мес
+                    </p>
                   </div>
                 </div>
               </div>

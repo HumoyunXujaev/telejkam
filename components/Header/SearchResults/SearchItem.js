@@ -8,11 +8,16 @@ import { useRouter } from 'next/router';
 
 export default function SearchItem({ product }) {
   const prices = sortPricesArr(product.subProducts[0]?.sizes)[0];
+
   const router = useRouter();
 
   const priceFrom = product.subProducts[0]?.discount
     ? priceAfterDiscount(prices, product.subProducts[0].discount)
     : prices;
+
+  console.log('pricefrom: ', priceFrom);
+  console.log('price', prices);
+  console.log(prices - priceFrom);
 
   return (
     <div
@@ -26,12 +31,12 @@ export default function SearchItem({ product }) {
       </div>
       <div className={styled.search__body_infos}>
         <p>{product.name}</p>
-        <p>{priceFrom} сум/мес</p>
+        <p>{priceFrom.toLocaleString('ru-RU')} сум/мес</p>
         {product.subProducts[0]?.discount > 0 && (
           <div className={styled.search__body_sale}>
-            <strike>{prices} сум/мес</strike> |
+            <strike>{prices.toLocaleString('ru-RU')} сум/мес</strike> |
             <span>
-              Save ${(prices - priceFrom).toFixed(2)} (
+              Сэкономьте {(prices - priceFrom).toLocaleString('ru-RU')} (
               {product.subProducts[0]?.discount}%)
             </span>
           </div>

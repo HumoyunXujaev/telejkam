@@ -137,11 +137,11 @@ const ProductCard = ({ product, className, remove }) => {
               <div className={styled.product__infos_price}>
                 <span></span>
                 <span></span>
-                <span>{priceFrom} сум/мес</span>
+                <span>{priceFrom.toLocaleString('ru-RU')} сум/мес</span>
                 {product.subProducts[active]?.discount > 0 && (
                   <>
                     <span></span>
-                    <span>{prices[0]}</span>
+                    <span>{prices[0].toLocaleString('ru-RU')}</span>
                   </>
                 )}
               </div>

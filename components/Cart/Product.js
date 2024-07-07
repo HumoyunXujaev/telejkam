@@ -185,9 +185,11 @@ const Product = ({ product, selected, setSelected }) => {
           )}
 
           <div className={styled.price__number}>
-            {product.price && <span>${product.price.toFixed(2)}</span>}
+            {product.price && (
+              <span>{product.price.toLocaleString('ru-RU')}</span>
+            )}
             {product.price !== product.priceBefore && !isSmall && (
-              <del>{product.priceBefore} сум/мес</del>
+              <del>{product.priceBefore.toLocaleString('ru-RU')} сум/мес</del>
             )}
           </div>
         </div>
@@ -211,7 +213,7 @@ const Product = ({ product, selected, setSelected }) => {
 
         {/* Col 4 */}
         <span className={styled.amount}>
-          {(product.price * product.qty).toFixed(2)} сум/мес
+          {(product.price * product.qty).toLocaleString('ru-RU')} сум/мес
         </span>
 
         {/* Col 5 */}

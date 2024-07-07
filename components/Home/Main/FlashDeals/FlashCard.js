@@ -36,12 +36,15 @@ const FlashCard = ({ product }) => {
           <div className={styled.flashDeals__item_price}>
             <span></span>
             <span>
-              {priceAfterDiscount(product.sizes[0].price, product.discount)}{' '}
+              {priceAfterDiscount(
+                product.sizes[0].price,
+                product.discount
+              ).toLocaleString('ru-RU')}{' '}
               сум/мес
             </span>
             <span>Своя цена : </span>
             <span></span>
-            <span>{product.sizes[0].price}</span>
+            <span>{product.sizes[0].price.toLocaleString('ru-RU')}</span>
           </div>
 
           <button

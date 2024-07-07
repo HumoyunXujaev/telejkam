@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
-import styled from "./styles.module.scss";
-import NextImage from "../NextImage";
-import Link from "next/link";
+import styled from './styles.module.scss';
+import NextImage from '../NextImage';
+import Link from 'next/link';
 
 export default function HeaderCartItem({ item }) {
   return (
     <Link
       onClick={(e) => e.stopPropagation()}
-      rel="noopener noreferrer"
-      target="_blank"
+      rel='noopener noreferrer'
+      target='_blank'
       href={`/product/${item.slug}?style=${item.style}&size=${item.sizeIndex}`}
       className={styled.cart__item}
     >
@@ -18,14 +18,14 @@ export default function HeaderCartItem({ item }) {
         <p>{item.qty}</p>
       </div>
       <div className={styled.cart__item_info}>
-        <p>{item.name.substring(0, 40) + "..."}</p>
+        <p>{item.name.substring(0, 40) + '...'}</p>
         <p>
-          <span>${item.price?.toFixed(2)}</span>
-          <strike>${item.priceBefore?.toFixed(2)}</strike>
+          <span>{item.price?.toLocaleString('ru-RU')}</span>
+          <strike>{item.priceBefore?.toLocaleString('ru-RU')}</strike>
         </p>
       </div>
       <div className={styled.cart__item_amount}>
-        ${(item.qty * item.price).toFixed(2)}
+        {(item.qty * item.price).toLocaleString('ru-RU')}
       </div>
     </Link>
   );

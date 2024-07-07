@@ -13,7 +13,7 @@ const Checkout = ({
     <div className={`${styled.cart__checkout} ${styled.card}`}>
       {/* Line 1 */}
       <div className={styled.cart__checkout_line}>
-        <span>Subtotal</span>
+        <span>Сумма</span>
         <span>{subTotal} сум</span>
       </div>
 
@@ -54,7 +54,7 @@ const Checkout = ({
           }}
           onClick={() => saveCartToDbHandler()}
         >
-          Continue ({selected?.length})
+          Продолжить ({selected?.length})
         </button>
       </div>
     </div>

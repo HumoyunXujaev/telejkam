@@ -132,15 +132,15 @@ const Summary = ({
         .map((product) => product.name)
         .join(', ')}%0A💰 <b>Сумма:</b> ${calculateTotal(
         cart.cartItems
+      ).toLocaleString(
+        'ru-RU'
       )}%0A💳 <b>Метод Оплаты:</b> ${paymentMethod}%0A🏠 <b>Адрес:</b> ${
         selectedAddress.address1
       }%0A🏢 <b>Район:</b> ${selectedAddress.state} %0A 🌆 <b>Город:</b> ${
         selectedAddress.city
       } %0A 🌍 <b>Страна:</b> ${
         selectedAddress.country
-      } %0A 📮 <b>Почтовый Индекс:</b> ${
-        selectedAddress.zipCode
-      } %0A 📞 <b>Номер:</b> ${selectedAddress.phoneNumber} `;
+      } %0A %0A 📞 <b>Номер:</b> ${selectedAddress.phoneNumber} `;
 
       await axios.post('/api/telegram', {
         message: message,
@@ -160,7 +160,7 @@ const Summary = ({
 
   return (
     <div className={`${styled.summary} ${styled.card}`}>
-      <h2 className={styled.heading}>Order summary</h2>
+      <h2 className={styled.heading}>Сумма Заказа</h2>
       {/* <div className={styled.coupon}>
         <Formik
           enableReinitialize
@@ -224,13 +224,13 @@ const Summary = ({
         </div> */}
 
       <div className={styled.summary__infos_totalLine}>
-        <span>Total : </span>
-        <span>${calculateTotal(cart.cartItems.map((product) => product))}</span>
+        <span>Сумма : </span>
+        <span>{calculateTotal(cart.cartItems.map((product) => product))}</span>
       </div>
       {/* </div> */}
       <div className={styled.summary__submit_btn}>
         <Button variant='contained' color='error' onClick={placeOrderHandler}>
-          Place order
+          Заказать
         </Button>
       </div>
     </div>
