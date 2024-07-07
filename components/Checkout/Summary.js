@@ -136,9 +136,9 @@ const Summary = ({
         'ru-RU'
       )}%0A💳 <b>Метод Оплаты:</b> ${paymentMethod}%0A🏠 <b>Адрес:</b> ${
         selectedAddress.address1
-      }%0A🏢 <b>Район:</b> ${selectedAddress.state} %0A 🌆 <b>Город:</b> ${
-        selectedAddress.city
-      } %0A 🌍 <b>Страна:</b> ${
+      } ${selectedAddress.address2}%0A🏢 <b>Район:</b> ${
+        selectedAddress.state
+      } %0A 🌆 <b>Город:</b> ${selectedAddress.city} %0A 🌍 <b>Страна:</b> ${
         selectedAddress.country
       } %0A %0A 📞 <b>Номер:</b> ${selectedAddress.phoneNumber} `;
 
@@ -225,7 +225,11 @@ const Summary = ({
 
       <div className={styled.summary__infos_totalLine}>
         <span>Сумма : </span>
-        <span>{calculateTotal(cart.cartItems.map((product) => product))}</span>
+        <span>
+          {calculateTotal(
+            cart.cartItems.map((product) => product)
+          ).toLocaleString('ru-RU')}
+        </span>
       </div>
       {/* </div> */}
       <div className={styled.summary__submit_btn}>
