@@ -733,9 +733,7 @@
     }
   }
   @media screen and (max-width: 950px) {
-    // .search {
-    //   display: none;
-    // }
+    height: 120px;
 
     .top {
       display: none;
@@ -764,9 +762,8 @@
     // logo on center
     .logo {
       position: absolute;
-      align-items: center;
       justify-content: center;
-      top: 50%;
+      top: 30%;
       left: 50%;
       transform: translate(-50%, -50%);
     }
@@ -774,7 +771,7 @@
     // search is below the logo
     .search {
       position: absolute;
-      top: 80%;
+      top: 60%;
       left: 50%;
       transform: translateX(-50%);
       width: 90%;
@@ -788,6 +785,14 @@
       display: none;
     }
   }
+}
+
+.drawerIcon {
+  position: absolute;
+  justify-content: center;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .drawer {

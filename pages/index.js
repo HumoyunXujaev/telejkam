@@ -11,7 +11,7 @@ import AnimateWrapper from '@/components/AnimateWrapper';
 import axios from 'axios';
 import FeaturedProducts from '@/components/Home/Main/FeaturedProducts';
 import FreeShippingProducts from '@/components/Home/Main/FreeShippingProducts';
-
+import { useRouter } from 'next/router';
 export default function Home({
   country,
   products,
@@ -21,15 +21,61 @@ export default function Home({
   featuredCategories,
   // featuredBrands,
 }) {
-  console.log('Home -> products', products);
-  console.log('Home -> flashDeals', flashDeals);
-  console.log('Home -> featuredProducts', featuredProducts);
-  console.log('Home -> freeShippingProducts', freeShippingProducts);
-  console.log('Home -> featuredCategories', featuredCategories);
-  // console.log('Home -> featuredBrands', featuredBrands);
+  const router = useRouter();
+
+  // console.log('Home -> products', products);
+  // console.log('Home -> flashDeals', flashDeals);
+  // console.log('Home -> featuredProducts', featuredProducts);
+  // console.log('Home -> freeShippingProducts', freeShippingProducts);
+  // console.log('Home -> featuredCategories', featuredCategories);
+  // // console.log('Home -> featuredBrands', featuredBrands);
+  const filter = ({
+    search,
+    category,
+    brand,
+    style,
+    pattern,
+    material,
+    size,
+    color,
+    gender,
+    price,
+    shipping,
+    rating,
+    sort,
+    page,
+  }) => {
+    const path = router.pathname;
+    if (search) router.query.search = search;
+    if (category) router.query.category = category;
+    if (brand) router.query.brand = brand;
+    if (style) router.query.style = style;
+    if (pattern) router.query.pattern = pattern;
+    if (material) router.query.material = material;
+    if (size) router.query.size = size;
+    if (color) router.query.color = color;
+    if (gender) router.query.gender = gender;
+    if (price) router.query.price = price;
+    if (shipping) router.query.shipping = shipping;
+    if (rating) router.query.rating = rating;
+    if (sort) router.query.sort = sort;
+    if (page) router.query.page = page;
+
+    router.push({ pathname: path, query: router.query }, undefined, {
+      scroll: false,
+    });
+  };
+
+  const searchHandler = (search) => {
+    if (search == '') {
+      filter({ search: '' });
+    } else {
+      filter({ search });
+    }
+  };
   return (
     <>
-      <Header country={country} />
+      <Header country={country} searchHandler={searchHandler} />
       <div className={styled.home}>
         <div className={styled.container}>
           <Main

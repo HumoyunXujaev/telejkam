@@ -13,7 +13,7 @@
     cursor: pointer;
     font-size: 24px;
 
-    &_item {
+    &__drawerIcon_item {
       color: #fff;
       display: flex;
       align-items: center;
@@ -155,6 +155,18 @@
         background-color: #1976d2;
         color: #fff;
         transition: $transition-1;
+      }
+    }
+  }
+
+  @media screen and (max-width: 950px) {
+    &__store {
+      &_products_wrap {
+        justify-content: center;
+        align-items: center;
+      }
+      &_products {
+        justify-content: center;
       }
     }
   }

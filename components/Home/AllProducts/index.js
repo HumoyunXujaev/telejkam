@@ -33,17 +33,6 @@ export default function AllProducts({ products }) {
 
   return (
     <>
-      <h1
-        style={{
-          textAlign: 'center',
-          color: '#1976d2',
-          fontSize: '34px',
-          fontWeight: '1000',
-          paddingTop: '15px',
-        }}
-      >
-        Все Продукты
-      </h1>
       <div className={styled.allProducts__container}>
         <div className={styled.allProducts__content}>
           {products.slice(0, visible).map((product, index) => (
@@ -74,11 +63,11 @@ export default function AllProducts({ products }) {
                     : isSmall
                     ? 'grid__1'
                     : isSmall2
-                    ? 'grid__1_2'
+                    ? 'grid__1_3'
                     : isSmall3
                     ? 'grid__1_3'
                     : isSmall4
-                    ? 'grid__1_4'
+                    ? 'grid__1_3'
                     : isSmall5
                     ? 'grid__1_5'
                     : 'grid__2'

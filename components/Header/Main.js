@@ -75,7 +75,10 @@ const Main = ({ searchHandler2 }) => {
       <div className={styled.main__container}>
         {isSmall && (
           <div className={styled.drawer}>
-            <IconButton onClick={() => setDrawerOpen(true)}>
+            <IconButton
+              onClick={() => setDrawerOpen(true)}
+              className={styled.drawerIcon}
+            >
               <MdMenu size={20} />
             </IconButton>
 

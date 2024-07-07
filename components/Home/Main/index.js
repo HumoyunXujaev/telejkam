@@ -56,22 +56,22 @@ const Main = ({
             <FeaturedBrands featuredBrands={featuredBrands} />
           </AnimateWrapper> */}
 
-          <AnimateWrapper origin='right'>
+          <AnimateWrapper origin='top'>
             <FeaturedCategories featuredCategories={featuredCategories} />
           </AnimateWrapper>
 
-          <AnimateWrapper origin='right'>
+          <AnimateWrapper origin='top'>
             <FeaturedProducts featuredProducts={featuredProducts} />
           </AnimateWrapper>
 
-          <AnimateWrapper origin='right'>
+          <AnimateWrapper origin='top'>
             <FreeShippingProducts freeShippingProducts={freeShippingProducts} />
           </AnimateWrapper>
           {/* <AnimateWrapper origin='right'>
             <GoodPrice />
           </AnimateWrapper> */}
 
-          <AnimateWrapper origin='right'>
+          <AnimateWrapper origin='top'>
             <FlashDeals flashDeals={flashDeals} />
           </AnimateWrapper>
         </div>
