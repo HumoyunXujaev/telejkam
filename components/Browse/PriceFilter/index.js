@@ -4,15 +4,18 @@ import ShowAllBtn from '../ShowAllBtn';
 import useSeeMore from '@/hook/useSeeMore';
 import CheckboxItem from '../CheckboxItem';
 import PlusMinusBtn from '../PlusMinusBtn';
+import { useTranslation } from 'next-i18next';
 
 export default function SortFilter({ sortingOptions, sortQuery, sortHandler }) {
+  const { t } = useTranslation();
+
   const [show, setShow] = useState(true);
   const { itemsQty, showAllHandler, hideBtn } = useSeeMore(sortingOptions);
 
   return (
     <div className={styled.filter}>
       <h3>
-        Фильтровать по
+        {t('filter_by')}
         <PlusMinusBtn show={show} onClick={() => setShow((prev) => !prev)} />
       </h3>
 

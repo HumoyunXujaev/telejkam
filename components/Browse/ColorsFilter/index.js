@@ -5,15 +5,18 @@ import { useRouter } from 'next/router';
 import styled from '../styles.module.scss';
 import { replaceQuery } from '@/utils/filter';
 import PlusMinusBtn from '../PlusMinusBtn';
+import { useTranslation } from 'next-i18next';
 
 export default function ColorsFilter({ colors, colorHandler, checkChecked }) {
   const [show, setShow] = useState(true);
   const router = useRouter();
   const existedColor = router.query.color;
+  const { t } = useTranslation();
+
   return (
     <div className={styled.filter}>
       <h3>
-        Цвета{' '}
+        {t('colors')}
         <PlusMinusBtn show={show} onClick={() => setShow((prev) => !prev)} />
       </h3>
 

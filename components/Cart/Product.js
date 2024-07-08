@@ -11,10 +11,12 @@ import { useMediaQuery } from 'react-responsive';
 import styled from './styles.module.scss';
 import Link from 'next/link';
 import NextImage from '../NextImage';
+import { useTranslation } from 'next-i18next';
 
 const Product = ({ product, selected, setSelected }) => {
   const { cart } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const [active, setActive] = useState(null);
 
@@ -133,12 +135,12 @@ const Product = ({ product, selected, setSelected }) => {
             <h3>{product.name}</h3>
             {product.size && (
               <p>
-                <span>Размер :&nbsp;</span>
+                <span>{t('size')}&nbsp;</span>
                 {product.size}
               </p>
             )}
             <p>
-              <span>Цвет :&nbsp;</span>
+              <span>{t('color')} :&nbsp;</span>
               {product?.color?.image ? (
                 <img src={product?.color?.image} alt='' />
               ) : (
@@ -155,15 +157,13 @@ const Product = ({ product, selected, setSelected }) => {
             </p>
             {!isSuperSmall && (
               <p>
-                <span>Доставка :&nbsp;</span>
-                {product.shipping
-                  ? `$${product.shipping}`
-                  : 'Бесплатная доставка'}
+                <span>{t('shipping_fee')} :&nbsp;</span>
+                {product.shipping ? `$${product.shipping}` : t('free_shipping')}
               </p>
             )}
             {!isSuperSmall && (
               <p>
-                <span>Детали :&nbsp;</span>
+                <span>{t('specifications')}:&nbsp;</span>
                 <Link
                   target='_blank'
                   href={`/product/${product.slug}?style=${product.style}&size=${product.sizeIndex}`}
@@ -179,7 +179,7 @@ const Product = ({ product, selected, setSelected }) => {
         <div className={styled.price}>
           {product.discount > 0 && !isSmall && (
             <p className={styled.price__discount}>
-              Скидка :&nbsp;&nbsp;
+              {t('discount')}:&nbsp;&nbsp;
               <span>-{product.discount}%</span>
             </p>
           )}
@@ -189,7 +189,9 @@ const Product = ({ product, selected, setSelected }) => {
               <span>{product.price.toLocaleString('ru-RU')}</span>
             )}
             {product.price !== product.priceBefore && !isSmall && (
-              <del>{product.priceBefore.toLocaleString('ru-RU')} сум/мес</del>
+              <del>
+                {product.priceBefore.toLocaleString('ru-RU')} {t('price_month')}
+              </del>
             )}
           </div>
         </div>
@@ -213,7 +215,8 @@ const Product = ({ product, selected, setSelected }) => {
 
         {/* Col 4 */}
         <span className={styled.amount}>
-          {(product.price * product.qty).toLocaleString('ru-RU')} сум/мес
+          {(product.price * product.qty).toLocaleString('ru-RU')}{' '}
+          {t('price_month')}
         </span>
 
         {/* Col 5 */}

@@ -20,10 +20,13 @@ import {
   calculateTotal,
   calculateTotalShipping,
 } from '@/utils/productUltils';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Cart = () => {
   const { data: session } = useSession();
   const { cart } = useSelector((state) => ({ ...state }));
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
   const Router = useRouter();
@@ -79,9 +82,9 @@ const Cart = () => {
 
   return (
     <div>
-      <CartHeader text='Вернуться в Продукты' link='/browse' />
+      <CartHeader text={t('return_to_products')} link='/browse' />
       <div className={styled.cart}>
-        <h1>Ваша Корзина</h1>
+        <h1>{t('header.cart')}</h1>
         {cart.cartItems.length > 0 ? (
           <div className={styled.cart__container}>
             <div className={styled.cart__container_left}>
@@ -122,3 +125,11 @@ const Cart = () => {
 };
 
 export default Cart;
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
+}

@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import Button from '@mui/material/Button';
 import { FcApproval } from 'react-icons/fc';
 import Swal from 'sweetalert2';
+import { useTranslation } from 'next-i18next';
 
 import styled from './styles.module.scss';
 // import ShippingInput from '../Input/ShippingInput';
@@ -26,6 +27,7 @@ const Summary = ({
   const [error, setError] = useState('');
   const [orderError, setOrderError] = useState('');
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const Router = useRouter();
 
@@ -160,7 +162,7 @@ const Summary = ({
 
   return (
     <div className={`${styled.summary} ${styled.card}`}>
-      <h2 className={styled.heading}>Сумма Заказа</h2>
+      <h2 className={styled.heading}></h2>
       {/* <div className={styled.coupon}>
         <Formik
           enableReinitialize
@@ -224,7 +226,7 @@ const Summary = ({
         </div> */}
 
       <div className={styled.summary__infos_totalLine}>
-        <span>Сумма : </span>
+        <span>{t('header.cart_subtotal')} : </span>
         <span>
           {calculateTotal(
             cart.cartItems.map((product) => product)
@@ -234,7 +236,7 @@ const Summary = ({
       {/* </div> */}
       <div className={styled.summary__submit_btn}>
         <Button variant='contained' color='error' onClick={placeOrderHandler}>
-          Заказать
+          {t('buy_order')}
         </Button>
       </div>
     </div>

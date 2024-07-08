@@ -17,6 +17,7 @@ import 'nprogress/nprogress.css';
 import StyledDotLoader from '@/components/Loaders/DotLoader';
 import Header from '@/components/Header';
 import { Analytics } from '@vercel/analytics/react';
+import { appWithTranslation } from 'next-i18next';
 
 NProgress.configure({
   minimum: 0.3,
@@ -27,10 +28,7 @@ NProgress.configure({
 
 let persistor = persistStore(store);
 
-export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}) {
+function App({ Component, pageProps: { session, ...pageProps } }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -96,3 +94,5 @@ export default function App({
     </>
   );
 }
+
+export default appWithTranslation(App);

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import { useTranslation } from 'next-i18next';
 
 import { paymentMethods } from '@/data/paymentMethods';
 import styled from './styles.module.scss';
@@ -18,6 +19,7 @@ const PaymentMethods = ({
   setDbPM,
 }) => {
   const [error, setError] = useState(null);
+  const { t } = useTranslation();
 
   const saveHandler = async () => {
     try {
@@ -35,11 +37,8 @@ const PaymentMethods = ({
 
   return (
     <div className={`${styled.payment} ${styled.card}`}>
-      {!profile ? (
-        <h2 className={styled.heading}>Методы Оплаты</h2>
-      ) : (
-        <h1 className={styled.profileHeading}>Мои методы Оплаты</h1>
-      )}
+      <h2 className={styled.heading}>{t('payment_method')} </h2>
+
       {paymentMethods.map((pm) => (
         <label
           htmlFor={pm.id}

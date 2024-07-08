@@ -21,11 +21,13 @@ import styled from './styles.module.scss';
 import StyledAccordion from './StyledAccordion';
 import Ratings from '../Ratings';
 import { addToCartHandler } from '@/utils/productUltils';
+import { useTranslation } from 'next-i18next';
 
 const Infos = ({ product, setActiveImg, setImages }) => {
   const Router = useRouter();
   const { data: session } = useSession();
   const { cart } = useSelector((state) => ({ ...state }));
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
 
@@ -111,11 +113,11 @@ const Infos = ({ product, setActiveImg, setImages }) => {
           )}
           {!size ? (
             <h3 className={styled.infos__price_range}>
-              {product.priceRange.toLocaleString('ru-RU')} сум/мес
+              {product.priceRange.toLocaleString('ru-RU')} {t('price_month')}
             </h3>
           ) : (
             <h3 className={styled.infos__price_single}>
-              {product.price.toLocaleString('ru-RU')} сум/мес
+              {product.price.toLocaleString('ru-RU')} {t('price_month')}
             </h3>
           )}
           {product.discount > 0 && size && (
@@ -124,17 +126,17 @@ const Infos = ({ product, setActiveImg, setImages }) => {
                 className={`${styled.infos__price_discount2} ${styled.lift}`}
               >
                 <AiFillTags />
-                {product.discount}% скидка
+                {product.discount}% {t('discount')}
               </span>
             </>
           )}
           {product.discount > 0 && !size && (
             <span className={styled.infos__price_range_discount}>
-              Купите сейчас чтобы получить{' '}
+              {t('buy_now')}
               <span className={styled.infos__price_discount}>
                 {product.discount}%
               </span>
-              скидку
+              {t('discount')}
             </span>
           )}
           {product.label && (
@@ -150,7 +152,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
         </div>
 
         <span className={styled.infos__sizes_title}>
-          Выберите Цвет <BsFillCaretDownFill />
+          {t('select_color')} <BsFillCaretDownFill />
         </span>
         <div className={styled.infos__colors}>
           {product.colors &&
@@ -182,7 +184,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
 
         <div className={styled.infos__sizes}>
           <span className={styled.infos__sizes_title}>
-            Выберите Размер <BsFillCaretDownFill />
+            {t('select_size')} <BsFillCaretDownFill />
           </span>
           <div className={styled.infos__sizes_wrapper}>
             {product.sizes.map((size, index) => (
@@ -200,7 +202,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
         </div>
 
         <span className={styled.infos__sizes_title}>
-          Выберите количество <BsFillCaretDownFill />
+          {t('select_qty')} <BsFillCaretDownFill />
         </span>
         <div className={styled.infos__qty}>
           {/* Input value phải lớn hơn 1 thì mới được trừ */}
@@ -220,12 +222,12 @@ const Infos = ({ product, setActiveImg, setImages }) => {
           <span className={styled.infos__shipping}>
             {product.shipping > 0 && (
               <>
-                <FcShipped /> ${product.shipping} Доставка
+                <FcShipped /> {product.shipping} {t('shipping_fee')}
               </>
             )}
             {!product.shipping && (
               <>
-                <FcShipped /> Бесплатная доставка
+                <FcShipped /> {t('free_shipping')}
               </>
             )}
           </span>
@@ -234,7 +236,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
             {size
               ? product.quantity
               : product.sizes.reduce((acc, cur) => acc + cur.qty, 0)}
-            &nbsp;штук в наличии
+            &nbsp;{t('in_stock')}
           </span>
         </div>
 
@@ -256,7 +258,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
             type='button'
           >
             <FaOpencart />
-            ДОБАВИТЬ В КОРЗИНУ
+            {t('add_to_cart')}
           </Button>
           <Button
             variant='contained'
@@ -265,7 +267,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
             color='secondary'
           >
             <BiHeart />
-            ДОБАВИТЬ В ИЗБРАННОЕ
+            {t('add_to_whishlist')}
           </Button>
         </div>
         {error && (

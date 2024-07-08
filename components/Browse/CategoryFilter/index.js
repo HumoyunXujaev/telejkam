@@ -5,6 +5,7 @@ import ShowAllBtn from '../ShowAllBtn';
 import useSeeMore from '@/hook/useSeeMore';
 import CheckboxItem from '../CheckboxItem';
 import PlusMinusBtn from '../PlusMinusBtn';
+import { useTranslation } from 'next-i18next';
 
 export default function CategoryFilter({
   categories,
@@ -14,11 +15,12 @@ export default function CategoryFilter({
 }) {
   const [show, setShow] = useState(true);
   const { itemsQty, showAllHandler, hideBtn } = useSeeMore(categories);
+  const { t } = useTranslation();
 
   return (
     <div className={styled.filter}>
       <h3>
-        Категории{' '}
+        {t('categories')}{' '}
         <PlusMinusBtn show={show} onClick={() => setShow((prev) => !prev)} />
       </h3>
 

@@ -20,13 +20,17 @@ import {
   priceAfterDiscount,
   sortPricesArr,
 } from '@/utils/productUltils';
+import { useTranslation } from 'next-i18next';
 
 import { Category } from '@/models/Category';
 import { Product } from '@/models/Product';
 import { SubCategory } from '@/models/SubCategory';
 import Header from '@/components/Header';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const ProductPage = ({ product }) => {
+  const { t } = useTranslation();
+
   const [activeImg, setActiveImg] = useState('');
   const [images, setImages] = useState(product?.images);
   const [ratings, setRatings] = useState([]);
@@ -69,10 +73,10 @@ const ProductPage = ({ product }) => {
       </Head>
       {/* <Header /> */}
       <CartHeader
-        text='Вернуться в продукты'
+        text={t('return_to_products')}
         link='/browse'
         link2='/cart'
-        text2='Корзина'
+        text2={t('header.cart')}
       />
       <div className={styled.product}>
         <div className={styled.container}>
@@ -116,6 +120,8 @@ export default ProductPage;
 
 export async function getServerSideProps(context) {
   const { query } = context;
+  const { locale } = context;
+
   const slug = query.slug;
   const style = query.style;
   const size = query.size || 0;
@@ -172,6 +178,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
+      ...(await serverSideTranslations(locale, ['common'])),
       product: JSON.parse(JSON.stringify(newProduct)),
     },
   };

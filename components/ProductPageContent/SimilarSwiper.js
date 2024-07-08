@@ -12,11 +12,14 @@ import { Navigation } from 'swiper';
 import NextImage from '../NextImage';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'next-i18next';
+
 import { toast } from 'react-toastify';
 
 export default function SimilarSwiper({ product }) {
   const [similarProducts, setSimilarProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchSimilars = async () => {
@@ -36,7 +39,9 @@ export default function SimilarSwiper({ product }) {
 
   return (
     <div style={{ padding: '10px' }}>
-      <h1 style={{ textAlign: 'center', padding: '10px' }}>Похожие товары</h1>
+      <h1 style={{ textAlign: 'center', padding: '10px' }}>
+        {t('similar_products')}
+      </h1>
 
       <Swiper
         slidesPerView={4}

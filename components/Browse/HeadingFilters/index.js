@@ -2,16 +2,19 @@ import { Tooltip } from '@mui/material';
 import styled from './styles.module.scss';
 
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 
 export default function HeadingFilters({ priceHandler, multiPriceHandler }) {
   const router = useRouter();
+  const { t } = useTranslation();
+
   return (
     <div className={styled.filters}>
       <div className={styled.filters__priceBtns_wrap}>
-        <span>Цена :</span>
+        <span>{t('price')}</span>
         <div className={styled.filters__priceBtns}>
           <Tooltip
-            title={<h4>Смотреть продукты между 1,000,000 - 3,000,000</h4>}
+            title={<h4>{t('see_between')} 1,000,000 - 3,000,000</h4>}
             placement='top'
             arrow
             onClick={() => multiPriceHandler(500, '')}
@@ -22,7 +25,7 @@ export default function HeadingFilters({ priceHandler, multiPriceHandler }) {
           </Tooltip>
 
           <Tooltip
-            title={<h4>Смотреть продукты между 500,000-1,000,000</h4>}
+            title={<h4>{t('see_between')}500,000-1,000,000</h4>}
             placement='top'
             arrow
             onClick={() => multiPriceHandler(500000, 1000000)}
@@ -33,7 +36,7 @@ export default function HeadingFilters({ priceHandler, multiPriceHandler }) {
           </Tooltip>
 
           <Tooltip
-            title={<h4>Смотреть продукты мужду 100,000-500,000</h4>}
+            title={<h4>{t('see_between')} 100,000-500,000</h4>}
             placement='top'
             arrow
             onClick={() => multiPriceHandler(100000, 500000)}
@@ -44,7 +47,7 @@ export default function HeadingFilters({ priceHandler, multiPriceHandler }) {
           </Tooltip>
 
           <Tooltip
-            title={<h4>Смотреть продукты между 50,000-100,000</h4>}
+            title={<h4>{t('see_between')} 50,000-100,000</h4>}
             placement='top'
             arrow
             onClick={() => multiPriceHandler(50000, 100000)}
@@ -55,7 +58,7 @@ export default function HeadingFilters({ priceHandler, multiPriceHandler }) {
           </Tooltip>
 
           <Tooltip
-            title={<h4>Смотреть продукты меньше чем 50,000</h4>}
+            title={<h4>{t('see_less_than')}50,000</h4>}
             placement='top'
             arrow
             onClick={() => multiPriceHandler(0, 50000)}

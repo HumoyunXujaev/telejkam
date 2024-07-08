@@ -13,8 +13,11 @@ import Router from 'next/router';
 import { FaOpencart } from 'react-icons/fa';
 import { addToCartHandler } from '@/utils/productUltils';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'next-i18next';
 
 const ProductCard = ({ product, className, remove }) => {
+  const { t } = useTranslation();
+
   const { cart } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
   const [active, setActive] = useState(0);
@@ -137,7 +140,9 @@ const ProductCard = ({ product, className, remove }) => {
               <div className={styled.product__infos_price}>
                 <span></span>
                 <span></span>
-                <span>{priceFrom.toLocaleString('ru-RU')} сум/мес</span>
+                <span>
+                  {priceFrom.toLocaleString('ru-RU')} {t('price_month')}
+                </span>
                 {product.subProducts[active]?.discount > 0 && (
                   <>
                     <span></span>
@@ -159,7 +164,7 @@ const ProductCard = ({ product, className, remove }) => {
               <span>
                 <FaOpencart />
               </span>
-              <span>Добавить в корзину</span>
+              <span>{t('add_to_cart')}</span>
             </button>
           </div>
         </Link>
@@ -175,7 +180,7 @@ const ProductCard = ({ product, className, remove }) => {
               cursor: 'pointer',
             }}
           >
-            Remove from wishlist
+            {t('delete_wishlist')}
           </button>
         )}
       </div>

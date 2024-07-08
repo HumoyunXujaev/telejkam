@@ -34,6 +34,8 @@ import { FcCheckmark } from 'react-icons/fc';
 import SortFilter from '@/components/Browse/PriceFilter';
 import { MdClose, MdFilter, MdSort, MdSortByAlpha } from 'react-icons/md';
 import { FaSort } from 'react-icons/fa';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 export default function BrowsePage({
   categories,
@@ -185,6 +187,8 @@ export default function BrowsePage({
     return false;
   };
 
+  const { t } = useTranslation();
+
   return (
     <div className={styled.browse}>
       <Header searchHandler={searchHandler} />
@@ -292,7 +296,7 @@ export default function BrowsePage({
                   variant='contained'
                   onClick={() => router.push('/browse')}
                 >
-                  Очистить все ({calculateFiltersApplied(router.query)})
+                  {t('clear_all')} ({calculateFiltersApplied(router.query)})
                 </Button>
               </div>
 
@@ -447,6 +451,7 @@ export default function BrowsePage({
 }
 
 export async function getServerSideProps(ctx) {
+  const { locale } = ctx;
   await db.connectDb();
 
   const searchQuery = ctx.query.search || '';
@@ -660,6 +665,7 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
+      ...(await serverSideTranslations(locale, ['common'])),
       categories: JSON.parse(JSON.stringify(categories)),
       subCategories: JSON.parse(JSON.stringify(subCategories)),
       products: JSON.parse(JSON.stringify(products)),

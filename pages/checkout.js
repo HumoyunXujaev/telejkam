@@ -8,9 +8,12 @@ import Shipping from '@/components/Checkout/Shipping';
 import PaymentMethods from '@/components/Checkout/PaymentMethods';
 import Summary from '@/components/Checkout/Summary';
 import { useSelector } from 'react-redux';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const Checkout = ({ user }) => {
   const { cart } = useSelector((state) => ({ ...state }));
+  const { t } = useTranslation();
 
   const [addresses, setAddresses] = useState(
     localStorage.getItem('addresses')
@@ -34,7 +37,7 @@ const Checkout = ({ user }) => {
 
   return (
     <>
-      <Header link='/cart' text='Вернуться в корзину' />
+      <Header link='/cart' text={t('return_to_products')} />
       <div className={styled.checkout}>
         <div className={styled.checkout__left_side}>
           <Shipping
@@ -67,6 +70,7 @@ export default Checkout;
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
+  const { locale } = context;
 
   const cart =
     typeof window !== 'undefined' && localStorage.getItem('cart')
@@ -78,6 +82,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
+      ...(await serverSideTranslations(locale, ['common'])),
       cart: JSON.parse(JSON.stringify(cart)),
       user: session?.user || null,
     },

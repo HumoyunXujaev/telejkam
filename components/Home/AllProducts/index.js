@@ -7,6 +7,7 @@ import { Button } from '@mui/material';
 import { MdOutlineExpandMore } from 'react-icons/md';
 import { RevealWrapper } from 'next-reveal';
 import AnimateWrapper from '@/components/AnimateWrapper';
+import { useTranslation } from 'next-i18next';
 
 export default function AllProducts({ products }) {
   const [visible, setVisible] = useState(8);
@@ -30,6 +31,8 @@ export default function AllProducts({ products }) {
   const showMoreHandler = () => {
     setVisible((prev) => prev + 8);
   };
+
+  const { t } = useTranslation();
 
   return (
     <>
@@ -76,11 +79,11 @@ export default function AllProducts({ products }) {
             </AnimateWrapper>
           ))}
         </div>
-        <h4 className={styled.allProducts__title}>Все Продукты</h4>
+        <h4 className={styled.allProducts__title}>{t('all_products')}</h4>
       </div>
       <div className={styled.allProducts__moreBtn}>
         <Button variant='contained' onClick={showMoreHandler}>
-          Больше <MdOutlineExpandMore />
+          {t('more')} <MdOutlineExpandMore />
         </Button>
       </div>
     </>

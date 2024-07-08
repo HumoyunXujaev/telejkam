@@ -19,6 +19,7 @@ import {
 } from '@/utils/request';
 import Popup from '../Popup';
 import Router from 'next/router';
+import { useTranslation } from 'next-i18next';
 
 const initialValues = {
   firstName: '',
@@ -32,6 +33,8 @@ const initialValues = {
 };
 
 const Shipping = ({ user, addresses, setAddresses, profile }) => {
+  const { t } = useTranslation();
+
   const [shipping, setShipping] = useState(initialValues);
   const [visible, setVisible] = useState(user?.address.length === 0);
 
@@ -115,11 +118,7 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
 
   return (
     <div className={`${styled.shipping} ${styled.card}`}>
-      {!profile ? (
-        <h2 className={styled.heading}>Адрес Доставки</h2>
-      ) : (
-        <h1 className={styled.profileHeading}>Мои Адреса</h1>
-      )}
+      <h2 className={styled.heading}>{t('address')}</h2>
 
       {addresses ? (
         <div className={styled.shipping__addresses}>
@@ -135,21 +134,14 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
             <div className={styled.shipping__address_addressLine}>
               <VscDebugBreakpointFunction />
               <p>
-                Адресс <span>: {addresses?.address1}</span>
+                {t('address')} <span>: {addresses?.address1}</span>
               </p>
             </div>
 
             <div className={styled.shipping__address_addressLine}>
               <VscDebugBreakpointFunction />{' '}
               <p>
-                Номер Телефона <span>: {addresses?.phoneNumber}</span>
-              </p>
-            </div>
-
-            <div className={styled.shipping__address_addressLine}>
-              <VscDebugBreakpointFunction />{' '}
-              <p>
-                Почтовый Индекс <span>: {addresses?.zipCode}</span>
+                {t('phone')} <span>: {addresses?.phoneNumber}</span>
               </p>
             </div>
 
@@ -158,7 +150,7 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
         </div>
       ) : (
         <div>
-          <p style={{ textAlign: 'center' }}>У вас нет сохраненных адресов.</p>
+          <p style={{ textAlign: 'center' }}>{t('no_saved_address')}</p>
         </div>
       )}
 
@@ -172,15 +164,15 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
         >
           {visible ? (
             <span>
-              Закрыть форму адресса <BsFillCaretDownFill />
+              <BsFillCaretDownFill />
             </span>
           ) : addresses || !addresses === null ? (
             <span>
-              Изменить Адресс <BsFillCaretUpFill />
+              {t('redact_address')} <BsFillCaretUpFill />
             </span>
           ) : (
             <span>
-              Добавить Адресс <BsFillCaretUpFill />
+              {t('add_address')} <BsFillCaretUpFill />
             </span>
           )}
         </Button>
@@ -294,12 +286,12 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
                 control={
                   <Checkbox color='primary' name='saveAddress' value='yes' />
                 }
-                label='Использовать этот адресс для оплаты'
+                label={t('use_for_pay')}
               />
 
               <div className={styled.shipping__button}>
                 <Button type='submit' variant='contained'>
-                  Сохранить адресс
+                  {t('save_address')}
                 </Button>
               </div>
             </Form>

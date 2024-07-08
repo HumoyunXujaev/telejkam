@@ -11,7 +11,6 @@ import AnimateWrapper from '@/components/AnimateWrapper';
 import { useMediaQuery } from 'react-responsive';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleMobileCate } from '@/store/mobileCateSlice';
-
 const Main = ({
   flashDeals,
   featuredProducts,

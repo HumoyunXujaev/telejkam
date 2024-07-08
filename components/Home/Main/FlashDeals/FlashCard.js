@@ -5,6 +5,7 @@ import { FaOpencart } from 'react-icons/fa';
 import NextImage from '@/components/NextImage';
 
 import { addToCartHandler, priceAfterDiscount } from '@/utils/productUltils';
+import { useTranslation } from 'next-i18next';
 
 import styled from './styles.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const FlashCard = ({ product }) => {
   const { cart } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   return (
     <div className={styled.flashDeals__item}>
@@ -26,8 +28,10 @@ const FlashCard = ({ product }) => {
             style={{ justifyContent: 'space-between' }}
           >
             <div className={styled.flashDeals__item_discount}>
-              <span>{product.discount}% скидка</span>
-              <span>Сделка</span>
+              <span>
+                {product.discount}% {t('discount')}
+              </span>
+              <span>{t('deal')}</span>
             </div>
           </div>
 
@@ -40,9 +44,9 @@ const FlashCard = ({ product }) => {
                 product.sizes[0].price,
                 product.discount
               ).toLocaleString('ru-RU')}{' '}
-              сум/мес
+              {t('price_month')}
             </span>
-            <span>Своя цена : </span>
+            <span>{t('price')} </span>
             <span></span>
             <span>{product.sizes[0].price.toLocaleString('ru-RU')}</span>
           </div>
@@ -63,7 +67,7 @@ const FlashCard = ({ product }) => {
             <span>
               <FaOpencart />
             </span>
-            <span>Добавить в корзину</span>
+            <span>{t('add_to_cart')}</span>
           </button>
         </div>
       </Link>

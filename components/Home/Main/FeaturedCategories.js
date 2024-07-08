@@ -9,14 +9,17 @@ import 'swiper/css/pagination';
 import styled from './styles.module.scss';
 import { menuArray } from '@/data/home';
 import CommonSwiper2 from './CommonSwiper2';
+import { useTranslation } from 'next-i18next';
 
 export default function FeaturedCategories({ featuredCategories }) {
+  const { t } = useTranslation();
+
   const categories = featuredCategories?.map((category) => category);
   console.log(categories);
   return (
     <div className={styled.featuredCategories}>
       <div className={styled.featuredCategories__title}>
-        <h3>Популярные Категории</h3>
+        <h3>{t('featured_categories')}</h3>
         <img src='/images/top-categories.png' alt='Official' />
       </div>
       <CommonSwiper2>

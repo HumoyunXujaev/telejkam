@@ -6,8 +6,10 @@ import { AiFillCloseSquare } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
 import { toggleMobileCate } from '@/store/mobileCateSlice';
 import { Fragment } from 'react';
-
+import { useTranslation } from 'next-i18next';
 const Menu = ({ categories }) => {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   return (
     <Fragment>
@@ -15,7 +17,7 @@ const Menu = ({ categories }) => {
         <ul>
           <a className={styled.menu__header}>
             <MdCategory size={25} />
-            Категории
+            {t('categories')}
             <button
               className={styled.menu__header_btn}
               onClick={() => dispatch(toggleMobileCate())}
@@ -52,7 +54,7 @@ const Menu = ({ categories }) => {
         <ul>
           <a className={styled.menu__header}>
             <MdContactEmergency size={25} />
-            Контакты
+            {t('contacts')}
             <button
               className={styled.menu__header_btn}
               onClick={() => dispatch(toggleMobileCate())}
@@ -76,7 +78,7 @@ const Menu = ({ categories }) => {
                 </div>
 
                 <span>
-                  <a href='tel:+380000000000'>Телефон</a>
+                  <a href='tel:+380000000000'>{t('phone')}</a>
                 </span>
               </Link>
             </li>
@@ -108,7 +110,7 @@ const Menu = ({ categories }) => {
                   />
                 </div>
 
-                <span>Адресс</span>
+                <span>{t('address')}</span>
               </Link>
             </li>
 

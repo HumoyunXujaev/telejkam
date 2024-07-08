@@ -9,17 +9,20 @@ import 'swiper/css/pagination';
 import styled from './styles.module.scss';
 import ProductCard from '@/components/ProductCard';
 import CommonSwiper from './CommonSwiper';
+import { useTranslation } from 'next-i18next';
 
 export default function FreeShippingProducts({ freeShippingProducts }) {
+  const { t } = useTranslation();
+
   return (
     <div className={styled.freeShippingProducts}>
       <div className={styled.freeShippingProducts__title}>
         <div className={styled.flex}>
-          <h3>Бесплатная доставка</h3>
+          <h3>{t('free_shipping')}</h3>
           <img src='/images/free-ship.png' alt='' />
         </div>
         <Link href='/browse?shipping=Free'>
-          Смотреть все
+          {t('see')}
           <MdOutlineKeyboardDoubleArrowRight />
         </Link>
       </div>

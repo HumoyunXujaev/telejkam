@@ -7,6 +7,7 @@ import {
   FaComment,
   FaHandsHelping,
   FaInfo,
+  FaLanguage,
   FaStore,
   FaTruck,
 } from 'react-icons/fa';
@@ -25,12 +26,17 @@ import UserMenu from './UserMenu';
 import { useDispatch } from 'react-redux';
 import { toggleMobileCate } from '@/store/mobileCateSlice';
 import { MdCall } from 'react-icons/md';
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 
 const Top = ({ country }) => {
+  const { t } = useTranslation();
+
   const { data: session } = useSession();
   const isSmallScreen = useMediaQuery({ query: '(max-width: 816px)' });
   const isExtraSmallScreen = useMediaQuery({ query: '(max-width: 386px)' });
   const dispatch = useDispatch();
+  const router = useRouter();
 
   return (
     <div className={styled.top}>
@@ -47,10 +53,10 @@ const Top = ({ country }) => {
         <ul className={styled.top__list}>
           {/* welcome text at left top corner */}
           <li className={styled.li_left}>
-            <span>Добро пожаловать в TELEJKAM</span>
+            <span>{t('top.welcome')}</span>
           </li>
 
-          <li className={styled.li}>
+          {/* <li className={styled.li}>
             <a href='https://www.instagram.com/telejkam.uz/' target='_blank'>
               <img src='icons/insta.png' alt='instagram' />
             </a>
@@ -59,7 +65,7 @@ const Top = ({ country }) => {
             <a href='https://t.me/telejkam' target='_blank'>
               <img src='icons/tg.png' alt='instagram' />
             </a>
-          </li>
+          </li> */}
 
           {!isSmallScreen && (
             <>
@@ -73,39 +79,38 @@ const Top = ({ country }) => {
                 <RiCustomerServiceFill
                   style={{ color: 'black', fill: 'white' }}
                 />
-                <span>ПН-ВС, 9:00-21:00</span>
+                <span>{t('top.time')}</span>
               </li>
               <li className={styled.li}>
                 <FaTruck style={{ fill: 'white' }} />
-                <span>Доставка</span>
+                <span>{t('top.delivery')}</span>
               </li>
               <li className={styled.li}>
                 <FaComment style={{ fill: 'white' }} />
-                <span>О Нас</span>
+                <span>{t('top.about')}</span>
               </li>
               <li className={styled.li}>
                 <FaStore style={{ fill: 'white' }} />
-                <span>Магазины</span>
+                <span>{t('top.stores')}</span>
+              </li>
+              <li className={styled.li}>
+                <FaLanguage style={{ fill: 'white' }} />
+                <span></span>
+              </li>
+
+              <li className={styled.li}>
+                <Link href={router.pathname} locale='ru'>
+                  {' '}
+                  RU
+                </Link>
+              </li>
+              <li className={styled.li}>
+                <Link href={router.pathname} locale='uz'>
+                  UZ
+                </Link>
               </li>
             </>
           )}
-
-          {/* <li className={styled.li}>
-            {session ? (
-              <div className={styled.flex}>
-                <img src={session.user.image} alt='Avatar' />
-                <span>{session.user.name}</span>
-                <RiArrowDropDownFill />
-              </div>
-            ) : (
-              <div className={styled.flex}>
-                <RiAccountPinCircleFill />
-                <span>Account</span>
-                <RiArrowDropDownFill />
-              </div>
-            )}
-            <UserMenu session={session} />
-          </li> */}
         </ul>
       </div>
     </div>

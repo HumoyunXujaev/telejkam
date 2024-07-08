@@ -8,18 +8,20 @@ import CheckboxItem from '../CheckboxItem';
 import ShowAllBtn from '../ShowAllBtn';
 import useSeeMore from '@/hook/useSeeMore';
 import PlusMinusBtn from '../PlusMinusBtn';
+import { useTranslation } from 'next-i18next';
 
 export default function BrandsFilter({ brands, brandHandler, checkChecked }) {
   const [show, setShow] = useState(true);
   const router = useRouter();
   const { itemsQty, showAllHandler, hideBtn } = useSeeMore(brands);
+  const { t } = useTranslation();
 
   const existedBrand = router.query.brand || '';
 
   return (
     <div className={styled.filter}>
       <h3>
-        Бренды{' '}
+        {t('brands')}
         <PlusMinusBtn show={show} onClick={() => setShow((prev) => !prev)} />
       </h3>
 

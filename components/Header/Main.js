@@ -24,6 +24,7 @@ import { signIn, useSession } from 'next-auth/react';
 import { MdClose, MdDashboard, MdMenu } from 'react-icons/md';
 import { useMediaQuery } from 'react-responsive';
 import Image from 'next/image';
+import { useTranslation } from 'next-i18next';
 const Main = ({ searchHandler2 }) => {
   const isSmall = useMediaQuery({ maxWidth: 950 });
 
@@ -36,6 +37,7 @@ const Main = ({ searchHandler2 }) => {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [loading, setLoading] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { t } = useTranslation();
 
   const searchChangeHandler = (e) => {
     setQuery(e.target.value);
@@ -106,25 +108,25 @@ const Main = ({ searchHandler2 }) => {
                   <Link href='browse'>
                     <div className={styled.drawer__item}>
                       <MdDashboard size={20} />
-                      <span>Каталог</span>
+                      <span>{t('header.katalog')}</span>
                     </div>
                   </Link>
                   <Link href='/order-status/'>
                     <div className={styled.drawer__item}>
                       <FaBox />
-                      <span>Статус заказа</span>
+                      <span>{t('header.status')}</span>
                     </div>
                   </Link>
                   <Link href='cart'>
                     <div className={styled.drawer__item}>
                       <FaOpencart />
-                      <span>Корзина</span>
+                      <span>{t('header.cart')}</span>
                     </div>
                   </Link>
                   <Link href={`wishlist`}>
                     <div className={styled.drawer__item}>
                       <FaHeart />
-                      <span>Избранное</span>
+                      <span>{t('header.heart')}</span>
                     </div>
                   </Link>
                   {session ? (
@@ -137,12 +139,12 @@ const Main = ({ searchHandler2 }) => {
                   ) : (
                     <div className={styled.drawer__item}>
                       <FaUser onClick={() => signIn()} />
-                      <span>Войти</span>
+                      <span>{t('header.login')}</span>
                     </div>
                   )}
                 </div>
                 <div className={styled.drawer__body}>
-                  <h1>Контакты</h1>
+                  <h1>{t('header.contacts')}</h1>
                   <Link href={`tel:+32213213312`}>
                     <div className={styled.drawer__item}>
                       <Image
@@ -151,7 +153,7 @@ const Main = ({ searchHandler2 }) => {
                         width='85'
                         height='85'
                       />
-                      <span>Телефон</span>
+                      <span>{t('header.phone')}</span>
                     </div>
                   </Link>
                   {/* <Link href={`mailto:hujaevhumoyun01@gmail.com`}>
@@ -173,7 +175,7 @@ const Main = ({ searchHandler2 }) => {
                         width='85'
                         height='85'
                       />
-                      <span>Адресс</span>
+                      <span>{t('header.address')}</span>
                     </div>
                   </Link>
                   <Link href={`https://www.telegram.com/`}>
@@ -227,7 +229,7 @@ const Main = ({ searchHandler2 }) => {
         <Link href='browse'>
           <div className={styled.catalog}>
             <MdMenu />
-            <span className={styled.catalog__text}>Каталог</span>
+            <span className={styled.catalog__text}>{t('header.katalog')}</span>
           </div>
         </Link>
 
@@ -259,13 +261,15 @@ const Main = ({ searchHandler2 }) => {
         <Link href={`order-status`}>
           <div className={styled.orderStatus}>
             <FaBox />
-            <span className={styled.orderStatus__text}>Статус заказа</span>
+            <span className={styled.orderStatus__text}>
+              {t('header.status')}
+            </span>
             <div className={styled.cart__dropdown}>
               <div className={styled.cart__empty}>
                 <div className={styled.cart__empty_img}>
                   <NextImage src='/images/empty-order-5.webp' />
                 </div>
-                <p>Проверьте статус вашего заказа</p>
+                <p>{t('header.status_check')}</p>
                 <div className={styled.cart__empty_btn}>
                   <Button
                     variant='contained'
@@ -275,7 +279,7 @@ const Main = ({ searchHandler2 }) => {
                       router.push('/browse');
                     }}
                   >
-                    Просто введите номер заказа
+                    {t('header.order_num')}
                   </Button>
                 </div>
               </div>
@@ -288,7 +292,7 @@ const Main = ({ searchHandler2 }) => {
           <div className={styled.cart}>
             <FaOpencart />
             <span className={styled.cart__number}>{cart.cartItems.length}</span>
-            <span className={styled.cart__text}>Корзина</span>
+            <span className={styled.cart__text}>{t('header.cart')}</span>
 
             <div className={styled.cart__dropdown}>
               {cart.cartItems.length > 0 ? (
@@ -300,26 +304,28 @@ const Main = ({ searchHandler2 }) => {
                   </div>
                   <div className={styled.cart__priceComponent}>
                     <p>
-                      <span>Цена :</span>
+                      <span>{t('header.cart_price')} :</span>
                       <span>{calculateSubPrice(cart.cartItems)}</span>
                     </p>
                     <p>
-                      <span>Доставка :</span>
+                      <span>{t('header.cart_fee')} :</span>
                       <span>{calculateTotalShipping(cart.cartItems)}</span>
                     </p>
                   </div>
                   <div className={styled.cart__total}>
-                    <span>Сумма :</span>
+                    <span>{t('header.cart_subtotal')}:</span>
                     <span>{calculateTotal(cart.cartItems)}</span>
                   </div>
-                  <div className={styled.cart__seeAll}>Смотреть все</div>
+                  <div className={styled.cart__seeAll}>
+                    {t('header.cart_see')}
+                  </div>
                 </div>
               ) : (
                 <div className={styled.cart__empty}>
                   <div className={styled.cart__empty_img}>
                     <NextImage src='/images/empty.png' />
                   </div>
-                  <p>Корзина пустая!</p>
+                  <p>{t('header.cart_empty')}</p>
                   <div className={styled.cart__empty_btn}>
                     <Button
                       variant='contained'
@@ -329,7 +335,7 @@ const Main = ({ searchHandler2 }) => {
                         router.push('/browse');
                       }}
                     >
-                      Начать покупки
+                      {t('header.cart_shopping')}
                     </Button>
                   </div>
                 </div>
@@ -340,7 +346,7 @@ const Main = ({ searchHandler2 }) => {
         <Link href={`wishlist`}>
           <div className={styled.wishlist}>
             <FaHeart />
-            <span className={styled.wishlist__text}>Избранное</span>
+            <span className={styled.wishlist__text}>{t('header.heart')}</span>
           </div>
         </Link>
 
@@ -354,7 +360,7 @@ const Main = ({ searchHandler2 }) => {
         ) : (
           <div className={styled.profile}>
             <FaUser onClick={() => signIn()} />
-            <span className={styled.profile__text}>Войти</span>
+            <span className={styled.profile__text}>{t('header.login')}</span>
           </div>
         )}
       </div>

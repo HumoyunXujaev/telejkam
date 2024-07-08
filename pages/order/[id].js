@@ -17,8 +17,12 @@ import { useState } from 'react';
 import NextImage from '@/components/NextImage';
 import Link from 'next/link';
 import { Product } from '@/models/Product';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
+  const { t } = useTranslation();
+
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const [error, setError] = useState('');
 
@@ -77,36 +81,36 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
   console.log(orderData);
   return (
     <>
-      <Header link='/' text='Вернуться на Главную' />
+      <Header link='/' text={t('return_to_products')} />
       <div className={styled.order}>
         <div className={styled.container}>
           <div className={`${styled.order__infos} ${styled.card}`}>
             <div className={styled.order__infos_heading}>
-              <h1 className={styled.heading}>Просмотрите свой Заказ</h1>
+              <h1 className={styled.heading}>{t('view_order')}</h1>
               <h2>
-                <span>Id Заказа:</span> {orderData._id}
+                <span>Id:</span> {orderData._id}
               </h2>
             </div>
             <div className={styled.order__infos_status}>
               <span>
-                <FcInfo /> Статут Оплаты :
+                <FcInfo /> {t('header.status')}
               </span>
               {orderData.isPaid ? (
-                <span>Оплачено</span>
+                <span>{t('paid')}</span>
               ) : (
-                <span>Еще Не Оплачено</span>
+                <span>{t('not_paid')}</span>
               )}
             </div>
             <div className={styled.order__infos_status}>
               <span>
                 <FcInfo />
-                Статус Заказа :
+                {t('header.status')}
               </span>
               <span>{orderData.status}</span>
             </div>
             <div className={styled.order__infos_status}>
               <span>
-                <FcInfo /> Детали Заказа :
+                <FcInfo /> {t('order_details')}
               </span>
               <span>
                 Включает {orderData.products.length}{' '}
@@ -125,7 +129,7 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                     </h3>
 
                     <div className={styled.product__infos_row}>
-                      <p>Цвет : </p>
+                      <p>{t('color')}: </p>
                       {product.color.image ? (
                         <img src={product.color.image} alt='' />
                       ) : (
@@ -133,14 +137,14 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                           style={{ backgroundColor: product.color.color }}
                         ></span>
                       )}
-                      <BiChevronsRight /> <p>Размер : </p>
-                      {product.size} <BiChevronsRight /> <p>Количество : </p>
-                      {product.qty} <BiChevronsRight /> <p>Цена : </p>
-                      {product.price}сум/мес <BiChevronsRight />{' '}
+                      <BiChevronsRight /> <p>{t('size')} : </p>
+                      {product.size} <BiChevronsRight /> <p>{t('qty')} : </p>
+                      {product.qty} <BiChevronsRight /> <p>{t('price')} : </p>
+                      {product.price} {t('price_month')} <BiChevronsRight />{' '}
                     </div>
                     <div className={styled.product__infos_total}>
-                      <span>Сумма :</span>
-                      {(product.price * product.qty).toLocaleString('ru-RU')}сум
+                      <span>{t('header.cart_subtotal')}:</span>
+                      {(product.price * product.qty).toLocaleString('ru-RU')}
                     </div>
                   </div>
                 </div>
@@ -150,15 +154,14 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                 orderData.totalBeforeDiscount > orderData.total ? (
                   <>
                     <div className={styled.order__total_sub}>
-                      <span>Сумма</span>
+                      <span>{t('header.cart_subtotal')}</span>
                       <span>
                         {orderData.totalBeforeDiscount.toLocaleString('ru-RU')}{' '}
-                        сум
                       </span>
                     </div>
 
                     <div className={styled.order__total_sub}>
-                      <span>Доставка</span>
+                      <span>{t('shipping_fee')}</span>
                       <span>
                         {orderData.shippingPrice.toLocaleString('ru-RU')} сум
                       </span>
@@ -168,7 +171,7 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                       <span>${orderData.taxPrice.toFixed(2)}</span>
                     </div> */}
                     <div className={styled.order__total_sub2}>
-                      <span>Общая сумма для оплаты</span>
+                      <span>{t('header.cart_subtotal')}</span>
                       <span>{orderData.total.toLocaleString('ru-RU')} сум</span>
                     </div>
                   </>
@@ -179,7 +182,7 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                       <span>{orderData.taxPrice}</span>
                     </div> */}
                     <div className={styled.order__total_sub}>
-                      <span>Общая сумма для оплаты</span>
+                      <span>{t('header.cart_subtotal')}</span>
                       <span>{orderData.total.toLocaleString('ru-RU')} сум</span>
                     </div>
                   </>
@@ -200,7 +203,7 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                 </div>
               </div> */}
               <div className={styled.order__address_shipping}>
-                <h3>Адресс Доставки</h3>
+                <h3>{t('address')}</h3>
                 <div className={styled.order__address_line}>
                   <span>Полное Имя : </span>
                   <span>
@@ -287,6 +290,7 @@ export default OrderPage;
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
+  const { locale } = context;
 
   await db.connectDb();
 
@@ -305,6 +309,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
+      ...(await serverSideTranslations(locale, ['common'])),
       orderData: JSON.parse(JSON.stringify(orderData)),
       paypal_client_id,
       stripe_public_key,

@@ -1,6 +1,7 @@
 import { FcShipped } from 'react-icons/fc';
 
 import styled from './styles.module.scss';
+import { useTranslation } from 'next-i18next';
 
 const Checkout = ({
   subTotal,
@@ -9,32 +10,34 @@ const Checkout = ({
   selected,
   saveCartToDbHandler,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className={`${styled.cart__checkout} ${styled.card}`}>
       {/* Line 1 */}
       <div className={styled.cart__checkout_line}>
-        <span>Сумма</span>
+        <span>{t('header.cart_subtotal')}</span>
         <span>{subTotal} сум</span>
       </div>
 
       {/* Line 2 */}
       <div className={styled.cart__checkout_line}>
-        <span>Доставка</span>
+        <span>{t('shipping_fee')}</span>
         <span>{shippingFee} сум</span>
       </div>
 
       {/* Line 3 */}
       <div className={styled.cart__checkout_total}>
-        <span>Сумма</span>
+        <span>{t('header.cart_subtotal')}</span>
         <span>{total} сум</span>
       </div>
 
       <span className={styled.cart__checkout_tax}>(Tax included if any)</span>
 
       <div className={styled.cart__checkout_days}>
-        <span>Получите через</span>
+        <span>{t('receive_after')}</span>
         <span>
-          <FcShipped /> 1 день
+          <FcShipped /> {t('1_day')}
         </span>
       </div>
 
@@ -54,7 +57,7 @@ const Checkout = ({
           }}
           onClick={() => saveCartToDbHandler()}
         >
-          Продолжить ({selected?.length})
+          {t('continue')} ({selected?.length})
         </button>
       </div>
     </div>

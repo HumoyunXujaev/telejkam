@@ -8,10 +8,12 @@ import { useMediaQuery } from 'react-responsive';
 import { updateCart } from '@/store/cartSlice';
 
 import styled from './styles.module.scss';
+import { useTranslation } from 'next-i18next';
 
 const Top = ({ cartItems, selected, setSelected }) => {
   const [active, setActive] = useState(false);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const isSuperSmall = useMediaQuery({ query: '(max-width: 488px)' });
 
@@ -91,11 +93,11 @@ const Top = ({ cartItems, selected, setSelected }) => {
           className={`${styled.checkbox} ${active ? styled.active : ''}`}
           onClick={selectAllHandler}
         ></div>
-        Все {!isSuperSmall && `(${cartItems.length} продукты)`}
+        {t('all')} {!isSuperSmall && `(${cartItems.length} )`}
       </span>
-      <span className={styled.cart__top_label}>Цена за единицу товара</span>
-      <span className={styled.cart__top_label}>Количество</span>
-      <span className={styled.cart__top_label}>Цена</span>
+      <span className={styled.cart__top_label}>{t('one_price')}</span>
+      <span className={styled.cart__top_label}>{t('quantity')}</span>
+      <span className={styled.cart__top_label}>{t('price')}</span>
       <span className={styled.cart__top_label} onClick={showPopupHandler}>
         <FcFullTrash />
       </span>

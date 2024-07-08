@@ -12,6 +12,8 @@ import axios from 'axios';
 import FeaturedProducts from '@/components/Home/Main/FeaturedProducts';
 import FreeShippingProducts from '@/components/Home/Main/FreeShippingProducts';
 import { useRouter } from 'next/router';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+
 export default function Home({
   country,
   products,
@@ -73,6 +75,7 @@ export default function Home({
       filter({ search });
     }
   };
+
   return (
     <>
       <Header country={country} searchHandler={searchHandler} />
@@ -96,7 +99,7 @@ export default function Home({
   );
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ locale }) {
   await db.connectDb();
 
   //lean method trả về các document dưới dạng plain Object chứ không phải Mongoose document thông thường
@@ -177,6 +180,7 @@ export async function getStaticProps() {
 
   return {
     props: {
+      ...(await serverSideTranslations(locale, ['common'])),
       products: JSON.parse(JSON.stringify(reduceImagesProducts)),
       flashDeals: JSON.parse(JSON.stringify(flashDealsArray)),
       featuredProducts: JSON.parse(JSON.stringify(featuredProducts)),

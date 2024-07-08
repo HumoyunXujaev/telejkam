@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { MdPlayArrow } from 'react-icons/md';
 import { FaCopy, FaShareAlt } from 'react-icons/fa';
+import { useTranslation } from 'next-i18next';
 
 import styles from './styles.module.scss';
 
@@ -56,6 +57,9 @@ export default function Accordian({ details, product }) {
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
+
+  const { t } = useTranslation();
+
   return (
     <div className={styles.accordian}>
       <Accordion
@@ -68,7 +72,7 @@ export default function Accordian({ details, product }) {
           aria-controls='panel1d-content'
           id='panel1d-header'
         >
-          Детали продукта
+          {t('product_details')}
         </AccordionSummary>
         <AccordionDetails>
           <div className={styles.accordian_grid}>
@@ -79,8 +83,8 @@ export default function Accordian({ details, product }) {
           <table className={styles.specifications}>
             <thead>
               <tr>
-                <th>Спецификации</th>
-                <th>Описание</th>
+                <th>{t('specifications')}</th>
+                <th>{t('descriptions')}</th>
               </tr>
             </thead>
             <tbody>
@@ -105,19 +109,19 @@ export default function Accordian({ details, product }) {
           aria-controls='panel1d-content'
           id='panel1d-header'
         >
-          Вопросы и ответы
+          {t('faq')}
         </AccordionSummary>
         <AccordionDetails>
           <div className={styles.accordian_grid}>
-            <p>Вопросы и ответы</p>
+            <p>{t('faq')}</p>
           </div>
         </AccordionDetails>
         <AccordionDetails className='scrollbar'>
           <table className={styles.specifications}>
             <thead>
               <tr>
-                <th>Вопрос</th>
-                <th>Ответ</th>
+                <th>{t('question')}</th>
+                <th>{t('answer')}</th>
               </tr>
             </thead>
 
@@ -188,7 +192,7 @@ export default function Accordian({ details, product }) {
           aria-controls='panel3d-content'
           id='panel3d-header'
         >
-          Поделиться этим продуктом
+          {t('share')}
         </AccordionSummary>
 
         <AccordionDetails>
@@ -199,14 +203,14 @@ export default function Accordian({ details, product }) {
                 toast.success('Успешно скопирована ссылка продукта!');
               }}
             >
-              <FaCopy /> Нажмите, чтобы скопировать ссылку
+              <FaCopy /> {t('click_to_copy')}
             </button>
           </div>
         </AccordionDetails>
         <AccordionDetails className='scrollbar'>
           <div className={styles.socials_share}>
             <span>
-              <FaShareAlt /> Поделиться в соц. сетях
+              <FaShareAlt /> {t('share_social')}
             </span>
           </div>
           <Share />

@@ -5,13 +5,16 @@ import { BsArrowReturnRight } from 'react-icons/bs';
 import styled from './styles.module.scss';
 import NextImage from '../NextImage';
 import { calculateTotal } from '@/utils/productUltils';
+import { useTranslation } from 'next-i18next';
 
 const Products = ({ cart }) => {
+  const { t } = useTranslation();
+
   return (
     <div className={`${styled.products} ${styled.card}`}>
       <div className={styled.products__header}>
         <h2 className={styled.heading}>
-          Корзина{' '}
+          {t('header.cart')}
           <span>
             (
             {`${cart?.cartItems.length} ${
@@ -33,7 +36,7 @@ const Products = ({ cart }) => {
                 <div className={styled.product__infos}>
                   <p>
                     <VscDebugBreakpointFunction />
-                    <span>Цвет : </span>{' '}
+                    <span>{t('color')} : </span>{' '}
                     {product.color.image ? (
                       <img src={product.color.image} alt='' />
                     ) : (
@@ -50,25 +53,25 @@ const Products = ({ cart }) => {
                   </p>
                   <p>
                     <VscDebugBreakpointFunction />
-                    <span>Размер : </span>
+                    <span>{t('size')} : </span>
                     {product.size}
                   </p>
                   <p>
                     <VscDebugBreakpointFunction />
 
-                    <span>Количество : </span>
+                    <span>{t('qty')} : </span>
                     {product.qty}
                   </p>
                   <p>
                     <VscDebugBreakpointFunction />
-                    <span>Цена : </span>
-                    {product.price}сум/мес/штука
+                    <span>{t('price')} : </span>
+                    {product.price} {t('price_month')}
                   </p>
                   <div className={styled.product__total}>
                     <BsArrowReturnRight />{' '}
                     <p>
                       {(product?.price * product?.qty)?.toLocaleString('ru-RU')}{' '}
-                      сум/мес
+                      {t('price_month')}
                     </p>
                   </div>
                 </div>
@@ -78,8 +81,10 @@ const Products = ({ cart }) => {
         })}
       </div>
       <div className={styled.products__subTotal}>
-        Сумма : <span>{calculateTotal(cart.cartItems)} сум/мес</span>
-        <span>(Эта цена не включает доставку)</span>
+        {t('header.cart_subtotal')} :{' '}
+        <span>
+          {calculateTotal(cart.cartItems)} {t('price_month')}{' '}
+        </span>
       </div>
     </div>
   );

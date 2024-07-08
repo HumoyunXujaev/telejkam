@@ -9,14 +9,17 @@ import 'swiper/css/pagination';
 
 import FlashCard from './FlashCard';
 import CommonSwiper from '../CommonSwiper';
+import { useTranslation } from 'next-i18next';
 
 const FlashDeals = ({ flashDeals }) => {
+  const { t } = useTranslation();
+
   return (
     <div className={styled.flashDeals}>
       <div className={styled.flashDeals__title}>
         <Countdown date={new Date(2024, 6, 22)} />
         <h3>
-          <span>Распродажа</span>
+          <span>{t('flash_deals')}</span>
           <img src='/images/limited.png' alt='' />
         </h3>
       </div>
