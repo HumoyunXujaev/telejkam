@@ -252,7 +252,7 @@ const Main = ({ searchHandler2 }) => {
         <form onSubmit={searchHandler} className={styled.search}>
           <input
             type='text'
-            placeholder='Искать товары...'
+            placeholder={t('header.search')}
             onChange={searchChangeHandler}
             value={query}
             onBlur={() => setShowSearchResults(false)}

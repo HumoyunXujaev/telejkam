@@ -46,6 +46,7 @@ const FlashCard = ({ product }) => {
               ).toLocaleString('ru-RU')}{' '}
               {t('price_month')}
             </span>
+            <br />
             <span>{t('price')} </span>
             <span></span>
             <span>{product.sizes[0].price.toLocaleString('ru-RU')}</span>
