@@ -13,6 +13,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { calculateTotal, emptyCartHandler } from '@/utils/productUltils';
 import { useDispatch } from 'react-redux';
+import { LoadingButton } from '@mui/lab';
 
 const Summary = ({
   totalAfterDiscount,
@@ -28,6 +29,7 @@ const Summary = ({
   const [orderError, setOrderError] = useState('');
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
 
   const Router = useRouter();
 
@@ -68,6 +70,7 @@ const Summary = ({
   // console.log('Total:', total);
 
   const placeOrderHandler = async () => {
+    setLoading(true);
     try {
       if (paymentMethod === '') {
         Swal.fire({
@@ -163,7 +166,39 @@ const Summary = ({
   return (
     <div className={`${styled.summary} ${styled.card}`}>
       <h2 className={styled.heading}></h2>
-      {/* <div className={styled.coupon}>
+      {loading ? (
+        <>
+          <LoadingButton /> <p>Loading...</p>
+        </>
+      ) : (
+        <>
+          <div className={styled.summary__infos_totalLine}>
+            <span>{t('header.cart_subtotal')} : </span>
+            <span>
+              {calculateTotal(
+                cart.cartItems.map((product) => product)
+              ).toLocaleString('ru-RU')}
+            </span>
+          </div>
+
+          <div className={styled.summary__submit_btn}>
+            <Button
+              variant='contained'
+              color='error'
+              onClick={placeOrderHandler}
+            >
+              {t('buy_order')}
+            </Button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default Summary;
+{
+  /* <div className={styled.coupon}>
         <Formik
           enableReinitialize
           initialValues={{ coupon }}
@@ -195,10 +230,14 @@ const Summary = ({
             </Form>
           )}
         </Formik>
-      </div> */}
+      </div> */
+}
 
-      {/* <div className={styled.summary__infos}> */}
-      {/* {discount > 0 && (
+{
+  /* <div className={styled.summary__infos}> */
+}
+{
+  /* {discount > 0 && (
           <div className={styled.summary__infos_couponLine}>
             <span>Coupon applied :</span>
             <span>
@@ -206,41 +245,28 @@ const Summary = ({
               {discount}%
             </span>
           </div>
-        )} */}
+        )} */
+}
 
-      {/* <div className={styled.summary__infos_line}>
+{
+  /* <div className={styled.summary__infos_line}>
           <span>Subtotal : </span>
           <span>${cart.cartTotal}</span>
-        </div> */}
+        </div> */
+}
 
-      {/* {totalAfterDiscount < cart.cartTotal && totalAfterDiscount !== 0 && (
+{
+  /* {totalAfterDiscount < cart.cartTotal && totalAfterDiscount !== 0 && (
           <div className={styled.summary__infos_line}>
             <span>New price: </span>
             <span>${totalAfterDiscount}</span>
           </div>
-        )} */}
+        )} */
+}
 
-      {/* <div className={styled.summary__infos_line}>
+{
+  /* <div className={styled.summary__infos_line}>
           <span>Shipping : </span>
           <span>${shipping?.toFixed(2)}</span>
-        </div> */}
-
-      <div className={styled.summary__infos_totalLine}>
-        <span>{t('header.cart_subtotal')} : </span>
-        <span>
-          {calculateTotal(
-            cart.cartItems.map((product) => product)
-          ).toLocaleString('ru-RU')}
-        </span>
-      </div>
-      {/* </div> */}
-      <div className={styled.summary__submit_btn}>
-        <Button variant='contained' color='error' onClick={placeOrderHandler}>
-          {t('buy_order')}
-        </Button>
-      </div>
-    </div>
-  );
-};
-
-export default Summary;
+        </div> */
+}

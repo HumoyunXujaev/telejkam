@@ -74,7 +74,10 @@ const Dashboard = ({ users, orders, products }) => {
             </div>
             <div className={styled.card__infos}>
               <h4>
-                {orders.reduce((a, val) => a + val.total, 0)}&nbsp; сум
+                {orders
+                  .reduce((a, val) => a + val.total, 0)
+                  .toLocaleString('ru-RU')}
+                &nbsp; сум
                 <br />
                 <span>Прибыль</span>
               </h4>
@@ -89,7 +92,8 @@ const Dashboard = ({ users, orders, products }) => {
               <h4>
                 {orders
                   .filter((o) => !o.isPaid)
-                  .reduce((a, val) => a + val.total, 0)}{' '}
+                  .reduce((a, val) => a + val.total, 0)
+                  .toLocaleString('ru-RU')}
                 &nbsp;сум
                 <br /> Не оплачено
               </h4>
