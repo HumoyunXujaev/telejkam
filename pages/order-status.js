@@ -9,8 +9,12 @@ import BreadCrumb from '@/components/BreadCrumb';
 import AnimateWrapper from '@/components/AnimateWrapper';
 import { FaBox } from 'react-icons/fa';
 import { RiSearch2Line } from 'react-icons/ri';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const OrderStatus = () => {
+  const { t } = useTranslation();
+
   const [orderId, setOrderId] = useState('');
   const router = useRouter();
 
@@ -54,7 +58,7 @@ const OrderStatus = () => {
               >
                 <FaBox style={{ color: 'white', fontSize: '30px' }} />
               </div>
-              <h1 style={{ textAlign: 'center' }}>Статус Заказа</h1>
+              <h1 style={{ textAlign: 'center' }}>{t('header.status')}</h1>
               <p
                 style={{
                   textAlign: 'center',
@@ -63,9 +67,10 @@ const OrderStatus = () => {
                   padding: '1rem',
                 }}
               >
-                Чтобы увидеть ваш заказ, пожалуйста, заполните необходимые поля.
+                {t('to_see_order')}
+
                 <br />
-                Номер заказа был отправлен на ваш номер в виде смс-сообщения
+                {t('order_id_was_sent')}
               </p>
               <form
                 onSubmit={submitHandler}
@@ -84,7 +89,7 @@ const OrderStatus = () => {
                   type='text'
                   value={orderId}
                   onChange={(e) => setOrderId(e.target.value)}
-                  placeholder='Введите номер заказа'
+                  placeholder={t('type_order_id')}
                   style={{
                     border: 'none',
                     outline: 'none',
@@ -122,3 +127,11 @@ const OrderStatus = () => {
 };
 
 export default OrderStatus;
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
+}

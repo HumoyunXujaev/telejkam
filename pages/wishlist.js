@@ -5,11 +5,16 @@ import NextImage from '@/components/NextImage';
 import ProductCard from '@/components/ProductCard';
 import Layout from '@/components/Profile/Layout';
 import styled from '@/styles/Browse.module.scss';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'next-i18next';
+
 export default function Wishlist() {
+  const { t } = useTranslation();
+
   const [wishlist, setWishlist] = useState([]);
   const [images, setImages] = useState([]);
 
@@ -32,7 +37,7 @@ export default function Wishlist() {
     const updatedWishlist = wishlist.filter((item) => item._id !== id);
     localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
     setWishlist(updatedWishlist);
-    toast.success('Удалено с избранного');
+    toast.success(t('product_deleted'));
   };
 
   return (
@@ -51,7 +56,7 @@ export default function Wishlist() {
         <div className={styled.browse__store_products_wrap}>
           <div className={styled.browse__store_products}>
             {wishlist.length < 1 ? (
-              <h1 style={{ textAlign: 'center' }}>Нет Продуктов в Избранном</h1>
+              <h1 style={{ textAlign: 'center' }}>{t('no_products')}</h1>
             ) : (
               wishlist.map((product, index) => (
                 <AnimateWrapper delay={50 * index} key={product._id}>
@@ -70,4 +75,12 @@ export default function Wishlist() {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
 }

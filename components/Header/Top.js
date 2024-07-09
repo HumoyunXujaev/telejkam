@@ -101,12 +101,12 @@ const Top = ({ country }) => {
               <li className={styled.li}>
                 <Link href={router.pathname} locale='ru'>
                   {' '}
-                  RU
+                  Рус
                 </Link>
               </li>
               <li className={styled.li}>
                 <Link href={router.pathname} locale='uz'>
-                  UZ
+                  O`&apos;zb
                 </Link>
               </li>
             </>

@@ -85,5 +85,10 @@
   "view_order": "Buyurtmani koring",
   "paid": "To'langan",
   "not_paid": "Tolanmagan",
-  "order_details": "Buyurtma Xususiyatlari"
+  "order_details": "Buyurtma Xususiyatlari",
+  "to_see_order": "Buyurtmani ko'rish uchun, raqamni kiriting",
+  "order_id_was_sent": "Sizga jo'natilgan buyurtma raqamini kiriting",
+  "type_order_id": "Buyurtma raqamini kiriting",
+  "product_deleted": "Produkt o'chirildi",
+  "no_products": "Hech narsa yo'q"
 }

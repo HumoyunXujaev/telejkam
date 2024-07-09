@@ -1,6 +1,13 @@
 import Link from 'next/link';
 import { RiSearch2Line } from 'react-icons/ri';
-import { FaBox, FaBoxOpen, FaHeart, FaOpencart, FaUser } from 'react-icons/fa';
+import {
+  FaBox,
+  FaBoxOpen,
+  FaHeart,
+  FaLanguage,
+  FaOpencart,
+  FaUser,
+} from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -98,6 +105,14 @@ const Main = ({ searchHandler2 }) => {
                     width='85'
                     height='85'
                   />
+                  <br />
+                  <Link href={router.pathname} locale='ru'>
+                    <span>Рус</span>
+                  </Link>
+                  <FaLanguage />
+                  <Link href={router.pathname} locale='uz'>
+                    <span>O`&apos;zb</span>
+                  </Link>
 
                   {/* </div> */}
                   <IconButton onClick={() => setDrawerOpen(false)}>
