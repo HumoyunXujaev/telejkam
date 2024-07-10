@@ -164,15 +164,15 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
         >
           {visible ? (
             <span>
-              <BsFillCaretDownFill />
+              <BsFillCaretUpFill />
             </span>
           ) : addresses || !addresses === null ? (
             <span>
-              {t('redact_address')} <BsFillCaretUpFill />
+              {t('redact_address')} <BsFillCaretDownFill />
             </span>
           ) : (
             <span>
-              {t('add_address')} <BsFillCaretUpFill />
+              {t('add_address')} <BsFillCaretDownFill />
             </span>
           )}
         </Button>

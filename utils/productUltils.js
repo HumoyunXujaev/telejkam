@@ -5,7 +5,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export const sortPricesArr = (products) => {
   if (products) {
-    return products.map((product) => product.price).sort((a, b) => a - b);
+    return products
+      .map((product) => product.price_description)
+      .sort((a, b) => a - b);
   }
 };
 

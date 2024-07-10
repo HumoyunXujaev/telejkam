@@ -97,6 +97,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
     );
   };
 
+  console.log(product);
   return (
     <div className={styled.infos}>
       <div className={styled.infos__container}>
@@ -108,16 +109,16 @@ const Infos = ({ product, setActiveImg, setImages }) => {
         <div className={styled.infos__price}>
           {product.discount > 0 && size && (
             <span className={styled.infos__price_before}>
-              {product.priceBefore}
+              {product.priceBefore.toLocaleString('ru-RU')}
             </span>
           )}
           {!size ? (
             <h3 className={styled.infos__price_range}>
-              {product.priceRange.toLocaleString('ru-RU')} {t('price_month')}
+              {product.priceRange.toLocaleString('ru-RU')} {t('price_def')}
             </h3>
           ) : (
             <h3 className={styled.infos__price_single}>
-              {product.price.toLocaleString('ru-RU')} {t('price_month')}
+              {product?.price?.toLocaleString('ru-RU')} {t('price_def')}
             </h3>
           )}
           {product.discount > 0 && size && (

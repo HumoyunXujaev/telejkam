@@ -141,7 +141,7 @@ const ProductCard = ({ product, className, remove }) => {
                 <span></span>
                 <span></span>
                 <span>
-                  {priceFrom.toLocaleString('ru-RU')} {t('price_month')}
+                  {priceFrom.toLocaleString('ru-RU')} {t('price_def')}
                 </span>
                 {product.subProducts[active]?.discount > 0 && (
                   <>

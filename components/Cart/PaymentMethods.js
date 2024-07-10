@@ -11,9 +11,12 @@ const PaymentMethods = () => {
     <div className={`${styled.card} ${styled.cart__method}`}>
       <span className={styled.cart__method_header}>{t('payment_method')}</span>
       <div className={styled.cart__method_images}>
+        <img src='/images/payment/cash.jpg' alt='' />
+
         <img src='/images/payment/uzum_nasiya.webp' alt='' />
-        <img src='/images/payment/mastercard.webp' alt='' />
-        <img src='/images/payment/visa.webp' alt='' />
+
+        <img src='/images/payment/uzcard.jpg' alt='' />
+        <img src='/images/payment/humo.jpg' alt='' />
       </div>
       <div className={styled.cart__method_protection}>{t('return_money')}</div>
     </div>

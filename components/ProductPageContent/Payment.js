@@ -17,7 +17,7 @@ const Payment = () => {
               position: 'relative',
             }}
           >
-            <NextImage src='/images/payment/visa2.webp' alt='Visa' />
+            <NextImage src='/images/payment/cash.jpg' alt='Visa' />
           </div>
         </div>
         <div className={styled.payment__image_wrap}>
@@ -29,7 +29,7 @@ const Payment = () => {
             }}
           >
             <NextImage
-              src='/images/payment/master-card2.png'
+              src='/images/payment/uzum_nasiya.webp'
               alt='Mastercard'
             />
           </div>
@@ -42,17 +42,21 @@ const Payment = () => {
               position: 'relative',
             }}
           >
-            <NextImage src='/images/payment/paypal2.png' alt='Paypal' />
+            <NextImage src='/images/payment/uzcard.jpg' alt='Paypal' />
+          </div>
+        </div>
+        <div className={styled.payment__image_wrap}>
+          <div
+            style={{
+              width: 65,
+              height: 40,
+              position: 'relative',
+            }}
+          >
+            <NextImage src='/images/payment/humo.jpg' alt='Paypal' />
           </div>
         </div>
       </div>
-      <p>
-        <div className={styled.payment__guarantee}>
-          Guaranteed by
-          <img src='/telejkam.png' alt='Logo' />
-        </div>
-        <p className={styled.payment__refund}>3 days return stuffs / refund</p>
-      </p>
     </div>
   );
 };

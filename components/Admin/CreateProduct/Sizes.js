@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { AiOutlineMinusSquare, AiOutlinePlusSquare } from 'react-icons/ai';
-
 import styled from './styles.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import { sizesList } from '@/data/sizes';
@@ -8,11 +7,23 @@ import { toast } from 'react-toastify';
 
 export default function Sizes({ sizes, product, setProduct }) {
   const [noSize, setNoSize] = useState(false);
+
+  const roundToTwoDecimalPlaces = (value) => {
+    return Math.round(value * 100) / 100;
+  };
+
   const changeSizeHandler = (i, e) => {
     const values = [...sizes];
-    values[i][e.target.name] = e.target.value;
+    if (e.target.name === 'price' || e.target.name === 'price_description') {
+      values[i][e.target.name] = roundToTwoDecimalPlaces(
+        parseFloat(e.target.value)
+      );
+    } else {
+      values[i][e.target.name] = e.target.value;
+    }
     setProduct({ ...product, sizes: values });
   };
+
   const removeHandler = (i) => {
     if (sizes.length > 1) {
       const values = [...sizes];
@@ -51,6 +62,7 @@ export default function Sizes({ sizes, product, setProduct }) {
                 let data = [sizes[0]].map((item) => ({
                   qty: item.qty,
                   price: item.price,
+                  price_description: item.price_description,
                 }));
 
                 setProduct({ ...product, sizes: data });
@@ -62,7 +74,7 @@ export default function Sizes({ sizes, product, setProduct }) {
             >
               здесь
             </button>{' '}
-            елси продукт не имеет размера
+            если продукт не имеет размера
           </span>
         )}
       </div>
@@ -77,7 +89,15 @@ export default function Sizes({ sizes, product, setProduct }) {
                     onClick={() =>
                       setProduct({
                         ...product,
-                        sizes: [...sizes, { size: '', qty: '', price: '' }],
+                        sizes: [
+                          ...sizes,
+                          {
+                            size: '',
+                            qty: '',
+                            price: '',
+                            price_description: '',
+                          },
+                        ],
                       })
                     }
                   >
@@ -128,9 +148,20 @@ export default function Sizes({ sizes, product, setProduct }) {
                 <input
                   type='number'
                   name='price'
-                  placeholder={noSize ? 'Цена продукта' : 'цена размера'}
+                  placeholder={noSize ? 'Цена продукта' : 'Цена размера'}
                   min={1}
                   value={size.price}
+                  onChange={(e) => changeSizeHandler(i, e)}
+                  step='0.01'
+                />
+                <input
+                  type='number'
+                  name='price_description'
+                  placeholder={
+                    noSize ? 'Общая цена продукта' : 'Общая цена размера'
+                  }
+                  min={1}
+                  value={size.price_description}
                   onChange={(e) => changeSizeHandler(i, e)}
                   step='0.01'
                 />

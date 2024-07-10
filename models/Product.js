@@ -83,6 +83,7 @@ const productSchema = new mongoose.Schema(
             size: String,
             qty: Number,
             price: Number,
+            price_description: Number,
           },
         ],
         discount: {

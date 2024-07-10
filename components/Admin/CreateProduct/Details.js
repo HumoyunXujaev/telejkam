@@ -27,7 +27,10 @@ export default function Details({ details, product, setProduct }) {
               onClick={() =>
                 setProduct({
                   ...product,
-                  details: [...details, { size: '', qty: '', price: '' }],
+                  details: [
+                    ...details,
+                    { size: '', qty: '', price: '', price_description: '' },
+                  ],
                 })
               }
             >

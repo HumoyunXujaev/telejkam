@@ -14,17 +14,6 @@ const Links = () => {
     <div className={styled.footer__links}>
       {/* copyright icon with text 2024 telejkam */}
       ©2024
-      <span
-        style={{
-          color: 'black',
-          fontWeight: '800',
-          fontSize: '25',
-          fontFamily: 'sans-serif',
-        }}
-      >
-        Telejkam
-      </span>
-      <h1></h1>
     </div>
   );
 };

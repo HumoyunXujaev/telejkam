@@ -27,6 +27,8 @@ import { Product } from '@/models/Product';
 import { SubCategory } from '@/models/SubCategory';
 import Header from '@/components/Header';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import ProductCard from '@/components/ProductCard';
+import { SwiperSlide } from 'swiper/react';
 
 const ProductPage = ({ product }) => {
   const { t } = useTranslation();
@@ -103,6 +105,7 @@ const ProductPage = ({ product }) => {
           </main>
           <br />
           <br />
+
           <SimilarSwiper product={product} />
           {/* <Reviews
             product={product}
@@ -165,15 +168,16 @@ export async function getServerSideProps(context) {
     price:
       subProduct?.discount > 0
         ? priceAfterDiscount(
-            subProduct?.sizes[size]?.price,
+            subProduct?.sizes[size]?.price_description,
             subProduct?.discount
           )
-        : subProduct?.sizes[size]?.price,
-    priceBefore: subProduct?.sizes[size]?.price,
+        : subProduct?.sizes[size]?.price_description,
+    priceBefore: subProduct?.sizes[size]?.price_description,
     quantity: subProduct?.sizes[size]?.qty,
     allSizes: findAllSizes(product?.subProducts),
   };
 
+  console.log(subProduct?.sizes[size]?.price_description);
   await db.disConnectDb();
 
   return {

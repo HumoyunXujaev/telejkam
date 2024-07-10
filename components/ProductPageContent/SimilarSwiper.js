@@ -15,6 +15,11 @@ import axios from 'axios';
 import { useTranslation } from 'next-i18next';
 
 import { toast } from 'react-toastify';
+import ProductCard from '../ProductCard';
+import ProductCardSwiper from '../ProductCard/ProductCardSwiper';
+import Actions from '../Actions';
+import { MdDiscount } from 'react-icons/md';
+import Image from 'next/image';
 
 export default function SimilarSwiper({ product }) {
   const [similarProducts, setSimilarProducts] = useState([]);
@@ -25,6 +30,7 @@ export default function SimilarSwiper({ product }) {
     const fetchSimilars = async () => {
       const { data } = await axios.get(`/api/product/${product._id}/similar`);
       setSimilarProducts(data);
+      console.log(data);
     };
 
     try {
@@ -37,6 +43,7 @@ export default function SimilarSwiper({ product }) {
     }
   }, []);
 
+  console.log(similarProducts, 'similar ');
   return (
     <div style={{ padding: '10px' }}>
       <h1 style={{ textAlign: 'center', padding: '10px' }}>
@@ -60,12 +67,28 @@ export default function SimilarSwiper({ product }) {
       >
         {similarProducts.map((p, index) => (
           <SwiperSlide key={index}>
-            <Link
-              href={`/product/${p.slug}?style=0`}
-              className={styled.similar__img}
-            >
-              <NextImage src={p.image} alt={p.slug} />
-            </Link>
+            <div className={`${styled.product}`} key={index}>
+              <div className={styled.product__container} key={index}>
+                <Link href={`/product/${p.slug}?style=0&size=0`} key={index}>
+                  <div style={{ position: 'relative' }}>
+                    <Image src={p.image} alt='fds' width={100} height={100} />
+                  </div>
+
+                  <h4 className={styled.product__infos_name}>{p.name}</h4>
+
+                  <div className={styled.product__infos_flex}>
+                    <div className={styled.product__infos_price}>
+                      <span></span>
+                      <span></span>
+                      <span>
+                        {p.price_description.toLocaleString('ru-RU')}{' '}
+                        {t('price_def')}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

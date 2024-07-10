@@ -41,15 +41,17 @@ const FlashCard = ({ product }) => {
             <span></span>
             <span>
               {priceAfterDiscount(
-                product.sizes[0].price,
+                product.sizes[0].price_description,
                 product.discount
               ).toLocaleString('ru-RU')}{' '}
-              {t('price_month')}
+              {t('price_def')}
             </span>
             <br />
             <span>{t('price')} </span>
             <span></span>
-            <span>{product.sizes[0].price.toLocaleString('ru-RU')}</span>
+            <span>
+              {product.sizes[0].price_description.toLocaleString('ru-RU')}
+            </span>
           </div>
 
           <button

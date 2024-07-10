@@ -1,7 +1,6 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import Main from '@/components/Home/Main';
-
 import { Product } from '@/models/Product';
 import db from '@/utils/db';
 import { Category } from '@/models/Category';
@@ -9,10 +8,17 @@ import styled from '../styles/Home.module.scss';
 import AllProducts from '@/components/Home/AllProducts';
 import AnimateWrapper from '@/components/AnimateWrapper';
 import axios from 'axios';
-import FeaturedProducts from '@/components/Home/Main/FeaturedProducts';
-import FreeShippingProducts from '@/components/Home/Main/FreeShippingProducts';
 import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import dynamic from 'next/dynamic';
+import React, { useCallback } from 'react';
+
+const DynamicFooter = dynamic(() => import('@/components/Footer'), {
+  ssr: false,
+});
+
+const MemoizedHeader = React.memo(Header);
+const MemoizedAllProducts = React.memo(AllProducts);
 
 export default function Home({
   country,
@@ -21,64 +27,63 @@ export default function Home({
   featuredProducts,
   freeShippingProducts,
   featuredCategories,
-  // featuredBrands,
 }) {
   const router = useRouter();
 
-  // console.log('Home -> products', products);
-  // console.log('Home -> flashDeals', flashDeals);
-  // console.log('Home -> featuredProducts', featuredProducts);
-  // console.log('Home -> freeShippingProducts', freeShippingProducts);
-  // console.log('Home -> featuredCategories', featuredCategories);
-  // // console.log('Home -> featuredBrands', featuredBrands);
-  const filter = ({
-    search,
-    category,
-    brand,
-    style,
-    pattern,
-    material,
-    size,
-    color,
-    gender,
-    price,
-    shipping,
-    rating,
-    sort,
-    page,
-  }) => {
-    const path = router.pathname;
-    if (search) router.query.search = search;
-    if (category) router.query.category = category;
-    if (brand) router.query.brand = brand;
-    if (style) router.query.style = style;
-    if (pattern) router.query.pattern = pattern;
-    if (material) router.query.material = material;
-    if (size) router.query.size = size;
-    if (color) router.query.color = color;
-    if (gender) router.query.gender = gender;
-    if (price) router.query.price = price;
-    if (shipping) router.query.shipping = shipping;
-    if (rating) router.query.rating = rating;
-    if (sort) router.query.sort = sort;
-    if (page) router.query.page = page;
+  const filter = useCallback(
+    ({
+      search,
+      category,
+      brand,
+      style,
+      pattern,
+      material,
+      size,
+      color,
+      gender,
+      price,
+      shipping,
+      rating,
+      sort,
+      page,
+    }) => {
+      const path = router.pathname;
+      if (search) router.query.search = search;
+      if (category) router.query.category = category;
+      if (brand) router.query.brand = brand;
+      if (style) router.query.style = style;
+      if (pattern) router.query.pattern = pattern;
+      if (material) router.query.material = material;
+      if (size) router.query.size = size;
+      if (color) router.query.color = color;
+      if (gender) router.query.gender = gender;
+      if (price) router.query.price = price;
+      if (shipping) router.query.shipping = shipping;
+      if (rating) router.query.rating = rating;
+      if (sort) router.query.sort = sort;
+      if (page) router.query.page = page;
 
-    router.push({ pathname: path, query: router.query }, undefined, {
-      scroll: false,
-    });
-  };
+      router.push({ pathname: path, query: router.query }, undefined, {
+        scroll: false,
+      });
+    },
+    [router]
+  );
 
-  const searchHandler = (search) => {
-    if (search == '') {
-      filter({ search: '' });
-    } else {
-      filter({ search });
-    }
-  };
+  const searchHandler = useCallback(
+    (search) => {
+      if (search === '') {
+        filter({ search: '' });
+      } else {
+        filter({ search });
+      }
+    },
+    [filter]
+  );
 
   return (
     <>
-      <Header country={country} searchHandler={searchHandler} />
+      <MemoizedHeader country={country} searchHandler={searchHandler} />
       <div className={styled.home}>
         <div className={styled.container}>
           <Main
@@ -86,15 +91,13 @@ export default function Home({
             featuredProducts={featuredProducts}
             freeShippingProducts={freeShippingProducts}
             featuredCategories={featuredCategories}
-            // featuredBrands={featuredBrands}
           />
-
           <AnimateWrapper>
-            <AllProducts products={products} />
+            <MemoizedAllProducts products={products} />
           </AnimateWrapper>
         </div>
       </div>
-      <Footer country={country} />
+      <DynamicFooter country={country} />
     </>
   );
 }
@@ -102,7 +105,6 @@ export default function Home({
 export async function getStaticProps({ locale }) {
   await db.connectDb();
 
-  //lean method trả về các document dưới dạng plain Object chứ không phải Mongoose document thông thường
   let products = await Product.find()
     .sort({ createdAt: -1 })
     .select('category brand name rating slug subProducts _id shipping')
@@ -111,10 +113,10 @@ export async function getStaticProps({ locale }) {
   let categories = await Category.find().lean();
 
   const reduceImagesProducts = products.map((p) => {
-    const newSubProducts = p.subProducts.map((s) => {
-      return { ...s, images: s.images.slice(0, 2) };
-    });
-
+    const newSubProducts = p.subProducts.map((s) => ({
+      ...s,
+      images: s.images.slice(0, 2),
+    }));
     return { ...p, subProducts: newSubProducts };
   });
 
@@ -136,15 +138,10 @@ export async function getStaticProps({ locale }) {
           parentId: p.parentId,
           style: i,
         };
-
         flashDealsArray.push(childProduct);
       }
     }
   });
-
-  // const featuredProducts = await Product.find()
-  //   .sort({ rating: -1, "subProducts.sold": -1 })
-  //   .lean();
 
   const featuredProducts = reduceImagesProducts
     .sort((a, b) => b.rating - a.rating)
@@ -154,26 +151,17 @@ export async function getStaticProps({ locale }) {
     .filter((p) => p.shipping === 0)
     .slice(0, 10);
 
-  const featuredCategories = [];
+  const featuredCategories = categories.map((category) => ({
+    name: category.name,
+    slug: category.slug,
+  }));
 
-  reduceImagesProducts.forEach((product) => {
-    featuredCategories.push(product.category);
-  });
-
-  // const featuredBrands = [];
-
-  // console.log(reduceImagesProducts);
-  // // function that iterates trough the products and returns the brands
-  // reduceImagesProducts.forEach((product) => {
-  //   featuredBrands.push(product.brand);
-  // });
-
-  let country;
+  let country = { name: '', flag: '' };
   try {
-    let data = await axios.get(
+    const { data } = await axios.get(
       'https://api.ipregistry.co/?key=ng3oke5gnbj5os01'
     );
-    country = data?.data.location?.country;
+    country = data?.location?.country || { name: '', flag: '' };
   } catch (err) {
     console.log(err);
   }
@@ -185,9 +173,9 @@ export async function getStaticProps({ locale }) {
       flashDeals: JSON.parse(JSON.stringify(flashDealsArray)),
       featuredProducts: JSON.parse(JSON.stringify(featuredProducts)),
       freeShippingProducts: JSON.parse(JSON.stringify(freeShippingProducts)),
-      featuredCategories: JSON.parse(JSON.stringify(categories)),
-      country: { name: country.name, flag: country.flag.emojitwo },
-      // featuredBrands: JSON.parse(JSON.stringify(featuredBrands)),
+      featuredCategories: JSON.parse(JSON.stringify(featuredCategories)),
+      country,
     },
+    revalidate: 60,
   };
 }

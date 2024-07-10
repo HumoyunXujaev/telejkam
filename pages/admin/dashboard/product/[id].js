@@ -58,6 +58,7 @@ const initialState = {
       size: '',
       qty: '',
       price: '',
+      price_description: '',
     },
   ],
   details: [
@@ -163,6 +164,7 @@ export default function UpdateProductPage({ parents, categories }) {
       if (
         product.sizes[i].size == '' ||
         product.sizes[i].price == '' ||
+        product.sizes[i].price_description == '' ||
         product.sizes[i].qty == ''
       ) {
         Swal.fire({

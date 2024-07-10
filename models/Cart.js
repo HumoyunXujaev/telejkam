@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const { ObjectId } = mongoose.Schema;
 
@@ -8,7 +8,7 @@ const cartSchema = new mongoose.Schema(
       {
         product: {
           type: ObjectId,
-          ref: "Product",
+          ref: 'Product',
         },
         name: {
           type: String,
@@ -34,7 +34,7 @@ const cartSchema = new mongoose.Schema(
     totalAfterDiscount: Number,
     user: {
       type: ObjectId,
-      ref: "User",
+      ref: 'User',
     },
   },
   {
@@ -42,6 +42,6 @@ const cartSchema = new mongoose.Schema(
   }
 );
 
-const Cart = mongoose.models.Cart || mongoose.model("Cart", cartSchema);
+const Cart = mongoose.models.Cart || mongoose.model('Cart', cartSchema);
 
 export default Cart;

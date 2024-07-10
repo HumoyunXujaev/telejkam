@@ -10,32 +10,48 @@ import { SubCategory } from '@/models/SubCategory';
 import { filterArray, randomize, removeDuplicates } from '@/utils/arrayUltils';
 import Header from '@/components/Header';
 import BreadCrumb from '@/components/BreadCrumb';
-import ProductCard from '@/components/ProductCard';
-import CategoryFilter from '@/components/Browse/CategoryFilter';
-import SizesFilter from '@/components/Browse/SizesFilter';
-import ColorsFilter from '@/components/Browse/ColorsFilter';
-import BrandsFilter from '@/components/Browse/BrandsFilter';
-import StylesFilter from '@/components/Browse/StylesFilter';
-import PatternsFilter from '@/components/Browse/PatternsFilter';
-import MaterialsFilter from '@/components/Browse/MaterialsFilter';
-import GenderFilter from '@/components/Browse/GenderFilter';
-import HeadingFilters from '@/components/Browse/HeadingFilters';
 import { useRouter } from 'next/router';
-import StarsFilter from '@/components/Browse/StarsFilter';
-import ShippingFeeFilter from '@/components/Browse/ShippingFeeFilter';
 import Footer from '@/components/Footer';
 import { useMediaQuery } from 'react-responsive';
 import { calculateFiltersApplied } from '@/utils/objectUltils';
-import NextImage from '@/components/NextImage';
 import { RevealWrapper } from 'next-reveal';
-import AnimateWrapper from '@/components/AnimateWrapper';
-import { IoIosArrowDown } from 'react-icons/io';
-import { FcCheckmark } from 'react-icons/fc';
-import SortFilter from '@/components/Browse/PriceFilter';
 import { MdClose, MdFilter, MdSort, MdSortByAlpha } from 'react-icons/md';
 import { FaSort } from 'react-icons/fa';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import dynamic from 'next/dynamic';
+
+// Lazy load components
+const ProductCard = dynamic(() => import('@/components/ProductCard'), {
+  suspense: true,
+});
+const CategoryFilter = dynamic(
+  () => import('@/components/Browse/CategoryFilter'),
+  {
+    suspense: true,
+  }
+);
+const ColorsFilter = dynamic(() => import('@/components/Browse/ColorsFilter'), {
+  suspense: true,
+});
+const BrandsFilter = dynamic(() => import('@/components/Browse/BrandsFilter'), {
+  suspense: true,
+});
+const SortFilter = dynamic(() => import('@/components/Browse/PriceFilter'), {
+  suspense: true,
+});
+const AnimateWrapper = dynamic(() => import('@/components/AnimateWrapper'), {
+  suspense: true,
+});
+const HeadingFilters = dynamic(
+  () => import('@/components/Browse/HeadingFilters'),
+  {
+    suspense: true,
+  }
+);
+const NextImage = dynamic(() => import('@/components/NextImage'), {
+  suspense: true,
+});
 
 export default function BrowsePage({
   categories,
@@ -45,8 +61,6 @@ export default function BrowsePage({
   colors,
   brands,
   styles,
-  patterns,
-  materials,
   paginationCount,
 }) {
   const router = useRouter();
@@ -381,17 +395,9 @@ export default function BrowsePage({
                 checkChecked={checkChecked}
               />
 
-              <PatternsFilter
-                patterns={patterns}
-                patternHandler={patternHandler}
-                checkChecked={checkChecked}
-              />
+             
 
-              <MaterialsFilter
-                materials={materials}
-                materialHandler={materialHandler}
-                checkChecked={checkChecked}
-              />
+            
 
               <StarsFilter
                 checkChecked={checkChecked}
@@ -453,7 +459,6 @@ export default function BrowsePage({
 export async function getServerSideProps(ctx) {
   const { locale } = ctx;
   await db.connectDb();
-
   const searchQuery = ctx.query.search || '';
   const categoryQuery = ctx.query.category || '';
   const priceQuery = ctx.query.price?.split('_');
@@ -482,17 +487,9 @@ export async function getServerSideProps(ctx) {
   const styleRegex = `^${styleQuery[0]}`;
   const styledMultiRegex = createRegex(styleQuery, styleRegex);
 
-  const patternQuery = ctx.query.pattern?.split('_') || '';
-  const patternRegex = `^${patternQuery[0]}`;
-  const patternMultiRegex = createRegex(patternQuery, patternRegex);
-
   const sizeQuery = ctx.query.size?.split('_') || '';
   const sizeRegex = `^${sizeQuery[0]}`;
   const sizeMultiRegex = createRegex(sizeQuery, sizeRegex);
-
-  const materialQuery = ctx.query.material?.split('_') || '';
-  const materialRegex = `^${materialQuery[0]}`;
-  const materialMultiRegex = createRegex(materialQuery, materialRegex);
 
   const colorQuery = ctx.query.color?.split('_') || '';
   const colorRegex = `^${colorQuery[0]}`;
@@ -518,16 +515,6 @@ export async function getServerSideProps(ctx) {
   const styleOptions =
     styleQuery && styleQuery.length > 0
       ? { 'details.value': { $regex: styledMultiRegex, $options: 'i' } }
-      : {};
-
-  const patternOptions =
-    patternQuery && patternQuery.length > 0
-      ? { 'details.value': { $regex: patternMultiRegex, $options: 'i' } }
-      : {};
-
-  const materialOptions =
-    materialQuery && materialQuery.length > 0
-      ? { 'details.value': { $regex: materialMultiRegex, $options: 'i' } }
       : {};
 
   const sizeOptions =
@@ -595,8 +582,6 @@ export async function getServerSideProps(ctx) {
     ...categoryOptions,
     ...brandOptions,
     ...styleOptions,
-    ...patternOptions,
-    ...materialOptions,
     ...sizeOptions,
     ...colorOptions,
     ...priceOptions,
@@ -616,7 +601,6 @@ export async function getServerSideProps(ctx) {
     return { ...p, subProducts: newSubProducts };
   });
 
-  //Dùng hàm helper randomize để random mảng productsDb
   let products =
     sortQuery && sortQuery !== ''
       ? reduceImagesProductsDb
@@ -639,23 +623,17 @@ export async function getServerSideProps(ctx) {
 
   //Sử dụng hàm helper filterArray lọc ra toàn bộ value của các Object Details
   let stylesDb = filterArray(details, 'Style');
-  let patternsDb = filterArray(details, 'Pattern Type');
-  let materialsDb = filterArray(details, 'Material');
 
   //Các kết quả lọc ra phía trên sẽ bị trùng lặp nhau
   //Ta cần remove các duplicate value bằng hàm helper removeDuplicates
   let styles = removeDuplicates(stylesDb);
-  let patterns = removeDuplicates(patternsDb);
   let brands = removeDuplicates(brandsDb);
-  let materials = removeDuplicates(materialsDb);
 
   let totalProducts = await Product.countDocuments({
     ...searchOptions,
     ...categoryOptions,
     ...brandOptions,
     ...styleOptions,
-    ...patternOptions,
-    ...materialOptions,
     ...sizeOptions,
     ...colorOptions,
     ...priceOptions,
@@ -673,8 +651,6 @@ export async function getServerSideProps(ctx) {
       colors,
       brands,
       styles,
-      patterns,
-      materials,
       paginationCount: Math.ceil(totalProducts.length / pageSize),
     },
   };
