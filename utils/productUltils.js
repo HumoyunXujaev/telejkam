@@ -34,13 +34,23 @@ export const calculatePercentage = (reviewsArr, numsOfStar) => {
 
   return ((reviewNumsByStar.length / reviewsArr.length) * 100).toFixed(1);
 };
+const productCache = {};
 
 export const addToCartHandler = async (e, id, style, size, cart, dispatch) => {
   e.preventDefault();
   e.stopPropagation();
-  const { data } = await axios.get(
-    `/api/product/${id}?style=${style}&size=${size}`
-  );
+
+  let data;
+  const cacheKey = `${id}_${style}_${size}`;
+  if (productCache[cacheKey]) {
+    data = productCache[cacheKey];
+  } else {
+    const response = await axios.get(
+      `/api/product/${id}?style=${style}&size=${size}`
+    );
+    data = response.data;
+    productCache[cacheKey] = data; // Cache the product data
+  }
 
   if (data.quantity < 1) {
     toast.error('Этот продукт закончился!');
@@ -51,7 +61,7 @@ export const addToCartHandler = async (e, id, style, size, cart, dispatch) => {
 
     if (exist) {
       let newCart = cart.cartItems.map((p) => {
-        if (p._uniqueId == exist._uniqueId) {
+        if (p._uniqueId === exist._uniqueId) {
           return { ...p, qty: p.qty + 1 };
         }
         return p;
@@ -68,9 +78,7 @@ export const addToCartHandler = async (e, id, style, size, cart, dispatch) => {
           _uniqueId,
         })
       );
-
       toast.success('Продукт успешно добавлен в корзину!');
-      console.log(data);
     }
   }
 };
