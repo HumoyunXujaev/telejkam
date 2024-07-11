@@ -176,7 +176,7 @@ const Summary = ({
       <h2 className={styled.heading}></h2>
       {loading ? (
         <>
-          <LoadingButton /> <p>Loading...</p>
+          <LoadingButton /> <p style={{ textAlign: 'center' }}>Loading...</p>
         </>
       ) : (
         <>
