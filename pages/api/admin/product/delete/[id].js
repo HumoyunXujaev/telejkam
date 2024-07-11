@@ -1,12 +1,12 @@
-import nc from 'next-connect';
 import auth from '@/middleware/auth';
 import admin from '@/middleware/admin';
 import { Product } from '@/models/Product';
 import db from '@/utils/db';
 
-const handler = nc().use(auth).use(admin);
+import { createRouter } from 'next-connect';
+const router = createRouter().use(auth).use(admin);
 
-handler.post(async (req, res) => {
+router.post(async (req, res) => {
   try {
     await db.connectDb();
     const productId = req.query.id;
@@ -27,4 +27,4 @@ handler.post(async (req, res) => {
   }
 });
 
-export default handler;
+export default router.handler();

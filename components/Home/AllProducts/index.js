@@ -4,7 +4,6 @@ import styled from './styles.module.scss';
 import ProductCard from '@/components/ProductCard';
 import { useMediaQuery } from 'react-responsive';
 import { Button } from '@mui/material';
-import { RevealWrapper } from 'next-reveal';
 import AnimateWrapper from '@/components/AnimateWrapper';
 import { useTranslation } from 'next-i18next';
 import * as Icon from 'react-feather';

@@ -1,4 +1,7 @@
+'use client';
+
 /* eslint-disable @next/next/no-img-element */
+
 import Countdown from '@/components/Countdown';
 import styled from './styles.module.scss';
 import React from 'react';

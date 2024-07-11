@@ -1,15 +1,12 @@
-import { Category } from "@/models/Category";
-import db from "@/utils/db";
-import nextConnect from "next-connect";
-import slugify from "slugify";
-import auth from "../../../middleware/auth";
-import admin from "../../../middleware/admin";
+import { Category } from '@/models/Category';
+import db from '@/utils/db';
+import slugify from 'slugify';
+import auth from '../../../middleware/auth';
+import admin from '../../../middleware/admin';
+import { createRouter } from 'next-connect';
+const router = createRouter().use(auth).use(admin);
 
-// Dùng middleware auth để xác thực người dùng đã đăng nhập
-// Đồng thời có thể gắn cho req propperty user bằng với id của người dùng gửi request
-const handler = nextConnect().use(auth).use(admin);
-
-handler.post(async (req, res) => {
+router.post(async (req, res) => {
   try {
     await db.connectDb();
     const { name } = req.body;
@@ -20,7 +17,7 @@ handler.post(async (req, res) => {
     if (test) {
       return res
         .status(400)
-        .json({ message: "Category already exists, try a different name." });
+        .json({ message: 'Category already exists, try a different name.' });
     }
 
     await new Category({ name, slug: slugify(name) }).save();
@@ -36,7 +33,7 @@ handler.post(async (req, res) => {
   }
 });
 
-handler.delete(async (req, res) => {
+router.delete(async (req, res) => {
   try {
     await db.connectDb();
     const { id } = req.query;
@@ -46,7 +43,7 @@ handler.delete(async (req, res) => {
     db.disConnectDb();
 
     return res.json({
-      message: "Category has been deleted successfully.",
+      message: 'Category has been deleted successfully.',
       categories: await Category.find({}).sort({ updatedAt: -1 }),
     });
   } catch (error) {
@@ -54,7 +51,7 @@ handler.delete(async (req, res) => {
   }
 });
 
-handler.put(async (req, res) => {
+router.put(async (req, res) => {
   try {
     const { id, name } = req.body;
 
@@ -65,7 +62,7 @@ handler.put(async (req, res) => {
     await db.disConnectDb();
 
     return res.json({
-      message: "Category has been updated successfully.",
+      message: 'Category has been updated successfully.',
       categories: await Category.find({}).sort({ createdAt: -1 }),
     });
   } catch (error) {
@@ -73,4 +70,4 @@ handler.put(async (req, res) => {
   }
 });
 
-export default handler;
+export default router.handler();

@@ -1,13 +1,15 @@
-import { useEffect, useRef } from "react";
+'use client';
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper";
+import { useEffect, useRef } from 'react';
 
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import styled from "./styles.module.scss";
-import NextImage from "../NextImage";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import styled from './styles.module.scss';
+import NextImage from '../NextImage';
 
 const ProductCardSwiper = ({ images }) => {
   const swiperRef = useRef(null);
@@ -40,7 +42,7 @@ const ProductCardSwiper = ({ images }) => {
         {images?.map((img, index) => (
           <SwiperSlide key={index}>
             <div className={styled.product__infos_img}>
-              <NextImage src={img.url} alt="" />
+              <NextImage src={img.url} alt='' />
             </div>
           </SwiperSlide>
         ))}

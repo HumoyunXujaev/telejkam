@@ -1,10 +1,9 @@
 import { Product } from '@/models/Product';
 import db from '@/utils/db';
-import nc from 'next-connect';
+import { createRouter } from 'next-connect';
+const router = createRouter();
 
-const handler = nc();
-
-handler.get(async (req, res) => {
+router.get(async (req, res) => {
   try {
     await db.connectDb();
     const { id } = req.query;
@@ -35,4 +34,4 @@ handler.get(async (req, res) => {
   }
 });
 
-export default handler;
+export default router.handler();

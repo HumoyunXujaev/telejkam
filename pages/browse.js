@@ -14,7 +14,6 @@ import { useRouter } from 'next/router';
 import Footer from '@/components/Footer';
 import { useMediaQuery } from 'react-responsive';
 import { calculateFiltersApplied } from '@/utils/objectUltils';
-import { RevealWrapper } from 'next-reveal';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import dynamic from 'next/dynamic';

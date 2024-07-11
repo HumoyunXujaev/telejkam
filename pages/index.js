@@ -10,13 +10,7 @@ import AnimateWrapper from '@/components/AnimateWrapper';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import dynamic from 'next/dynamic';
 import React, { useCallback } from 'react';
-
-const DynamicFooter = dynamic(() => import('@/components/Footer'), {
-  ssr: false,
-});
-
 const MemoizedHeader = React.memo(Header);
 const MemoizedAllProducts = React.memo(AllProducts);
 
@@ -97,7 +91,7 @@ export default function Home({
           </AnimateWrapper>
         </div>
       </div>
-      <DynamicFooter country={country} />
+      <Footer />
     </>
   );
 }

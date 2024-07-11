@@ -1,11 +1,11 @@
-import auth from "@/middleware/auth";
-import { Review } from "@/models/Review";
-import db from "@/utils/db";
-import nc from "next-connect";
+import auth from '@/middleware/auth';
+import { Review } from '@/models/Review';
+import db from '@/utils/db';
 
-const handler = nc().use(auth);
+import { createRouter } from 'next-connect';
+const router = createRouter().use(auth);
 
-handler.post(async (req, res) => {
+router.post(async (req, res) => {
   try {
     await db.connectDb();
     const { id } = req.query;
@@ -19,7 +19,7 @@ handler.post(async (req, res) => {
     if (liked) {
       return res
         .status(400)
-        .json({ message: "You haved liked this review already!" });
+        .json({ message: 'You haved liked this review already!' });
     }
 
     review.likes.push(req.user);
@@ -30,7 +30,7 @@ handler.post(async (req, res) => {
     return res
       .status(200)
       .json(
-        await Review.find({ product: review.product }).populate("reviewBy")
+        await Review.find({ product: review.product }).populate('reviewBy')
       );
   } catch (error) {
     await db.disConnectDb();
@@ -38,4 +38,4 @@ handler.post(async (req, res) => {
   }
 });
 
-export default handler;
+export default router.handler();

@@ -11,6 +11,7 @@ async function handler(req, res) {
         shippingAddress,
         paymentMethod,
         total,
+
         // user_id,
         // shippingPrice,
         // totalBeforeDiscount,

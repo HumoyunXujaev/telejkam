@@ -1,3 +1,5 @@
+'use client';
+
 import styled from '@/styles/AllProducts.module.scss';
 import Layout from '@/components/Admin/Layout';
 import { Category } from '@/models/Category';

@@ -1,4 +1,7 @@
+'use client';
+
 /* eslint-disable @next/next/no-img-element */
+
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@mui/material';

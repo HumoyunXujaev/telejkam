@@ -1,14 +1,12 @@
-import nc from 'next-connect';
-
 import auth from '@/middleware/auth';
 import admin from '@/middleware/admin';
 import db from '@/utils/db';
 import { Product } from '@/models/Product';
 import slugify from 'slugify';
+import { createRouter } from 'next-connect';
+const router = createRouter().use(auth).use(admin);
 
-const handler = nc().use(auth).use(admin);
-
-handler.post(async (req, res) => {
+router.post(async (req, res) => {
   try {
     console.log(req.body);
     await db.connectDb();
@@ -66,4 +64,4 @@ handler.post(async (req, res) => {
   }
 });
 
-export default handler;
+export default router.handler();

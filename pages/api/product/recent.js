@@ -1,18 +1,17 @@
-import auth from "@/middleware/auth";
-import { Product } from "@/models/Product";
-import db from "@/utils/db";
-import nc from "next-connect";
+import auth from '@/middleware/auth';
+import { Product } from '@/models/Product';
+import db from '@/utils/db';
+import { createRouter } from 'next-connect';
+const router = createRouter().use(auth);
 
-const handler = nc().use(auth);
-
-handler.post(async (req, res) => {
+router.post(async (req, res) => {
   try {
     const { ids } = req.body;
 
     await db.connectDb();
 
     const recentProducts = await Product.find({ _id: ids })
-      .select("category name rating slug subProducts _id shipping")
+      .select('category name rating slug subProducts _id shipping')
       .lean();
 
     const reduceImagesProducts = recentProducts.map((p) => {
@@ -32,4 +31,4 @@ handler.post(async (req, res) => {
   }
 });
 
-export default handler;
+export default router.handler();

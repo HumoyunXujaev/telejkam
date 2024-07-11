@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import styled from '@/styles/Product.module.scss';
@@ -28,7 +30,6 @@ import { SubCategory } from '@/models/SubCategory';
 import Header from '@/components/Header';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import ProductCard from '@/components/ProductCard';
-import { SwiperSlide } from 'swiper/react';
 
 const ProductPage = ({ product }) => {
   const { t } = useTranslation();

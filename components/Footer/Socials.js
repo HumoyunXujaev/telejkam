@@ -6,9 +6,7 @@ import Image from 'next/image';
 const Socials = () => {
   return (
     <div className={styled.footer__socials}>
-      {/* <Image src='/telejkam.png' alt='logo' width={100} height={100} /> */}
       <section>
-        {/* <h3>Связаться с Нами</h3> */}
         <ul>
           <li>
             <a href='https://www.instagram.com/telejkam.uz/' target='_blank'>

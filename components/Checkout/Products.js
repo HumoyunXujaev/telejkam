@@ -3,7 +3,10 @@ import * as Icon from 'react-feather';
 
 import styled from './styles.module.scss';
 import NextImage from '../NextImage';
-import { calculateTotal } from '@/utils/productUltils';
+import {
+  calculateTotal,
+  calculateTotalDescription,
+} from '@/utils/productUltils';
 import { useTranslation } from 'next-i18next';
 
 const Products = ({ cart }) => {
@@ -59,13 +62,25 @@ const Products = ({ cart }) => {
                   </p>
                   <p>
                     <span>{t('price')} : </span>
-                    {product.price} {t('price_month')}
+                    {product.price.toLocaleString('ru-RU')} {t('price_month')}
+                  </p>
+                  <p>
+                    <span> </span>
+                    {product.price_description.toLocaleString('ru-RU')}{' '}
+                    {t('price_def')}
                   </p>
                   <div className={styled.product__total}>
                     <Icon.CornerDownRight />{' '}
-                    <p>
+                    {/* <p>
                       {(product?.price * product?.qty)?.toLocaleString('ru-RU')}{' '}
                       {t('price_month')}
+                    </p> */}
+                    <br />
+                    <p>
+                      {(
+                        product?.price_description * product?.qty
+                      )?.toLocaleString('ru-RU')}{' '}
+                      {t('price_def')}
                     </p>
                   </div>
                 </div>
@@ -77,7 +92,8 @@ const Products = ({ cart }) => {
       <div className={styled.products__subTotal}>
         {t('header.cart_subtotal')} :{' '}
         <span>
-          {calculateTotal(cart.cartItems)} {t('price_month')}{' '}
+          {/* {calculateTotal(cart.cartItems)} {t('price_month')} <></> */}
+          {calculateTotalDescription(cart.cartItems)} {t('price_def')}
         </span>
       </div>
     </div>

@@ -43,6 +43,9 @@ function Row(props) {
     setIsEditing(true);
   };
 
+  // useeffect to automatically change the page if something changes or deletes
+  React.useEffect(() => {}, [row, updatedOrder]);
+
   // send id trough the parameter of url
 
   const handleDeleteClick = async () => {

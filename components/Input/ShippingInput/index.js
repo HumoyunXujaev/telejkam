@@ -1,8 +1,9 @@
-import styled from "./styles.module.scss";
-import TextField from "@mui/material/TextField";
-import { useField, ErrorMessage } from "formik";
-import { TbAbc, Tb123 } from "react-icons/tb";
-import { MdDiscount } from "react-icons/md";
+import styled from './styles.module.scss';
+import TextField from '@mui/material/TextField';
+import { useField, ErrorMessage } from 'formik';
+import { TbAbc } from 'react-icons/tb';
+import { TbNumber123 } from 'react-icons/tb';
+import { MdDiscount } from 'react-icons/md';
 
 const ShippingInput = (props) => {
   const [field, meta] = useField(props);
@@ -18,14 +19,14 @@ const ShippingInput = (props) => {
           <TextField {...props} {...field} onChange={props.onChange} />
           {!field.value && (
             <div className={styled.input__icon}>
-              {props.icon === "text" ? (
+              {props.icon === 'text' ? (
                 <TbAbc />
-              ) : props.icon === "number" ? (
-                <Tb123 />
-              ) : props.icon === "coupon" ? (
+              ) : props.icon === 'number' ? (
+                <TbNumber123 />
+              ) : props.icon === 'coupon' ? (
                 <MdDiscount />
               ) : (
-                ""
+                ''
               )}
             </div>
           )}

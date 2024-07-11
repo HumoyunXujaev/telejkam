@@ -1,18 +1,17 @@
-import auth from "@/middleware/auth";
-import { Product } from "@/models/Product";
-import { Review } from "@/models/Review";
-import { User } from "@/models/User";
-import db from "@/utils/db";
-import nc from "next-connect";
+import auth from '@/middleware/auth';
+import { Product } from '@/models/Product';
+import { Review } from '@/models/Review';
+import { User } from '@/models/User';
+import db from '@/utils/db';
+import { createRouter } from 'next-connect';
+const router = createRouter();
 
-const handler = nc();
-
-handler.get(async (req, res) => {
+router.get(async (req, res) => {
   try {
     await db.connectDb();
     const { id } = req.query;
 
-    const reviews = await Review.find({ product: id }).populate("reviewBy");
+    const reviews = await Review.find({ product: id }).populate('reviewBy');
 
     await db.disConnectDb();
     return res.status(200).json(reviews);
@@ -22,7 +21,7 @@ handler.get(async (req, res) => {
   }
 });
 
-handler.post(async (req, res) => {
+router.post(async (req, res) => {
   try {
     await db.connectDb();
 
@@ -30,42 +29,42 @@ handler.post(async (req, res) => {
     const product = await Product.findById(id).lean();
 
     if (!product) {
-      return res.status(404).json({ message: "Product not found" });
+      return res.status(404).json({ message: 'Product not found' });
     }
 
     const { filter } = req.body;
     const { order, rating, size, style } = filter;
 
     const ratingOptions =
-      rating && rating !== "all"
+      rating && rating !== 'all'
         ? { rating: Number(rating) }
-        : rating === "all"
+        : rating === 'all'
         ? {}
         : {};
 
     const sizeOptions =
-      size && size !== "all" ? { size: size } : rating === "all" ? {} : {};
+      size && size !== 'all' ? { size: size } : rating === 'all' ? {} : {};
 
     let styleOptions =
       style.color && !style.colorImg
-        ? { "style.color": style.color }
+        ? { 'style.color': style.color }
         : !style.color && style.colorImg
-        ? { "style.colorImg": style.colorImg }
+        ? { 'style.colorImg': style.colorImg }
         : style.color && style.colorImg
-        ? { "style.color": style.color, "style.colorImg": style.colorImg }
-        : rating === "all"
+        ? { 'style.color': style.color, 'style.colorImg': style.colorImg }
+        : rating === 'all'
         ? {}
         : {};
 
     const recommendedSortOptions =
-      order === "Recommended" ? { rating: -1 } : {};
+      order === 'Recommended' ? { rating: -1 } : {};
 
     const sortOptions =
-      order === "Newest to Oldest"
+      order === 'Newest to Oldest'
         ? { updatedAt: -1 }
-        : order === "Oldest to Newest"
+        : order === 'Oldest to Newest'
         ? { updatedAt: 1 }
-        : order === "All"
+        : order === 'All'
         ? {}
         : {};
 
@@ -76,7 +75,7 @@ handler.post(async (req, res) => {
       ...styleOptions,
     })
       .sort({ ...recommendedSortOptions, ...sortOptions })
-      .populate("reviewBy");
+      .populate('reviewBy');
 
     res.status(200).json(reviewsAfterFilter);
   } catch (error) {
@@ -85,7 +84,7 @@ handler.post(async (req, res) => {
   }
 });
 
-handler.use(auth).put(async (req, res) => {
+router.use(auth).put(async (req, res) => {
   try {
     await db.connectDb();
 
@@ -134,7 +133,7 @@ handler.use(auth).put(async (req, res) => {
       return res.status(200).json({
         reviews: await Review.find({ product: id })
           .populate({
-            path: "reviewBy",
+            path: 'reviewBy',
             model: User,
           })
           .sort({ updatedAt: -1 }),
@@ -173,7 +172,7 @@ handler.use(auth).put(async (req, res) => {
       return res.status(200).json({
         reviews: await Review.find({ product: id })
           .populate({
-            path: "reviewBy",
+            path: 'reviewBy',
             model: User,
           })
           .sort({ updatedAt: -1 }),
@@ -185,4 +184,4 @@ handler.use(auth).put(async (req, res) => {
   }
 });
 
-export default handler;
+export default router.handler();

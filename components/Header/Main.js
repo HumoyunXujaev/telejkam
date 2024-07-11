@@ -162,17 +162,7 @@ const Main = ({ searchHandler2 }) => {
                       <span>{t('header.phone')}</span>
                     </div>
                   </Link>
-                  {/* <Link href={`mailto:hujaevhumoyun01@gmail.com`}>
-                    <div className={styled.drawer__item}>
-                      <Image
-                        src={`icons/email.png`}
-                        alt='phone'
-                        width='85'
-                        height='85'
-                      />
-                      <span>Почта</span>
-                    </div>
-                  </Link> */}
+
                   <Link href={`https://www.google.com/maps/place/`}>
                     <div className={styled.drawer__item}>
                       <Image

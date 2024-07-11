@@ -1,11 +1,14 @@
+'use client';
+
 /* eslint-disable @next/next/no-img-element */
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper";
 
-import "swiper/css";
-import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper';
 
-import styled from "./styles.module.scss";
+import 'swiper/css';
+import 'swiper/css/pagination';
+
+import styled from './styles.module.scss';
 
 const ProductsSwiper = ({ header, products }) => {
   return (
@@ -17,7 +20,7 @@ const ProductsSwiper = ({ header, products }) => {
         navigation={true}
         modules={[Navigation]}
         rewind={true}
-        className="products_swiper"
+        className='products_swiper'
         breakpoints={{
           300: { slidesPerView: 1 },
           360: { slidesPerView: 2 },

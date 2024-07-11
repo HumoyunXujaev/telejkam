@@ -1,16 +1,16 @@
-import nc from "next-connect";
-import auth from "@/middleware/auth";
-import db from "@/utils/db";
-import { User } from "@/models/User";
+import auth from '@/middleware/auth';
+import db from '@/utils/db';
+import { User } from '@/models/User';
 
-const handler = nc().use(auth);
+import { createRouter } from 'next-connect';
+const router = createRouter().use(auth);
 
-handler.patch(async (req, res) => {
+router.patch(async (req, res) => {
   try {
     const { id } = req.query;
     await db.connectDb();
 
-    const user = await User.findById(req.user).populate("wishlist.product");
+    const user = await User.findById(req.user).populate('wishlist.product');
     const newWishlist = [...user.wishlist].filter(
       (item) => item._id.toString() != id
     );
@@ -26,4 +26,4 @@ handler.patch(async (req, res) => {
   }
 });
 
-export default handler;
+export default router.handler();

@@ -2,12 +2,11 @@ import db from '@/utils/db';
 import { User } from '@/models/User';
 import auth from '@/middleware/auth';
 import admin from '@/middleware/admin';
-import nextConnect from 'next-connect';
 import { id } from 'date-fns/locale';
+import { createRouter } from 'next-connect';
+const router = createRouter().use(auth).use(admin);
 
-const handler = nextConnect().use(auth).use(admin);
-
-handler.put(async (req, res) => {
+router.put(async (req, res) => {
   try {
     const { _id, role, emailVerified } = req.body;
     await db.connectDb();
@@ -39,7 +38,7 @@ handler.put(async (req, res) => {
   }
 });
 
-handler.delete(async (req, res) => {
+router.delete(async (req, res) => {
   try {
     const { id } = req.query;
     // const { _id } = req.body;
@@ -63,4 +62,4 @@ handler.delete(async (req, res) => {
   }
 });
 
-export default handler;
+export default router.handler();

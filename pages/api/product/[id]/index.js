@@ -19,6 +19,8 @@ async function handler(req, res) {
       let priceBefore = product.subProducts[style].sizes[size]?.price;
       let priceAfter = priceBefore - (priceBefore * discount) / 100;
       let price = discount > 0 ? priceAfter : priceBefore;
+      let price_description =
+        product.subProducts[style].sizes[size]?.price_description;
 
       db.disConnectDb();
 
@@ -38,6 +40,7 @@ async function handler(req, res) {
         color: product.subProducts[style].color,
         size: product.subProducts[style].sizes[size]?.size,
         price,
+        price_description,
         priceBefore,
         quantity: product.subProducts[style].sizes[size]?.qty,
       });

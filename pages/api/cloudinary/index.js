@@ -1,10 +1,10 @@
-import nextConnect from "next-connect";
-import cloudinary from "cloudinary";
-import bodyParser from "body-parser";
-import fs from "fs";
-import fileUpload from "express-fileupload";
+import nextConnect from 'next-connect';
+import cloudinary from 'cloudinary';
+import bodyParser from 'body-parser';
+import fs from 'fs';
+import fileUpload from 'express-fileupload';
 
-import { imgMiddleware } from "@/middleware/imgMiddleware";
+import { imgMiddleware } from '@/middleware/imgMiddleware';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -12,11 +12,12 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-const handler = nextConnect();
+import { createRouter } from 'next-connect';
+const router = createRouter();
 //Dùng middleware express-fileupload
-handler.use(fileUpload({ useTempFiles: true }));
+router.use(fileUpload({ useTempFiles: true }));
 //Dùng middleware imgMiddleware
-handler.use(imgMiddleware);
+router.use(imgMiddleware);
 
 export const config = {
   //Tắt bodyParser tự động của NextJS
@@ -24,7 +25,7 @@ export const config = {
 };
 
 //Handle request upload ảnh
-handler.post(async (req, res) => {
+router.post(async (req, res) => {
   try {
     //Extract path từ body - path là path của folder mà ta muốn lưu ảnh
     const { path } = req.body;
@@ -48,7 +49,7 @@ handler.post(async (req, res) => {
 });
 
 //Handle request delete ảnh
-handler.delete(async (req, res) => {
+router.delete(async (req, res) => {
   let image_id = req.body.public_id;
   cloudinary.v2.uploader.destroy(image_id, (err, res) => {
     if (err) {
@@ -68,7 +69,7 @@ const uploadToCloudinaryHandler = async (file, path) => {
         if (err) {
           removeTmp(file.tempFilePath);
           console.log(err);
-          return res.status(400).json({ message: "Upload image failed." });
+          return res.status(400).json({ message: 'Upload image failed.' });
         }
 
         resolve({ url: res.secure_url, public_url: res.public_id });
@@ -83,4 +84,4 @@ const removeTmp = (path) => {
   });
 };
 
-export default handler;
+export default router.handler();

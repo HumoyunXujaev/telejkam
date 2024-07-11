@@ -1,14 +1,13 @@
-import { Category } from "@/models/Category";
-import { SubCategory } from "@/models/SubCategory";
-import db from "@/utils/db";
-import nextConnect from "next-connect";
-import slugify from "slugify";
-import auth from "../../../middleware/auth";
-import admin from "../../../middleware/admin";
+import { Category } from '@/models/Category';
+import { SubCategory } from '@/models/SubCategory';
+import db from '@/utils/db';
+import slugify from 'slugify';
+import auth from '../../../middleware/auth';
+import admin from '../../../middleware/admin';
+import { createRouter } from 'next-connect';
+const router = createRouter().use(auth).use(admin);
 
-const handler = nextConnect().use(auth).use(admin);
-
-handler.get(async (req, res) => {
+router.get(async (req, res) => {
   try {
     await db.connectDb();
 
@@ -18,7 +17,7 @@ handler.get(async (req, res) => {
       return res.json([]);
     }
 
-    const results = await SubCategory.find({ parent: category }).select("name");
+    const results = await SubCategory.find({ parent: category }).select('name');
 
     await db.disConnectDb();
 
@@ -28,7 +27,7 @@ handler.get(async (req, res) => {
   }
 });
 
-handler.post(async (req, res) => {
+router.post(async (req, res) => {
   try {
     await db.connectDb();
     const { name, parent } = req.body;
@@ -37,7 +36,7 @@ handler.post(async (req, res) => {
 
     if (test) {
       return res.status(400).json({
-        message: "Sub-Category already exists, try a different name.",
+        message: 'Sub-Category already exists, try a different name.',
       });
     }
 
@@ -47,7 +46,7 @@ handler.post(async (req, res) => {
 
     res.status(201).json({
       subCategories: await SubCategory.find({})
-        .populate({ path: "parent", model: Category })
+        .populate({ path: 'parent', model: Category })
         .sort({ updatedAt: -1 }),
       message: `Sub-Category ${name} has been created successfully.`,
     });
@@ -56,7 +55,7 @@ handler.post(async (req, res) => {
   }
 });
 
-handler.delete(async (req, res) => {
+router.delete(async (req, res) => {
   try {
     await db.connectDb();
     const { id } = req.query;
@@ -66,9 +65,9 @@ handler.delete(async (req, res) => {
     db.disConnectDb();
 
     return res.json({
-      message: "Sub-Category has been deleted successfully.",
+      message: 'Sub-Category has been deleted successfully.',
       subCategories: await SubCategory.find({})
-        .populate({ path: "parent", model: Category })
+        .populate({ path: 'parent', model: Category })
         .sort({ updatedAt: -1 }),
     });
   } catch (error) {
@@ -76,7 +75,7 @@ handler.delete(async (req, res) => {
   }
 });
 
-handler.put(async (req, res) => {
+router.put(async (req, res) => {
   try {
     const { id, name, parent } = req.body;
 
@@ -91,9 +90,9 @@ handler.put(async (req, res) => {
     await db.disConnectDb();
 
     return res.json({
-      message: "Sub-Category has been updated successfully.",
+      message: 'Sub-Category has been updated successfully.',
       subCategories: await SubCategory.find({})
-        .populate({ path: "parent", model: Category })
+        .populate({ path: 'parent', model: Category })
         .sort({ createdAt: -1 }),
     });
   } catch (error) {
@@ -101,4 +100,4 @@ handler.put(async (req, res) => {
   }
 });
 
-export default handler;
+export default router.handler();

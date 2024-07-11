@@ -1,22 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import styled from './styles.module.scss';
-import Policy from './Policy';
 import Links from './Links';
-import Newsletter from './Newsletter';
-import Payment from './Payment';
+
 import Socials from './Socials';
 import Copyright from './Copyright';
 import AnimateWrapper from '../AnimateWrapper';
 import Image from 'next/image';
 
-const Footer = ({ country }) => {
+const Footer = () => {
   return (
-    <AnimateWrapper className='load-hidden'>
+    <AnimateWrapper>
       <footer className={styled.footer}>
         <div className={styled.footer__container}>
-          {/* logo right in the middle of the footer */}
-
           <div className={styled.footer__left}>
             <Links />
           </div>

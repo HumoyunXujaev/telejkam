@@ -1,7 +1,6 @@
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import store from '@/store';
-import { persistStore } from 'redux-persist';
 import Head from 'next/head';
 import { SessionProvider } from 'next-auth/react';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
@@ -14,6 +13,8 @@ import 'nprogress/nprogress.css';
 import StyledDotLoader from '@/components/Loaders/DotLoader';
 import { Analytics } from '@vercel/analytics/react';
 import { appWithTranslation } from 'next-i18next';
+import { persistStore } from 'redux-persist';
+import 'swiper/swiper-bundle.css';
 
 NProgress.configure({
   minimum: 0.1,

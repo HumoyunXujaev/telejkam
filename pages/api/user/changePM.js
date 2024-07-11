@@ -1,11 +1,11 @@
-import auth from "@/middleware/auth";
-import { User } from "@/models/User";
-import db from "@/utils/db";
-import nc from "next-connect";
+import auth from '@/middleware/auth';
+import { User } from '@/models/User';
+import db from '@/utils/db';
 
-const handler = nc().use(auth);
+import { createRouter } from 'next-connect';
+const router = createRouter().use(auth);
 
-handler.put(async (req, res) => {
+router.put(async (req, res) => {
   try {
     await db.connectDb();
     const { paymentMethod } = req.body;
@@ -25,4 +25,4 @@ handler.put(async (req, res) => {
   }
 });
 
-export default handler;
+export default router.handler();

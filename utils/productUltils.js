@@ -70,6 +70,7 @@ export const addToCartHandler = async (e, id, style, size, cart, dispatch) => {
       );
 
       toast.success('Продукт успешно добавлен в корзину!');
+      console.log(data);
     }
   }
 };
@@ -92,6 +93,14 @@ export const calculateTotalShipping = (items) => {
 export const calculateTotal = (items) => {
   const newTotal = items.reduce(
     (a, c) => a + Number(c.shipping) + Number(c.price) * c.qty,
+    0
+  );
+  return Number(newTotal);
+};
+
+export const calculateTotalDescription = (items) => {
+  const newTotal = items.reduce(
+    (a, c) => a + Number(c.shipping) + Number(c.price_description) * c.qty,
     0
   );
   return Number(newTotal);

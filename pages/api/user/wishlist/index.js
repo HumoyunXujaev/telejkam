@@ -1,18 +1,18 @@
-import nc from "next-connect";
-import auth from "@/middleware/auth";
-import db from "@/utils/db";
-import { User } from "@/models/User";
-import { Product } from "@/models/Product";
+import auth from '@/middleware/auth';
+import db from '@/utils/db';
+import { User } from '@/models/User';
+import { Product } from '@/models/Product';
 
-const handler = nc().use(auth);
+import { createRouter } from 'next-connect';
+const router = createRouter().use(auth);
 
-handler.post(async (req, res) => {
+router.post(async (req, res) => {
   try {
     await db.connectDb();
     const { productIds } = req.body;
 
     const products = await Product.find({ _id: productIds }).select(
-      "name subProducts slug"
+      'name subProducts slug'
     );
 
     res.status(200).json(products);
@@ -20,7 +20,7 @@ handler.post(async (req, res) => {
   } catch (error) {}
 });
 
-handler.put(async (req, res) => {
+router.put(async (req, res) => {
   try {
     await db.connectDb();
 
@@ -40,7 +40,7 @@ handler.put(async (req, res) => {
     if (exist) {
       return res
         .status(400)
-        .json({ message: "Product already exists in your wishlist." });
+        .json({ message: 'Product already exists in your wishlist.' });
     }
 
     await user.updateOne({
@@ -57,10 +57,10 @@ handler.put(async (req, res) => {
 
     res
       .status(200)
-      .json({ message: "Product successfully added to your wishlist." });
+      .json({ message: 'Product successfully added to your wishlist.' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-export default handler;
+export default router.handler();

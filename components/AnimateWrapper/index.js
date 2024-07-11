@@ -1,14 +1,24 @@
-import { RevealWrapper } from "next-reveal";
-import React from "react";
+import React, { useRef, useEffect } from 'react';
 
-export default function AnimateWrapper({
-  origin = "top",
-  children,
-  delay = 0,
-}) {
+const RevealWrapper = ({ children, className, origin, delay }) => {
+  const revealRef = useRef(null);
+
+  useEffect(() => {
+    if (revealRef && revealRef.current) {
+      // Perform the reveal animation or action here
+    }
+  }, [revealRef]);
+
   return (
-    <RevealWrapper className="load-hidden" origin={origin} delay={delay}>
+    <div
+      ref={revealRef}
+      className={className}
+      data-origin={origin}
+      data-delay={delay}
+    >
       {children}
-    </RevealWrapper>
+    </div>
   );
-}
+};
+
+export default RevealWrapper;

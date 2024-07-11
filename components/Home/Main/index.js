@@ -1,3 +1,5 @@
+'use client';
+
 import styled from './styles.module.scss';
 import React, { useState } from 'react';
 import MainSwiper from './Swiper';

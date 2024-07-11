@@ -1,4 +1,7 @@
+'use client';
+
 /* eslint-disable @next/next/no-img-element */
+
 import Link from 'next/link';
 import styled from './styles.module.scss';
 import { Swiper, SwiperSlide } from 'swiper/react';

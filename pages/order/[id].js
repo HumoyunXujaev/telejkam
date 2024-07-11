@@ -77,6 +77,9 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
     console.log(error);
   };
 
+  const price_description = orderData.products.map(
+    (product) => product.price_description
+  );
   console.log(orderData);
   return (
     <>
@@ -140,12 +143,14 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                       {product.size} <Icon.ChevronsRight /> <p>{t('qty')} : </p>
                       {product.qty} <Icon.ChevronsRight />{' '}
                       <p>{t('price')} : </p>
-                      {product.price} {t('price_month')} <Icon.ChevronsRight />{' '}
+                      {product.price_description.toLocaleString('ru-RU')}{' '}
+                      <Icon.ChevronsRight />{' '}
                     </div>
                     <div className={styled.product__infos_total}>
                       <span>{t('header.cart_subtotal')}:</span>
                       {(product.price * product.qty).toLocaleString('ru-RU')}
                     </div>
+                    <br />
                   </div>
                 </div>
               ))}
@@ -166,27 +171,40 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                         {orderData.shippingPrice.toLocaleString('ru-RU')} сум
                       </span>
                     </div>
-                    {/* <div className={styled.order__total_sub}>
-                      <span>Tax price</span>
-                      <span>${orderData.taxPrice.toFixed(2)}</span>
-                    </div> */}
+
+                    {orderData.paymentMethod === 'cash' && (
+                      <div className={styled.order__total_sub2}>
+                        <span>{t('header.cart_subtotal')}</span>
+                        <span></span>
+                      </div>
+                    )}
+
                     <div className={styled.order__total_sub2}>
-                      <span>{t('header.cart_subtotal')}</span>
-                      <span>{orderData.total.toLocaleString('ru-RU')} сум</span>
+                      <span>
+                        {t('header.cart_subtotal')} {t('price_month')}
+                      </span>
+                      <span>
+                        {orderData.total.toLocaleString('ru-RU')}{' '}
+                        {t('price_month')}
+                      </span>
                     </div>
                   </>
                 ) : (
                   <>
-                    {/* <div className={styled.order__total_sub}>
-                      <span>Tax price</span>
-                      <span>{orderData.taxPrice}</span>
-                    </div> */}
                     <div className={styled.order__total_sub}>
                       <span>{t('header.cart_subtotal')}</span>
-                      <span>{orderData.total.toLocaleString('ru-RU')} сум</span>
+                      <span>
+                        {orderData.total.toLocaleString('ru-RU')}{' '}
+                        {t('price_month')}
+                      </span>
                     </div>
                   </>
                 )}
+
+                <div className={styled.order__total_sub}>
+                  <span>{t('payment_method')}</span>
+                  <span>{orderData.paymentMethod} </span>
+                </div>
               </div>
             </div>
           </div>

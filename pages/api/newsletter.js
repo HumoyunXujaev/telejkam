@@ -1,8 +1,8 @@
 import axios from 'axios';
-import nc from 'next-connect';
 
-const handler = nc();
-handler.post(async (req, res) => {
+import { createRouter } from 'next-connect';
+const router = createRouter();
+router.post(async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) {
@@ -20,14 +20,11 @@ handler.post(async (req, res) => {
   }
 });
 
-export default handler;
+export default router.handler();
 
-//Cung cấp các thông tin cần thiết để authenticate API, giúp access vào dashboard của Mailchimp
 function mailchimphandler(email) {
   const { MAILCHIMP_API_KEY, MAILCHIMP_LIST_ID } = process.env;
 
-  //Data center căn bản là 1 key, xác định API được gửi từ đâu
-  //Phần đưng trước dấu - trong API Key thể hiện region
   const DATACENTER = MAILCHIMP_API_KEY.split('-')[1];
 
   const url = `https://${DATACENTER}.api.mailchimp.com/3.0/lists/${MAILCHIMP_LIST_ID}/members`;
@@ -36,7 +33,6 @@ function mailchimphandler(email) {
     status: 'subscribed',
   };
 
-  //Key cần được send ở dạng base64
   const base64Key = Buffer.from(`anystring:${MAILCHIMP_API_KEY}`).toString(
     'base64'
   );

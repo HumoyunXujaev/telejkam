@@ -10,7 +10,11 @@ import styled from './styles.module.scss';
 // import { applyCoupon } from '@/utils/request';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { calculateTotal, emptyCartHandler } from '@/utils/productUltils';
+import {
+  calculateTotal,
+  calculateTotalDescription,
+  emptyCartHandler,
+} from '@/utils/productUltils';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
 
@@ -68,6 +72,7 @@ const Summary = ({
 
   // console.log('Total:', total);
 
+  console.log(cart);
   const placeOrderHandler = async () => {
     setLoading(true);
     try {
@@ -92,7 +97,9 @@ const Summary = ({
         shippingAddress: selectedAddress,
         // shippingPrice: shipping,
         paymentMethod,
-        total: calculateTotal(cart.cartItems.map((product) => product)),
+        total: calculateTotalDescription(
+          cart.cartItems.map((product) => product)
+        ),
 
         // totalBeforeDiscount: cart.cartTotal,
         // couponApplied: coupon,
@@ -134,7 +141,9 @@ const Summary = ({
         selectedAddress.firstName
       } ${selectedAddress.lastName}%0A📦 <b>Товары:</b> ${cart.cartItems
         .map((product) => product.name)
-        .join(', ')}%0A💰 <b>Сумма:</b> ${calculateTotal(
+        .join(', ')} <b>Количество:</b> (${cart.cartItems.map(
+        (product) => product.qty
+      )}) %0A💰 <b>Сумма:</b> ${calculateTotalDescription(
         cart.cartItems
       ).toLocaleString(
         'ru-RU'
@@ -173,10 +182,17 @@ const Summary = ({
         <>
           <div className={styled.summary__infos_totalLine}>
             <span>{t('header.cart_subtotal')} : </span>
-            <span>
+            {/* <span>
               {calculateTotal(
                 cart.cartItems.map((product) => product)
-              ).toLocaleString('ru-RU')}
+              ).toLocaleString('ru-RU')}{' '}
+              {t('price_month')}
+            </span> */}
+            <span>
+              {calculateTotalDescription(
+                cart.cartItems.map((product) => product)
+              ).toLocaleString('ru-RU')}{' '}
+              {t('price_def')}
             </span>
           </div>
 
@@ -196,76 +212,3 @@ const Summary = ({
 };
 
 export default Summary;
-{
-  /* <div className={styled.coupon}>
-        <Formik
-          enableReinitialize
-          initialValues={{ coupon }}
-          validationSchema={validateCoupon}
-          onSubmit={applyCouponHandler}
-        >
-          {(formik) => (
-            <Form>
-              <ShippingInput
-                required
-                id='coupon'
-                name='coupon'
-                label='Coupon'
-                fullWidth
-                icon='coupon'
-                onChange={(e) => {
-                  setCoupon(e.target.value);
-                  setError('');
-                }}
-              />
-              {error && <span className={styled.error}>{error}</span>}
-              <Button
-                type='submit'
-                variant='contained'
-                className={styled.coupon__submit_btn}
-              >
-                Apply
-              </Button>
-            </Form>
-          )}
-        </Formik>
-      </div> */
-}
-
-{
-  /* <div className={styled.summary__infos}> */
-}
-{
-  /* {discount > 0 && (
-          <div className={styled.summary__infos_couponLine}>
-            <span>Coupon applied :</span>
-            <span>
-              <FcApproval />
-              {discount}%
-            </span>
-          </div>
-        )} */
-}
-
-{
-  /* <div className={styled.summary__infos_line}>
-          <span>Subtotal : </span>
-          <span>${cart.cartTotal}</span>
-        </div> */
-}
-
-{
-  /* {totalAfterDiscount < cart.cartTotal && totalAfterDiscount !== 0 && (
-          <div className={styled.summary__infos_line}>
-            <span>New price: </span>
-            <span>${totalAfterDiscount}</span>
-          </div>
-        )} */
-}
-
-{
-  /* <div className={styled.summary__infos_line}>
-          <span>Shipping : </span>
-          <span>${shipping?.toFixed(2)}</span>
-        </div> */
-}

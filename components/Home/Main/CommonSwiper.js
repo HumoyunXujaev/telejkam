@@ -1,7 +1,9 @@
-import React from "react";
-import { Swiper } from "swiper/react";
-import { Pagination, Navigation } from "swiper";
-import { useMediaQuery } from "react-responsive";
+'use client';
+
+import React from 'react';
+import { Swiper } from 'swiper/react';
+import { Pagination, Navigation } from 'swiper';
+import { useMediaQuery } from 'react-responsive';
 
 export default function CommonSwiper({ children }) {
   const isLarge = useMediaQuery({ minWidth: 951, maxWidth: 1033 });
@@ -20,7 +22,7 @@ export default function CommonSwiper({ children }) {
       }}
       navigation={true}
       modules={[Pagination, Navigation]}
-      className="products_swiper"
+      className='products_swiper'
       rewind={true}
     >
       {children}

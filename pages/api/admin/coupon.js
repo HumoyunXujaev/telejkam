@@ -1,14 +1,13 @@
-import { Category } from "@/models/Category";
-import { Coupon } from "@/models/Coupon";
-import { SubCategory } from "@/models/SubCategory";
-import db from "@/utils/db";
-import nextConnect from "next-connect";
-import auth from "../../../middleware/auth";
-import admin from "../../../middleware/admin";
+import { Category } from '@/models/Category';
+import { Coupon } from '@/models/Coupon';
+import { SubCategory } from '@/models/SubCategory';
+import db from '@/utils/db';
+import auth from '../../../middleware/auth';
+import admin from '../../../middleware/admin';
+import { createRouter } from 'next-connect';
+const router = createRouter().use(auth).use(admin);
 
-const handler = nextConnect().use(auth).use(admin);
-
-handler.post(async (req, res) => {
+router.post(async (req, res) => {
   try {
     await db.connectDb();
     const { coupon, discount, startDate, endDate } = req.body;
@@ -17,7 +16,7 @@ handler.post(async (req, res) => {
 
     if (test) {
       return res.status(400).json({
-        message: "Coupon already exists, try a different coupon.",
+        message: 'Coupon already exists, try a different coupon.',
       });
     }
 
@@ -34,7 +33,7 @@ handler.post(async (req, res) => {
   }
 });
 
-handler.delete(async (req, res) => {
+router.delete(async (req, res) => {
   try {
     await db.connectDb();
     const { id } = req.query;
@@ -44,7 +43,7 @@ handler.delete(async (req, res) => {
     db.disConnectDb();
 
     return res.json({
-      message: "Coupon has been deleted successfully.",
+      message: 'Coupon has been deleted successfully.',
       coupons: await Coupon.find({}).sort({ updatedAt: -1 }),
     });
   } catch (error) {
@@ -52,7 +51,7 @@ handler.delete(async (req, res) => {
   }
 });
 
-handler.put(async (req, res) => {
+router.put(async (req, res) => {
   try {
     const { id, coupon, startDate, endDate, discount } = req.body;
 
@@ -76,4 +75,4 @@ handler.put(async (req, res) => {
   }
 });
 
-export default handler;
+export default router.handler();
