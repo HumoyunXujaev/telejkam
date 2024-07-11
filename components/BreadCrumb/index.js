@@ -1,22 +1,18 @@
 import Link from 'next/link';
-import { ImHome } from 'react-icons/im';
-import { GrFormNext } from 'react-icons/gr';
-
+import * as Icon from 'react-feather';
 import styled from './styles.module.scss';
 
 const BreadCrumb = ({ category, categoryLink, subCategories }) => {
   return (
     <div className={styled.wrapper}>
       <Link href='/'>
-        <ImHome />
-        Главная
+        <Icon.Home />
       </Link>
-      <GrFormNext /> <Link href={categoryLink}>
-        {category}
-      </Link> <GrFormNext />{' '}
+      <Icon.ChevronRight /> <Link href={categoryLink}>{category}</Link>{' '}
+      <Icon.ChevronRight />{' '}
       {subCategories?.map((sub, index) => (
         <span key={index}>
-          {sub.name} <GrFormNext />{' '}
+          {sub.name} <Icon.ChevronRight />{' '}
         </span>
       ))}
     </div>

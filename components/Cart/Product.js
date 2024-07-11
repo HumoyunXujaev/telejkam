@@ -2,11 +2,10 @@
 import { updateCart } from '@/store/cartSlice';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { FcShop, FcFullTrash } from 'react-icons/fc';
-import { MdOutlineKeyboardArrowRight, MdPlayArrow } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { useMediaQuery } from 'react-responsive';
+import * as Icon from 'react-feather';
 
 import styled from './styles.module.scss';
 import Link from 'next/link';
@@ -110,9 +109,9 @@ const Product = ({ product, selected, setSelected }) => {
           onClick={selectHandler}
         ></div>
         <Link href={'/'}>
-          <FcShop />
+          <Icon.Home />
           Telejkam
-          <MdPlayArrow />
+          <Icon.ChevronRight />
         </Link>
       </div>
       <div className={styled.cart__product_body}>
@@ -168,7 +167,7 @@ const Product = ({ product, selected, setSelected }) => {
                   target='_blank'
                   href={`/product/${product.slug}?style=${product.style}&size=${product.sizeIndex}`}
                 >
-                  Нажмите здесь <MdOutlineKeyboardArrowRight />
+                  Нажмите здесь <Icon.ChevronRight />
                 </Link>
               </p>
             )}
@@ -190,7 +189,8 @@ const Product = ({ product, selected, setSelected }) => {
             )}
             {product.price !== product.priceBefore && !isSmall && (
               <del>
-                {product.priceBefore.toLocaleString('ru-RU')} {t('price_month')}
+                {product?.priceBefore?.toLocaleString('ru-RU')}{' '}
+                {t('price_month')}
               </del>
             )}
           </div>
@@ -229,7 +229,7 @@ const Product = ({ product, selected, setSelected }) => {
             style={{ zIndex: 2 }}
             onClick={showPopupHandler}
           >
-            <FcFullTrash />
+            <Icon.Trash />
           </div>
         </div>
       </div>

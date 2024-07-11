@@ -1,14 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useRef, useState } from 'react';
-import { AiOutlinePlusCircle } from 'react-icons/ai';
 import Image from 'next/image';
 import { Button } from '@mui/material';
 import { SlideshowLightbox } from 'lightbox.js-react';
 import 'lightbox.js-react/dist/index.css';
-import {
-  MdOutlineKeyboardDoubleArrowUp,
-  MdOutlineKeyboardDoubleArrowDown,
-} from 'react-icons/md';
+import * as Icon from 'react-feather';
 
 import styled from './styles.module.scss';
 import NextImage from '../NextImage';
@@ -127,7 +123,7 @@ const MainSwiper = ({ images, activeImg }) => {
 
         {!showMaginify && (
           <div className={styled.hint}>
-            <AiOutlinePlusCircle /> <span>Нажмите или Наведите</span>
+            <Icon.PlusCircle /> <span>Нажмите или Наведите</span>
           </div>
         )}
 
@@ -155,7 +151,7 @@ const MainSwiper = ({ images, activeImg }) => {
           variant='contained'
           onClick={() => containerScrollHandler('up')}
         >
-          <MdOutlineKeyboardDoubleArrowUp />
+          <Icon.ChevronsUp />
         </Button>
         <div className={styled.swiper__list_container} ref={containerRef}>
           {images.map((img, index) => {
@@ -176,7 +172,7 @@ const MainSwiper = ({ images, activeImg }) => {
           variant='contained'
           onClick={() => containerScrollHandler('down')}
         >
-          <MdOutlineKeyboardDoubleArrowDown />
+          <Icon.ChevronsDown />
         </Button>
       </div>
     </div>

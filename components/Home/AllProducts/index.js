@@ -4,10 +4,10 @@ import styled from './styles.module.scss';
 import ProductCard from '@/components/ProductCard';
 import { useMediaQuery } from 'react-responsive';
 import { Button } from '@mui/material';
-import { MdOutlineExpandMore } from 'react-icons/md';
 import { RevealWrapper } from 'next-reveal';
 import AnimateWrapper from '@/components/AnimateWrapper';
 import { useTranslation } from 'next-i18next';
+import * as Icon from 'react-feather';
 
 export default function AllProducts({ products }) {
   const [visible, setVisible] = useState(8);
@@ -83,7 +83,7 @@ export default function AllProducts({ products }) {
       </div>
       <div className={styled.allProducts__moreBtn}>
         <Button variant='contained' onClick={showMoreHandler}>
-          {t('more')} <MdOutlineExpandMore />
+          {t('more')} <Icon.ChevronDown />
         </Button>
       </div>
     </>

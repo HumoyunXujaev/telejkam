@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { MdDiscount } from 'react-icons/md';
 
 import ProductCardSwiper from './ProductCardSwiper';
 
@@ -10,10 +9,10 @@ import { priceAfterDiscount, sortPricesArr } from '@/utils/productUltils';
 // import Ratings from '../Ratings';
 import Actions from '../Actions';
 import Router from 'next/router';
-import { FaOpencart } from 'react-icons/fa';
 import { addToCartHandler } from '@/utils/productUltils';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'next-i18next';
+import * as Icon from 'react-feather';
 
 const ProductCard = ({ product, className, remove }) => {
   const { t } = useTranslation();
@@ -69,7 +68,7 @@ const ProductCard = ({ product, className, remove }) => {
             </div>{' '}
             {product.subProducts[active]?.discount ? (
               <div className={styled.product__infos_discount}>
-                <MdDiscount />
+                <Icon.Gift />
                 <p>{product.subProducts[active].discount}%</p>
               </div>
             ) : (
@@ -77,7 +76,7 @@ const ProductCard = ({ product, className, remove }) => {
             )}
             {product.label && (
               <div className={styled.product__infos_label}>
-                <MdDiscount />
+                <Icon.Gift />
                 <p>{product.label}</p>
               </div>
             )}
@@ -162,7 +161,7 @@ const ProductCard = ({ product, className, remove }) => {
               }
             >
               <span>
-                <FaOpencart />
+                <Icon.ShoppingCart />
               </span>
               <span>{t('add_to_cart')}</span>
             </button>

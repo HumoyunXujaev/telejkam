@@ -15,11 +15,10 @@ import Footer from '@/components/Footer';
 import { useMediaQuery } from 'react-responsive';
 import { calculateFiltersApplied } from '@/utils/objectUltils';
 import { RevealWrapper } from 'next-reveal';
-import { MdClose, MdFilter, MdSort, MdSortByAlpha } from 'react-icons/md';
-import { FaSort } from 'react-icons/fa';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import dynamic from 'next/dynamic';
+import * as Icon from 'react-feather';
 
 // Lazy load components
 const ProductCard = dynamic(() => import('@/components/ProductCard'), {
@@ -238,12 +237,12 @@ export default function BrowsePage({
               <div className={styled.browse__drawerIcon}>
                 <div className={styled.browse__drawerIcon_item}>
                   <IconButton onClick={() => setDrawerOpen(true)}>
-                    Фильтры <FaSort />
+                    Фильтры <Icon.Filter />
                   </IconButton>
                 </div>
                 <div className={styled.browse__drawerIcon_item}>
                   <IconButton onClick={() => setSortDrawer(true)}>
-                    Сортировать <MdSort />
+                    Сортировать <Icon.Filter />
                   </IconButton>
                 </div>
 
@@ -255,7 +254,7 @@ export default function BrowsePage({
                 >
                   <div className={styled.browse__drawer}>
                     <IconButton onClick={() => setSortDrawer(false)}>
-                      <MdClose />
+                      <Icon.XCircle />
                     </IconButton>
                     <SortFilter
                       sortHandler={sortHandler}
@@ -272,7 +271,7 @@ export default function BrowsePage({
                 >
                   <div className={styled.browse__drawer}>
                     <IconButton onClick={() => setDrawerOpen(false)}>
-                      <MdClose />
+                      <Icon.XCircle />
                     </IconButton>
                     <SortFilter
                       sortHandler={sortHandler}

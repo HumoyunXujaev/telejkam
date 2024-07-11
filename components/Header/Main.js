@@ -1,13 +1,4 @@
 import Link from 'next/link';
-import { RiSearch2Line } from 'react-icons/ri';
-import {
-  FaBox,
-  FaBoxOpen,
-  FaHeart,
-  FaLanguage,
-  FaOpencart,
-  FaUser,
-} from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -26,12 +17,12 @@ import {
 import { Button, Tooltip } from '@mui/material';
 import SearchResults from './SearchResults/';
 import axios from 'axios';
-import { BiLoader } from 'react-icons/bi';
 import { signIn, useSession } from 'next-auth/react';
-import { MdClose, MdDashboard, MdMenu } from 'react-icons/md';
 import { useMediaQuery } from 'react-responsive';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
+import * as Icon from 'react-feather';
+
 const Main = ({ searchHandler2 }) => {
   const isSmall = useMediaQuery({ maxWidth: 950 });
 
@@ -88,7 +79,7 @@ const Main = ({ searchHandler2 }) => {
               onClick={() => setDrawerOpen(true)}
               className={styled.drawerIcon}
             >
-              <MdMenu size={20} />
+              <Icon.Menu size={20} />
             </IconButton>
 
             <Drawer
@@ -109,51 +100,51 @@ const Main = ({ searchHandler2 }) => {
                   <Link href={router.pathname} locale='ru'>
                     <span>Рус</span>
                   </Link>
-                  <FaLanguage />
+                  <Icon.Globe />
                   <Link href={router.pathname} locale='uz'>
                     <span>O`&apos;zb</span>
                   </Link>
 
                   {/* </div> */}
                   <IconButton onClick={() => setDrawerOpen(false)}>
-                    <MdClose />
+                    <Icon.XCircle />
                   </IconButton>
                 </div>
                 <div className={styled.drawer__body}>
                   <Link href='browse'>
                     <div className={styled.drawer__item}>
-                      <MdDashboard size={20} />
+                      <Icon.Layers size={20} />
                       <span>{t('header.katalog')}</span>
                     </div>
                   </Link>
                   <Link href='/order-status/'>
                     <div className={styled.drawer__item}>
-                      <FaBox />
+                      <Icon.Inbox />
                       <span>{t('header.status')}</span>
                     </div>
                   </Link>
                   <Link href='cart'>
                     <div className={styled.drawer__item}>
-                      <FaOpencart />
+                      <Icon.ShoppingBag />
                       <span>{t('header.cart')}</span>
                     </div>
                   </Link>
                   <Link href={`wishlist`}>
                     <div className={styled.drawer__item}>
-                      <FaHeart />
+                      <Icon.Heart />
                       <span>{t('header.heart')}</span>
                     </div>
                   </Link>
                   {session ? (
                     <Link href={`profile`}>
                       <div className={styled.drawer__item}>
-                        <FaUser />
+                        <Icon.User />
                         <span>Аккаунт</span>
                       </div>
                     </Link>
                   ) : (
                     <div className={styled.drawer__item}>
-                      <FaUser onClick={() => signIn()} />
+                      <Icon.User onClick={() => signIn()} />
                       <span>{t('header.login')}</span>
                     </div>
                   )}
@@ -215,17 +206,6 @@ const Main = ({ searchHandler2 }) => {
                       <span>Instagram</span>
                     </div>
                   </Link>
-                  {/* <Link href={`https://www.youtube.com/`}>
-                    <div className={styled.drawer__item}>
-                      <Image
-                        src={`icons/yt.png`}
-                        alt='phone'
-                        width='85'
-                        height='85'
-                      />
-                      <span>Youtube</span>
-                    </div>
-                  </Link> */}
                 </div>
               </div>
             </Drawer>
@@ -243,7 +223,7 @@ const Main = ({ searchHandler2 }) => {
 
         <Link href='browse'>
           <div className={styled.catalog}>
-            <MdMenu />
+            <Icon.Menu />
             <span className={styled.catalog__text}>{t('header.katalog')}</span>
           </div>
         </Link>
@@ -267,15 +247,15 @@ const Main = ({ searchHandler2 }) => {
           <button type='submit' className={styled.search__icon}>
             {loading && (
               <span>
-                <BiLoader />
+                <Icon.Loader />
               </span>
             )}
-            {!loading && <RiSearch2Line />}
+            {!loading && <Icon.Search />}
           </button>
         </form>
         <Link href={`order-status`}>
           <div className={styled.orderStatus}>
-            <FaBox />
+            <Icon.Inbox />
             <span className={styled.orderStatus__text}>
               {t('header.status')}
             </span>
@@ -305,7 +285,7 @@ const Main = ({ searchHandler2 }) => {
         {/* Cart */}
         <Link href='cart'>
           <div className={styled.cart}>
-            <FaOpencart />
+            <Icon.ShoppingBag />
             <span className={styled.cart__number}>{cart.cartItems.length}</span>
             <span className={styled.cart__text}>{t('header.cart')}</span>
 
@@ -360,7 +340,7 @@ const Main = ({ searchHandler2 }) => {
         </Link>
         <Link href={`wishlist`}>
           <div className={styled.wishlist}>
-            <FaHeart />
+            <Icon.Heart />
             <span className={styled.wishlist__text}>{t('header.heart')}</span>
           </div>
         </Link>
@@ -368,13 +348,13 @@ const Main = ({ searchHandler2 }) => {
         {session ? (
           <Link href={`profile`}>
             <div className={styled.profile}>
-              <FaUser />
+              <Icon.User />
               <span className={styled.profile__text}>Аккаунт</span>
             </div>
           </Link>
         ) : (
           <div className={styled.profile}>
-            <FaUser onClick={() => signIn()} />
+            <Icon.User onClick={() => signIn()} />
             <span className={styled.profile__text}>{t('header.login')}</span>
           </div>
         )}

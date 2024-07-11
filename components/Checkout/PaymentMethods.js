@@ -1,6 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button } from '@mui/material';
-import { RiSave3Fill } from 'react-icons/ri';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,8 +11,6 @@ import styled from './styles.module.scss';
 const PaymentMethods = ({
   paymentMethod,
   setPaymentMethod,
-  profile,
-  disabled,
   setDisabled,
   setDbPM,
 }) => {
@@ -80,20 +76,6 @@ const PaymentMethods = ({
           </div>
         </label>
       ))}
-
-      {profile && (
-        <div className={`${styled.btn} ${styled.profileBtn}`}>
-          <Button
-            variant='contained'
-            startIcon={<RiSave3Fill />}
-            disabled={disabled}
-            onClick={saveHandler}
-            type='submit'
-          >
-            Сохранить настройки оплаты
-          </Button>
-        </div>
-      )}
     </div>
   );
 };

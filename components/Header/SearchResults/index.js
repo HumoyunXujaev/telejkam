@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { BiSearchAlt } from 'react-icons/bi';
 
 import styled from '../styles.module.scss';
 import SearchItem from './SearchItem';
 import { useRouter } from 'next/router';
 import StyledDotLoader2 from '@/components/Loaders/DotLoader2';
 import NextImage from '@/components/NextImage';
+import * as Icon from 'react-feather';
 
 function SearchResults({ products, showSearchResults, query, loading }) {
   const router = useRouter();
@@ -22,7 +22,7 @@ function SearchResults({ products, showSearchResults, query, loading }) {
       {!loading && products.length > 0 && (
         <>
           <div className={styled.search__heading}>
-            <BiSearchAlt size={20} />
+            <Icon.Search size={20} />
             Продукты
           </div>
           <div className={styled.search__body}>

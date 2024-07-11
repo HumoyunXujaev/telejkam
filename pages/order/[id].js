@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect } from 'react';
-import { BiChevronsRight } from 'react-icons/bi';
-import { FcInfo, FcPaid } from 'react-icons/fc';
 import Swal from 'sweetalert2';
+import * as Icon from 'react-feather';
 
 import styled from '../../styles/Order.module.scss';
 import { Order } from '@/models/Order';
@@ -93,7 +92,7 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
             </div>
             <div className={styled.order__infos_status}>
               <span>
-                <FcInfo /> {t('header.status')}
+                <Icon.Info /> {t('header.status')}
               </span>
               {orderData.isPaid ? (
                 <span>{t('paid')}</span>
@@ -103,14 +102,14 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
             </div>
             <div className={styled.order__infos_status}>
               <span>
-                <FcInfo />
+                <Icon.Info />
                 {t('header.status')}
               </span>
               <span>{orderData.status}</span>
             </div>
             <div className={styled.order__infos_status}>
               <span>
-                <FcInfo /> {t('order_details')}
+                <Icon.Info /> {t('order_details')}
               </span>
               <span>
                 Включает {orderData.products.length}{' '}
@@ -137,10 +136,11 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                           style={{ backgroundColor: product.color.color }}
                         ></span>
                       )}
-                      <BiChevronsRight /> <p>{t('size')} : </p>
-                      {product.size} <BiChevronsRight /> <p>{t('qty')} : </p>
-                      {product.qty} <BiChevronsRight /> <p>{t('price')} : </p>
-                      {product.price} {t('price_month')} <BiChevronsRight />{' '}
+                      <Icon.ChevronsRight /> <p>{t('size')} : </p>
+                      {product.size} <Icon.ChevronsRight /> <p>{t('qty')} : </p>
+                      {product.qty} <Icon.ChevronsRight />{' '}
+                      <p>{t('price')} : </p>
+                      {product.price} {t('price_month')} <Icon.ChevronsRight />{' '}
                     </div>
                     <div className={styled.product__infos_total}>
                       <span>{t('header.cart_subtotal')}:</span>
@@ -276,7 +276,7 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
               </div>
             ) : (
               <div className={styled.paid}>
-                <FcPaid /> Оплата успешна!
+                <Icon.CheckCircle /> Оплата успешна!
               </div>
             )}
           </div>

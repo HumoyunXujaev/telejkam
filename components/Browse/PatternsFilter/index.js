@@ -1,12 +1,11 @@
-import { useState } from "react";
-import styled from "../styles.module.scss";
-import { FaMinus, FaPlus } from "react-icons/fa";
-import { useRouter } from "next/router";
-import { replaceQuery } from "@/utils/filter";
-import CheckboxItem from "../CheckboxItem";
-import ShowAllBtn from "../ShowAllBtn";
-import useSeeMore from "@/hook/useSeeMore";
-import PlusMinusBtn from "../PlusMinusBtn";
+import { useState } from 'react';
+import styled from '../styles.module.scss';
+import { useRouter } from 'next/router';
+import { replaceQuery } from '@/utils/filter';
+import CheckboxItem from '../CheckboxItem';
+import ShowAllBtn from '../ShowAllBtn';
+import useSeeMore from '@/hook/useSeeMore';
+import PlusMinusBtn from '../PlusMinusBtn';
 
 export default function PatternsFilter({
   patterns,
@@ -17,12 +16,12 @@ export default function PatternsFilter({
   const router = useRouter();
   const { itemsQty, showAllHandler, hideBtn } = useSeeMore(patterns);
 
-  const existedPattern = router.query.pattern || "";
+  const existedPattern = router.query.pattern || '';
 
   return (
     <div className={styled.filter}>
       <h3>
-        Patterns{" "}
+        Patterns{' '}
         <PlusMinusBtn show={show} onClick={() => setShow((prev) => !prev)} />
       </h3>
 
@@ -31,7 +30,7 @@ export default function PatternsFilter({
           <div>
             {patterns.length > 0 ? (
               patterns.map((pattern, i) => {
-                const check = checkChecked("pattern", pattern);
+                const check = checkChecked('pattern', pattern);
                 return (
                   <CheckboxItem
                     key={i}
@@ -46,13 +45,13 @@ export default function PatternsFilter({
                     id={pattern}
                     check={check}
                     content={pattern}
-                    name="pattern"
-                    type="checkbox"
+                    name='pattern'
+                    type='checkbox'
                   />
                 );
               })
             ) : (
-              <p style={{ padding: "10px 0" }}>Found no patterns</p>
+              <p style={{ padding: '10px 0' }}>Found no patterns</p>
             )}
           </div>
           {patterns.slice(0, itemsQty).length > 5 && (

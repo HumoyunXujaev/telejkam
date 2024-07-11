@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { VscDebugBreakpointFunction } from 'react-icons/vsc';
-import { BsArrowReturnRight } from 'react-icons/bs';
+import * as Icon from 'react-feather';
 
 import styled from './styles.module.scss';
 import NextImage from '../NextImage';
@@ -35,7 +34,6 @@ const Products = ({ cart }) => {
                 <h3>{product.name}</h3>
                 <div className={styled.product__infos}>
                   <p>
-                    <VscDebugBreakpointFunction />
                     <span>{t('color')} : </span>{' '}
                     {product.color.image ? (
                       <img src={product.color.image} alt='' />
@@ -52,23 +50,19 @@ const Products = ({ cart }) => {
                     )}
                   </p>
                   <p>
-                    <VscDebugBreakpointFunction />
                     <span>{t('size')} : </span>
                     {product.size}
                   </p>
                   <p>
-                    <VscDebugBreakpointFunction />
-
                     <span>{t('qty')} : </span>
                     {product.qty}
                   </p>
                   <p>
-                    <VscDebugBreakpointFunction />
                     <span>{t('price')} : </span>
                     {product.price} {t('price_month')}
                   </p>
                   <div className={styled.product__total}>
-                    <BsArrowReturnRight />{' '}
+                    <Icon.CornerDownRight />{' '}
                     <p>
                       {(product?.price * product?.qty)?.toLocaleString('ru-RU')}{' '}
                       {t('price_month')}

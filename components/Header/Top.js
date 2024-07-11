@@ -1,33 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
-import { AiFillSafetyCertificate, AiOutlineMenuUnfold } from 'react-icons/ai';
-import { HiHeart } from 'react-icons/hi';
-import {
-  FaBuilding,
-  FaCar,
-  FaComment,
-  FaHandsHelping,
-  FaInfo,
-  FaLanguage,
-  FaStore,
-  FaTruck,
-} from 'react-icons/fa';
-import {
-  RiCustomerServiceFill,
-  RiAccountPinCircleFill,
-  RiArrowDropDownFill,
-  RiPhoneCameraFill,
-} from 'react-icons/ri';
+
 import { useSession } from 'next-auth/react';
 import { useMediaQuery } from 'react-responsive';
 import Link from 'next/link';
 
 import styled from './styles.module.scss';
-import UserMenu from './UserMenu';
 import { useDispatch } from 'react-redux';
 import { toggleMobileCate } from '@/store/mobileCateSlice';
-import { MdCall } from 'react-icons/md';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
+import * as Icon from 'react-feather';
 
 const Top = ({ country }) => {
   const { t } = useTranslation();
@@ -46,7 +28,7 @@ const Top = ({ country }) => {
             className={styled.menuIcon}
             onClick={() => dispatch(toggleMobileCate())}
           >
-            <AiOutlineMenuUnfold size={24} />
+            {/* <AiOutlineMenuUnfold size={24} /> */}
           </div>
         </div>
 
@@ -70,31 +52,29 @@ const Top = ({ country }) => {
           {!isSmallScreen && (
             <>
               <li className={styled.li}>
-                <MdCall style={{ fill: 'white' }} />
+                <Icon.PhoneCall />
                 <a href='tel:+998991911136'>
                   <span>+998 99 191 11 36</span>
                 </a>
               </li>
               <li className={styled.li}>
-                <RiCustomerServiceFill
-                  style={{ color: 'black', fill: 'white' }}
-                />
+                <Icon.Briefcase style={{ color: 'white' }} />
                 <span>{t('top.time')}</span>
               </li>
               <li className={styled.li}>
-                <FaTruck style={{ fill: 'white' }} />
+                <Icon.Truck />
                 <span>{t('top.delivery')}</span>
               </li>
               <li className={styled.li}>
-                <FaComment style={{ fill: 'white' }} />
+                <Icon.MessageCircle />
                 <span>{t('top.about')}</span>
               </li>
               <li className={styled.li}>
-                <FaStore style={{ fill: 'white' }} />
+                <Icon.Home />
                 <span>{t('top.stores')}</span>
               </li>
               <li className={styled.li}>
-                <FaLanguage style={{ fill: 'white' }} />
+                <Icon.Globe />
                 <span></span>
               </li>
 

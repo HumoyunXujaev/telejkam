@@ -1,8 +1,8 @@
-import Link from "next/link";
-import React from "react";
-import { IoLocationSharp } from "react-icons/io5";
+import Link from 'next/link';
+import React from 'react';
 
-import styled from "./styles.module.scss";
+import styled from './styles.module.scss';
+import * as Icon from 'react-feather';
 
 const Policy = ({ country }) => {
   return (
@@ -17,8 +17,8 @@ const Policy = ({ country }) => {
             );
           })}
           <li>
-            <a href="">
-              <IoLocationSharp /> <span>{country?.name}</span>
+            <a href=''>
+              <Icon.Map /> <span>{country?.name}</span>
             </a>
           </li>
         </ul>
@@ -29,24 +29,24 @@ const Policy = ({ country }) => {
 
 const data = [
   {
-    name: "Privacy Center",
-    link: "",
+    name: 'Privacy Center',
+    link: '',
   },
   {
-    name: "Privacy & Cookie Policy",
-    link: "",
+    name: 'Privacy & Cookie Policy',
+    link: '',
   },
   {
-    name: "Manage Cookies",
-    link: "",
+    name: 'Manage Cookies',
+    link: '',
   },
   {
-    name: "Terms & Conditions",
-    link: "",
+    name: 'Terms & Conditions',
+    link: '',
   },
   {
-    name: "Copyright Notice",
-    link: "",
+    name: 'Copyright Notice',
+    link: '',
   },
 ];
 

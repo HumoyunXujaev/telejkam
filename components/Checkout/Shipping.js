@@ -5,8 +5,7 @@ import * as Yup from 'yup';
 import Button from '@mui/material/Button';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { VscDebugBreakpointFunction } from 'react-icons/vsc';
-import { BsFillCaretDownFill, BsFillCaretUpFill } from 'react-icons/bs';
+import * as Icon from 'react-feather';
 
 import styled from './styles.module.scss';
 import ShippingInput from '../Input/ShippingInput';
@@ -132,14 +131,14 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
             </div>
 
             <div className={styled.shipping__address_addressLine}>
-              <VscDebugBreakpointFunction />
+              <Icon.Circle />
               <p>
                 {t('address')} <span>: {addresses?.address1}</span>
               </p>
             </div>
 
             <div className={styled.shipping__address_addressLine}>
-              <VscDebugBreakpointFunction />{' '}
+              <Icon.Circle />{' '}
               <p>
                 {t('phone')} <span>: {addresses?.phoneNumber}</span>
               </p>
@@ -164,15 +163,15 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
         >
           {visible ? (
             <span>
-              <BsFillCaretUpFill />
+              <Icon.ChevronUp />
             </span>
           ) : addresses || !addresses === null ? (
             <span>
-              {t('redact_address')} <BsFillCaretDownFill />
+              {t('redact_address')} <Icon.ChevronDown />
             </span>
           ) : (
             <span>
-              {t('add_address')} <BsFillCaretDownFill />
+              {t('add_address')} <Icon.ChevronDown />
             </span>
           )}
         </Button>

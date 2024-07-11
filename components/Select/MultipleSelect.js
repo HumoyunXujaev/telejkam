@@ -9,8 +9,8 @@ import {
   Chip,
 } from '@mui/material';
 
-import { MdCancel } from 'react-icons/md';
 import { FcCheckmark } from 'react-icons/fc';
+import * as Icon from 'react-feather';
 
 export default function MultiSelect({ header, data, handleChange, disabled }) {
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -43,7 +43,9 @@ export default function MultiSelect({ header, data, handleChange, disabled }) {
                   )
                 }
                 deleteIcon={
-                  <MdCancel onMouseDown={(event) => event.stopPropagation()} />
+                  <Icon.XCircle
+                    onMouseDown={(event) => event.stopPropagation()}
+                  />
                 }
               />
             ))}

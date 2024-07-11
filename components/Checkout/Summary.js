@@ -2,7 +2,6 @@ import { Form, Formik } from 'formik';
 import { useMemo, useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import Button from '@mui/material/Button';
-import { FcApproval } from 'react-icons/fc';
 import Swal from 'sweetalert2';
 import { useTranslation } from 'next-i18next';
 

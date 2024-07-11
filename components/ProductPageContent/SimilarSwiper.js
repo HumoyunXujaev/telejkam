@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
-
 import styled from './styles.module.scss';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -9,16 +8,10 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 import { Navigation } from 'swiper';
-import NextImage from '../NextImage';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'next-i18next';
-
 import { toast } from 'react-toastify';
-import ProductCard from '../ProductCard';
-import ProductCardSwiper from '../ProductCard/ProductCardSwiper';
-import Actions from '../Actions';
-import { MdDiscount } from 'react-icons/md';
 import Image from 'next/image';
 
 export default function SimilarSwiper({ product }) {

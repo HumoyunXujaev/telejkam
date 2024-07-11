@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { FcFullTrash } from 'react-icons/fc';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import { useMediaQuery } from 'react-responsive';
+import * as Icon from 'react-feather';
 
 import { updateCart } from '@/store/cartSlice';
 
@@ -99,7 +99,7 @@ const Top = ({ cartItems, selected, setSelected }) => {
       <span className={styled.cart__top_label}>{t('quantity')}</span>
       <span className={styled.cart__top_label}>{t('price')}</span>
       <span className={styled.cart__top_label} onClick={showPopupHandler}>
-        <FcFullTrash />
+        <Icon.Trash2 />
       </span>
     </div>
   );

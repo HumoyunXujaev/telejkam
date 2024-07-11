@@ -1,12 +1,10 @@
 import React from 'react';
-import { FcSearch, FcLike, FcPaid } from 'react-icons/fc';
 import { toast } from 'react-toastify';
-import { Tooltip } from '@mui/material';
+import { Tooltip, createSvgIcon } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import axios from 'axios';
-
+import * as Icon from 'react-feather';
 import styled from './styles.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import { addToCartHandler } from '@/utils/productUltils';
@@ -28,32 +26,11 @@ export default function Actions({ product, productStyle, productSize }) {
     toast.success('Добавлено в избранное');
   };
 
-  // const addToWishListHandler = async (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-
-  //   if (!session) {
-  //     toast.error("Please login before using this feature!");
-  //     return;
-  //   }
-
-  //   try {
-  //     const { data } = await axios.put("/api/user/wishlist", {
-  //       product_id: product._id,
-  //       style: productStyle,
-  //       size: productSize,
-  //     });
-  //     toast.success(data.message);
-  //   } catch (error) {
-  //     return toast.error(error.response.data.message);
-  //   }
-  // };
-
   return (
     <div className={styled.actions}>
       <Tooltip title={<p>Быстрый просмотр</p>} placement='left' arrow>
         <button className={styled.actions__quickview}>
-          <FcSearch />
+          <Icon.Search />{' '}
         </button>
       </Tooltip>
 
@@ -71,7 +48,7 @@ export default function Actions({ product, productStyle, productSize }) {
             )
           }
         >
-          <FcPaid />
+          <Icon.ShoppingCart />
         </button>
       </Tooltip>
 
@@ -80,7 +57,7 @@ export default function Actions({ product, productStyle, productSize }) {
           className={styled.actions__wishlist}
           onClick={addToWishListHandler}
         >
-          <FcLike />
+          <Icon.Heart />
         </button>
       </Tooltip>
     </div>

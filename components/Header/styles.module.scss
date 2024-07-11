@@ -87,7 +87,8 @@
       svg {
         width: 20px;
         height: 20px;
-        fill: rgb(177, 177, 177);
+        color: white;
+        // fill: rgb(177, 177, 177);
       }
 
       span {
@@ -494,9 +495,9 @@
     position: relative;
 
     &:hover {
-      svg {
-        fill: $admin-text;
-      }
+      // svg {
+      //   fill: $admin-text;
+      // }
 
       svg,
       .cart__number {
@@ -513,7 +514,7 @@
     svg {
       width: 25px;
       height: 25px;
-      fill: #666;
+      // fill: #666;
       cursor: pointer;
     }
 

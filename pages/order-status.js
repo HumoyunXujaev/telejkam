@@ -7,10 +7,9 @@ import Header from '@/components/Header';
 import styled from '@/styles/Browse.module.scss';
 import BreadCrumb from '@/components/BreadCrumb';
 import AnimateWrapper from '@/components/AnimateWrapper';
-import { FaBox } from 'react-icons/fa';
-import { RiSearch2Line } from 'react-icons/ri';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import * as Icon from 'react-feather';
 
 const OrderStatus = () => {
   const { t } = useTranslation();
@@ -56,7 +55,7 @@ const OrderStatus = () => {
                   margin: 'auto',
                 }}
               >
-                <FaBox style={{ color: 'white', fontSize: '30px' }} />
+                <Icon.Inbox style={{ color: 'white', fontSize: '30px' }} />
               </div>
               <h1 style={{ textAlign: 'center' }}>{t('header.status')}</h1>
               <p
@@ -113,7 +112,7 @@ const OrderStatus = () => {
                     padding: '4px',
                   }}
                 >
-                  <RiSearch2Line
+                  <Icon.Search
                     style={{ width: '21px', height: '21px', fill: '#fff' }}
                   />
                 </button>

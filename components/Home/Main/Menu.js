@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { MdCategory, MdContactEmergency } from 'react-icons/md';
 import styled from './styles.module.scss';
-import { AiFillCloseSquare } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
 import { toggleMobileCate } from '@/store/mobileCateSlice';
 import { Fragment } from 'react';
 import { useTranslation } from 'next-i18next';
+import * as Icon from 'react-feather';
+
 const Menu = ({ categories }) => {
   const { t } = useTranslation();
 
@@ -16,14 +16,8 @@ const Menu = ({ categories }) => {
       <div className={styled.menu}>
         <ul>
           <a className={styled.menu__header}>
-            <MdCategory size={25} />
+            <Icon.Layers size={25} />
             {t('categories')}
-            <button
-              className={styled.menu__header_btn}
-              onClick={() => dispatch(toggleMobileCate())}
-            >
-              <AiFillCloseSquare size={20} />
-            </button>
           </a>
           <div className={styled.menu__list}>
             {categories?.map((item, index) => (
@@ -53,14 +47,8 @@ const Menu = ({ categories }) => {
       <div className={styled.menu}>
         <ul>
           <a className={styled.menu__header}>
-            <MdContactEmergency size={25} />
+            <Icon.PhoneCall size={25} />
             {t('contacts')}
-            <button
-              className={styled.menu__header_btn}
-              onClick={() => dispatch(toggleMobileCate())}
-            >
-              <AiFillCloseSquare size={20} />
-            </button>
           </a>
           <div className={styled.menu__list}>
             <li className={styled.menu__item}>
@@ -82,19 +70,6 @@ const Menu = ({ categories }) => {
                 </span>
               </Link>
             </li>
-            {/* <li className={styled.menu__item}>
-              <Link href={'mailto:hujaevhumoyun01@gmail.com'}>
-                <div className={styled.menu__item_img}>
-                  <Image
-                    fill={true}
-                    style={{ objectFit: 'cover' }}
-                    src={`icons/email.png`}
-                    alt='email'
-                  />
-                </div>
-                <span>Почта</span>
-              </Link>
-            </li> */}
 
             <li className={styled.menu__item}>
               <Link
@@ -149,40 +124,6 @@ const Menu = ({ categories }) => {
                 <span>INSTAGRAM</span>
               </Link>
             </li>
-
-            {/* <li className={styled.menu__item}>
-              <Link
-                href={`https://www.twitter.com/`}
-                onClick={() => dispatch(toggleMobileCate())}
-              >
-                <div className={styled.menu__item_img}>
-                  <Image
-                    fill={true}
-                    style={{ objectFit: 'cover' }}
-                    src={`icons/twitter.png`}
-                    alt='twitter'
-                  />
-                </div>
-                <span>TWITTER</span>
-              </Link>
-            </li> */}
-
-            {/* <li className={styled.menu__item}>
-              <Link
-                href={`https://www.youtube.com/`}
-                onClick={() => dispatch(toggleMobileCate())}
-              >
-                <div className={styled.menu__item_img}>
-                  <Image
-                    fill={true}
-                    style={{ objectFit: 'cover' }}
-                    src={`icons/yt.png`}
-                    alt='youtube'
-                  />
-                </div>
-                <span>YOUTUBE</span>
-              </Link>
-            </li> */}
           </div>
         </ul>
       </div>

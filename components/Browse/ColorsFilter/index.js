@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { FaMinus, FaPlus } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 
 import styled from '../styles.module.scss';

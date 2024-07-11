@@ -5,9 +5,8 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import { styled } from '@mui/material/styles';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { MdPlayArrow } from 'react-icons/md';
-import { FaCopy, FaShareAlt } from 'react-icons/fa';
 import { useTranslation } from 'next-i18next';
+import * as Icon from 'react-feather';
 
 import styles from './styles.module.scss';
 
@@ -29,7 +28,7 @@ const Accordion = styled((props) => (
 
 const AccordionSummary = styled((props) => (
   <MuiAccordionSummary
-    expandIcon={<MdPlayArrow sx={{ fontSize: '0.9rem' }} />}
+    expandIcon={<Icon.Play sx={{ fontSize: '0.9rem' }} />}
     {...props}
   />
 ))(({ theme }) => ({
@@ -203,14 +202,14 @@ export default function Accordian({ details, product }) {
                 toast.success('Успешно скопирована ссылка продукта!');
               }}
             >
-              <FaCopy /> {t('click_to_copy')}
+              <Icon.Copy /> {t('click_to_copy')}
             </button>
           </div>
         </AccordionDetails>
         <AccordionDetails className='scrollbar'>
           <div className={styles.socials_share}>
             <span>
-              <FaShareAlt /> {t('share_social')}
+              <Icon.Share /> {t('share_social')}
             </span>
           </div>
           <Share />

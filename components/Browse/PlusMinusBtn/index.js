@@ -1,10 +1,9 @@
-import React from "react";
-import { FaMinus, FaPlus } from "react-icons/fa";
-
+import React from 'react';
+import * as Icon from 'react-feather';
 export default function PlusMinusBtn({ show, onClick }) {
   return (
-    <span style={{ cursor: "pointer" }} onClick={onClick}>
-      {show ? <FaMinus /> : <FaPlus />}
+    <span style={{ cursor: 'pointer' }} onClick={onClick}>
+      {show ? <Icon.Minus /> : <Icon.Plus />}
     </span>
   );
 }

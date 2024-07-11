@@ -1,12 +1,13 @@
 import { Button } from '@mui/material';
 import React from 'react';
-import { BsCaretDownFill, BsCaretUpFill } from 'react-icons/bs';
+
+import * as Icon from 'react-feather';
 
 export default function ShowAllBtn({ hideBtn, onClick }) {
   return (
     <Button
       endIcon={
-        hideBtn ? <BsCaretUpFill size={13} /> : <BsCaretDownFill size={13} />
+        hideBtn ? <Icon.ChevronUp size={13} /> : <Icon.ChevronDown size={13} />
       }
       variant='outlined'
       onClick={onClick}

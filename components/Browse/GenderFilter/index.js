@@ -1,16 +1,15 @@
-import { useState } from "react";
-import styled from "../styles.module.scss";
-import { FaMinus, FaPlus } from "react-icons/fa";
-import { useRouter } from "next/router";
-import { replaceQuery } from "@/utils/filter";
-import CheckboxItem from "../CheckboxItem";
-import PlusMinusBtn from "../PlusMinusBtn";
+import { useState } from 'react';
+import styled from '../styles.module.scss';
+import { useRouter } from 'next/router';
+import { replaceQuery } from '@/utils/filter';
+import CheckboxItem from '../CheckboxItem';
+import PlusMinusBtn from '../PlusMinusBtn';
 
 export default function GenderFilter({ genderHandler, checkChecked }) {
-  const genders = ["Men", "Women", "Unisex"];
+  const genders = ['Men', 'Women', 'Unisex'];
 
   const router = useRouter();
-  const existedGender = router.query.gender || "";
+  const existedGender = router.query.gender || '';
 
   const [show, setShow] = useState(true);
   return (
@@ -23,7 +22,7 @@ export default function GenderFilter({ genderHandler, checkChecked }) {
       {show && (
         <>
           {genders.map((gender, i) => {
-            const check = checkChecked("gender", gender);
+            const check = checkChecked('gender', gender);
             return (
               <CheckboxItem
                 key={i}
@@ -33,8 +32,8 @@ export default function GenderFilter({ genderHandler, checkChecked }) {
                 id={gender}
                 check={check}
                 content={gender}
-                name="gender"
-                type="checkbox"
+                name='gender'
+                type='checkbox'
               />
             );
           })}

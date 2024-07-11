@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md';
 import Link from 'next/link';
 
 import { SwiperSlide } from 'swiper/react';
@@ -10,6 +9,7 @@ import styled from './styles.module.scss';
 import ProductCard from '@/components/ProductCard';
 import CommonSwiper from './CommonSwiper';
 import { useTranslation } from 'next-i18next';
+import * as Icon from 'react-feather';
 
 export default function FreeShippingProducts({ freeShippingProducts }) {
   const { t } = useTranslation();
@@ -23,7 +23,7 @@ export default function FreeShippingProducts({ freeShippingProducts }) {
         </div>
         <Link href='/browse?shipping=Free'>
           {t('see')}
-          <MdOutlineKeyboardDoubleArrowRight />
+          <Icon.ChevronsRight />
         </Link>
       </div>
       <CommonSwiper>

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import React from 'react';
-import { MdPlayArrow } from 'react-icons/md';
+import * as Icon from 'react-feather';
 
 import styled from './styles.module.scss';
 import Image from 'next/image';
@@ -18,14 +18,14 @@ const Header = ({ link, text, link2, text2 }) => {
         <div className={styled.header__right}>
           <Link href={link}>
             {text}
-            <MdPlayArrow />
+            <Icon.ChevronRight />
           </Link>
         </div>
         {text2 && link2 && (
           <div className={styled.header__right}>
             <Link href={link2}>
               {text2}
-              <MdPlayArrow />
+              <Icon.ChevronRight />
             </Link>
           </div>
         )}

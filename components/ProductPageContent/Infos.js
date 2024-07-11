@@ -9,17 +9,10 @@ import { Button } from '@mui/material';
 import { signIn, useSession } from 'next-auth/react';
 import { useMediaQuery } from 'react-responsive';
 
-import { BsFillCaretDownFill } from 'react-icons/bs';
-import { BiHeart } from 'react-icons/bi';
-import { TbMinus, TbPlus } from 'react-icons/tb';
-import { MdCancel } from 'react-icons/md';
-import { FaOpencart } from 'react-icons/fa';
-import { AiFillTags } from 'react-icons/ai';
-import { FcShipped, FcDeployment } from 'react-icons/fc';
+import * as Icon from 'react-feather';
 
 import styled from './styles.module.scss';
 import StyledAccordion from './StyledAccordion';
-import Ratings from '../Ratings';
 import { addToCartHandler } from '@/utils/productUltils';
 import { useTranslation } from 'next-i18next';
 
@@ -126,7 +119,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
               <span
                 className={`${styled.infos__price_discount2} ${styled.lift}`}
               >
-                <AiFillTags />
+                <Icon.Gift />
                 {product.discount}% {t('discount')}
               </span>
             </>
@@ -145,7 +138,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
               <span
                 className={`${styled.infos__price_discount2} ${styled.lift}`}
               >
-                <AiFillTags />
+                <Icon.Layers />
                 {product.label}
               </span>
             </>
@@ -153,7 +146,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
         </div>
 
         <span className={styled.infos__sizes_title}>
-          {t('select_color')} <BsFillCaretDownFill />
+          {t('select_color')} <Icon.ChevronDown />
         </span>
         <div className={styled.infos__colors}>
           {product.colors &&
@@ -185,7 +178,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
 
         <div className={styled.infos__sizes}>
           <span className={styled.infos__sizes_title}>
-            {t('select_size')} <BsFillCaretDownFill />
+            {t('select_size')} <Icon.ChevronDown />
           </span>
           <div className={styled.infos__sizes_wrapper}>
             {product.sizes.map((size, index) => (
@@ -203,19 +196,19 @@ const Infos = ({ product, setActiveImg, setImages }) => {
         </div>
 
         <span className={styled.infos__sizes_title}>
-          {t('select_qty')} <BsFillCaretDownFill />
+          {t('select_qty')} <Icon.ChevronDown />
         </span>
         <div className={styled.infos__qty}>
           {/* Input value phải lớn hơn 1 thì mới được trừ */}
           <button onClick={() => qty > 1 && setQty((prev) => prev - 1)}>
-            <TbMinus />
+            <Icon.Minus />
           </button>
           <span>{qty}</span>
           {/* Input value phải nhỏ hơn số lượng sp hiện có thì mới được cộng */}
           <button
             onClick={() => qty < product.quantity && setQty((prev) => prev + 1)}
           >
-            <TbPlus />
+            <Icon.Plus />
           </button>
         </div>
 
@@ -223,17 +216,17 @@ const Infos = ({ product, setActiveImg, setImages }) => {
           <span className={styled.infos__shipping}>
             {product.shipping > 0 && (
               <>
-                <FcShipped /> {product.shipping} {t('shipping_fee')}
+                <Icon.Truck /> {product.shipping} {t('shipping_fee')}
               </>
             )}
             {!product.shipping && (
               <>
-                <FcShipped /> {t('free_shipping')}
+                <Icon.Truck /> {t('free_shipping')}
               </>
             )}
           </span>
           <span className={styled.infos__available}>
-            <FcDeployment />
+            <Icon.Layers />
             {size
               ? product.quantity
               : product.sizes.reduce((acc, cur) => acc + cur.qty, 0)}
@@ -258,7 +251,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
             }
             type='button'
           >
-            <FaOpencart />
+            <Icon.ShoppingCart />
             {t('add_to_cart')}
           </Button>
           <Button
@@ -267,13 +260,13 @@ const Infos = ({ product, setActiveImg, setImages }) => {
             onClick={addToWishListHandler}
             color='secondary'
           >
-            <BiHeart />
+            <Icon.Heart />
             {t('add_to_whishlist')}
           </Button>
         </div>
         {error && (
           <span className={styled.error}>
-            <MdCancel /> {error}
+            <Icon.XCircle /> {error}
           </span>
         )}
         <StyledAccordion

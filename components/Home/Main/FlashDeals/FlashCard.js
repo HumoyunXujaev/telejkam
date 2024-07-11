@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaOpencart } from 'react-icons/fa';
 import NextImage from '@/components/NextImage';
 
 import { addToCartHandler, priceAfterDiscount } from '@/utils/productUltils';
 import { useTranslation } from 'next-i18next';
+import * as Icon from 'react-feather';
 
 import styled from './styles.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
@@ -68,7 +68,7 @@ const FlashCard = ({ product }) => {
             }
           >
             <span>
-              <FaOpencart />
+              <Icon.ShoppingCart />
             </span>
             <span>{t('add_to_cart')}</span>
           </button>

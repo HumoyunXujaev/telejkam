@@ -1,12 +1,11 @@
-import { useState } from "react";
-import styled from "../styles.module.scss";
-import { FaMinus, FaPlus } from "react-icons/fa";
-import { useRouter } from "next/router";
-import { replaceQuery } from "@/utils/filter";
-import CheckboxItem from "../CheckboxItem";
-import ShowAllBtn from "../ShowAllBtn";
-import useSeeMore from "@/hook/useSeeMore";
-import PlusMinusBtn from "../PlusMinusBtn";
+import { useState } from 'react';
+import styled from '../styles.module.scss';
+import { useRouter } from 'next/router';
+import { replaceQuery } from '@/utils/filter';
+import CheckboxItem from '../CheckboxItem';
+import ShowAllBtn from '../ShowAllBtn';
+import useSeeMore from '@/hook/useSeeMore';
+import PlusMinusBtn from '../PlusMinusBtn';
 
 export default function MaterialsFilter({
   materials,
@@ -31,7 +30,7 @@ export default function MaterialsFilter({
           <div>
             {materials.length > 0 ? (
               materials.slice(0, itemsQty).map((material, i) => {
-                const check = checkChecked("material", material);
+                const check = checkChecked('material', material);
                 return (
                   <CheckboxItem
                     key={i}
@@ -50,13 +49,13 @@ export default function MaterialsFilter({
                         ? `${material.substring(0, 20)}...`
                         : material
                     }
-                    name="material"
-                    type="checkbox"
+                    name='material'
+                    type='checkbox'
                   />
                 );
               })
             ) : (
-              <p style={{ padding: "10px 0" }}>Found no materials</p>
+              <p style={{ padding: '10px 0' }}>Found no materials</p>
             )}
           </div>
           {materials.length > 5 && (

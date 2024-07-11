@@ -1,4 +1,4 @@
-import { FcShipped } from 'react-icons/fc';
+import * as Icon from 'react-feather';
 
 import styled from './styles.module.scss';
 import { useTranslation } from 'next-i18next';
@@ -37,7 +37,7 @@ const Checkout = ({
       <div className={styled.cart__checkout_days}>
         <span>{t('receive_after')}</span>
         <span>
-          <FcShipped /> {t('1_day')}
+          <Icon.Truck /> {t('1_day')}
         </span>
       </div>
 

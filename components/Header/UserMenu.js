@@ -2,10 +2,9 @@
 import Link from 'next/link';
 import React from 'react';
 import { signOut, signIn } from 'next-auth/react';
-import { BiLogOut } from 'react-icons/bi';
+import * as Icon from 'react-feather';
 
 import styled from './styles.module.scss';
-import { RevealWrapper } from 'next-reveal';
 
 const UserMenu = ({ session }) => {
   return (
@@ -21,7 +20,7 @@ const UserMenu = ({ session }) => {
           <div className={styled.col}>
             <h3>{session.user.name}</h3>
             <span onClick={() => signOut()}>
-              <BiLogOut /> Sign out
+              <Icon.LogOut /> Sign out
             </span>
           </div>
         </div>
