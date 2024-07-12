@@ -34,33 +34,32 @@ export const calculatePercentage = (reviewsArr, numsOfStar) => {
 
   return ((reviewNumsByStar.length / reviewsArr.length) * 100).toFixed(1);
 };
-const productCache = {};
 
 export const addToCartHandler = async (e, id, style, size, cart, dispatch) => {
   e.preventDefault();
   e.stopPropagation();
 
-  let data;
   const cacheKey = `${id}_${style}_${size}`;
-  if (productCache[cacheKey]) {
-    data = productCache[cacheKey];
-  } else {
-    const response = await axios.get(
+  let productData = sessionStorage.getItem(cacheKey);
+
+  if (!productData) {
+    const { data } = await axios.get(
       `/api/product/${id}?style=${style}&size=${size}`
     );
-    data = response.data;
-    productCache[cacheKey] = data; // Cache the product data
+    productData = data;
+    sessionStorage.setItem(cacheKey, JSON.stringify(data));
+  } else {
+    productData = JSON.parse(productData);
   }
 
-  if (data.quantity < 1) {
+  if (productData.quantity < 1) {
     toast.error('Этот продукт закончился!');
   } else {
-    let _uniqueId = `${id}_${style}_${size}`;
-
-    let exist = cart.cartItems.find((p) => p._uniqueId === _uniqueId);
+    const _uniqueId = `${id}_${style}_${size}`;
+    const exist = cart.cartItems.find((p) => p._uniqueId === _uniqueId);
 
     if (exist) {
-      let newCart = cart.cartItems.map((p) => {
+      const newCart = cart.cartItems.map((p) => {
         if (p._uniqueId === exist._uniqueId) {
           return { ...p, qty: p.qty + 1 };
         }
@@ -71,9 +70,9 @@ export const addToCartHandler = async (e, id, style, size, cart, dispatch) => {
     } else {
       dispatch(
         addToCart({
-          ...data,
+          ...productData,
           qty: 1,
-          size: data.size,
+          size: productData.size,
           sizeIndex: size,
           _uniqueId,
         })
