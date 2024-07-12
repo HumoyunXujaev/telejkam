@@ -61,29 +61,32 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/telejkam1.png' />
       </Head>
-
-      <SessionProvider session={session}>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <PayPalScriptProvider deferLoading={true}>
-              <ToastContainer
-                position='top-right'
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme='colored'
-              />
-              <Component {...pageProps} />
-              <Analytics />
-            </PayPalScriptProvider>
-          </PersistGate>
-        </Provider>
-      </SessionProvider>
+      {loading ? (
+        <StyledDotLoader />
+      ) : (
+        <SessionProvider session={session}>
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+              <PayPalScriptProvider deferLoading={true}>
+                <ToastContainer
+                  position='top-right'
+                  autoClose={2000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme='colored'
+                />
+                <Component {...pageProps} />
+                <Analytics />
+              </PayPalScriptProvider>
+            </PersistGate>
+          </Provider>
+        </SessionProvider>
+      )}
     </>
   );
 }
