@@ -7,10 +7,9 @@ import { Category } from '@/models/Category';
 import styled from '../styles/Home.module.scss';
 import AllProducts from '@/components/Home/AllProducts';
 import AnimateWrapper from '@/components/AnimateWrapper';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 const MemoizedHeader = React.memo(Header);
 const MemoizedAllProducts = React.memo(AllProducts);
 
@@ -150,16 +149,6 @@ export async function getStaticProps({ locale }) {
     slug: category.slug,
   }));
 
-  let country = { name: '', flag: '' };
-  try {
-    const { data } = await axios.get(
-      'https://api.ipregistry.co/?key=ng3oke5gnbj5os01'
-    );
-    country = data?.location?.country || { name: '', flag: '' };
-  } catch (err) {
-    console.log(err);
-  }
-
   return {
     props: {
       ...(await serverSideTranslations(locale, ['common'])),
@@ -168,7 +157,6 @@ export async function getStaticProps({ locale }) {
       featuredProducts: JSON.parse(JSON.stringify(featuredProducts)),
       freeShippingProducts: JSON.parse(JSON.stringify(freeShippingProducts)),
       featuredCategories: JSON.parse(JSON.stringify(featuredCategories)),
-      country,
     },
     revalidate: 60,
   };

@@ -9,11 +9,30 @@ import * as Icon from 'react-feather';
 
 import styled from './styles.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const FlashCard = ({ product }) => {
   const { cart } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [productDataCache, setProductDataCache] = useState({});
+  const [active, setActive] = useState(0); // Переключатель активного продукта
+  const [sizeActive, setSizeActive] = useState(0); // Переключатель активного размера
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(
+        `/api/product/${product.parentId}?style=${product.style}&size=${sizeActive}`
+      );
+      setProductDataCache({
+        ...productDataCache,
+        [`${product._id}_${product.style}_${sizeActive}`]: response.data,
+      });
+    };
+
+    fetchData();
+  }, [product, active, sizeActive]);
 
   return (
     <div className={styled.flashDeals__item}>
@@ -63,7 +82,9 @@ const FlashCard = ({ product }) => {
                 product.style,
                 0,
                 cart,
-                dispatch
+                dispatch,
+                productDataCache,
+                setProductDataCache
               )
             }
           >

@@ -42,7 +42,8 @@ export const addToCartHandler = async (
   size,
   cart,
   dispatch,
-  productDataCache
+  productDataCache,
+  setProductDataCache
 ) => {
   e.preventDefault();
   e.stopPropagation();

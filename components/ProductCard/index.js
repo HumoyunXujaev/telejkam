@@ -183,7 +183,8 @@ const ProductCard = ({ product, className, remove }) => {
                   0,
                   cart,
                   dispatch,
-                  productDataCache
+                  productDataCache,
+                  setProductDataCache
                 )
               }
             >
