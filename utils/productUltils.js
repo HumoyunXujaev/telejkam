@@ -35,44 +35,55 @@ export const calculatePercentage = (reviewsArr, numsOfStar) => {
   return ((reviewNumsByStar.length / reviewsArr.length) * 100).toFixed(1);
 };
 
-export const addToCartHandler = async (e, id, style, size, cart, dispatch) => {
+export const addToCartHandler = async (
+  e,
+  id,
+  style,
+  size,
+  cart,
+  dispatch,
+  productDataCache
+) => {
   e.preventDefault();
   e.stopPropagation();
 
+  let data;
   const cacheKey = `${id}_${style}_${size}`;
-  let productData = sessionStorage.getItem(cacheKey);
-
-  if (!productData) {
-    const { data } = await axios.get(
+  if (productDataCache[cacheKey]) {
+    data = productDataCache[cacheKey];
+  } else {
+    const response = await axios.get(
       `/api/product/${id}?style=${style}&size=${size}`
     );
-    productData = data;
-    sessionStorage.setItem(cacheKey, JSON.stringify(data));
-  } else {
-    productData = JSON.parse(productData);
+    data = response.data;
+    setProductDataCache({
+      ...productDataCache,
+      [cacheKey]: data,
+    });
   }
 
-  if (productData.quantity < 1) {
+  if (data.quantity < 1) {
     toast.error('Этот продукт закончился!');
   } else {
-    const _uniqueId = `${id}_${style}_${size}`;
-    const exist = cart.cartItems.find((p) => p._uniqueId === _uniqueId);
+    let _uniqueId = `${id}_${style}_${size}`;
+
+    let exist = cart.cartItems.find((p) => p._uniqueId === _uniqueId);
 
     if (exist) {
-      const newCart = cart.cartItems.map((p) => {
+      let newCart = cart.cartItems.map((p) => {
         if (p._uniqueId === exist._uniqueId) {
           return { ...p, qty: p.qty + 1 };
         }
         return p;
       });
       dispatch(updateCart(newCart));
-      toast.success('Успешно добавлено количество продукта в корзину!');
+      toast.success('Продукт успешно добавлен в корзину!');
     } else {
       dispatch(
         addToCart({
-          ...productData,
+          ...data,
           qty: 1,
-          size: productData.size,
+          size: data.size,
           sizeIndex: size,
           _uniqueId,
         })
