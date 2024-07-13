@@ -16,7 +16,6 @@ import { addToCartHandler } from '@/utils/productUltils';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'next-i18next';
 import * as Icon from 'react-feather';
-import axios from 'axios';
 
 const ProductCard = ({ product, className, remove }) => {
   const { t } = useTranslation();
@@ -28,7 +27,6 @@ const ProductCard = ({ product, className, remove }) => {
   const [showActions, setShowActions] = useState(false);
 
   const [images, setImages] = useState(product.subProducts[active]?.images);
-  const [productDataCache, setProductDataCache] = useState({});
 
   const [styles, setStyles] = useState(
     product.subProducts.map((p) => {
@@ -46,20 +44,6 @@ const ProductCard = ({ product, className, remove }) => {
   useEffect(() => {
     setImages(product.subProducts[active]?.images);
   }, [active]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `/api/product/${product._id}?style=${active}&size=${sizeActive}`
-      );
-      setProductDataCache({
-        ...productDataCache,
-        [`${product._id}_${active}_${sizeActive}`]: response.data,
-      });
-    };
-
-    fetchData();
-  }, [product, active, sizeActive]);
 
   return (
     <div className={`${styled.product} ${className}`}>
@@ -176,16 +160,7 @@ const ProductCard = ({ product, className, remove }) => {
             <button
               className={styled.flashDeals__item_btn}
               onClick={(e) =>
-                addToCartHandler(
-                  e,
-                  product._id,
-                  0,
-                  0,
-                  cart,
-                  dispatch,
-                  productDataCache,
-                  setProductDataCache
-                )
+                addToCartHandler(e, product._id, 0, 0, cart, dispatch)
               }
             >
               <span>

@@ -9,30 +9,11 @@ import * as Icon from 'react-feather';
 
 import styled from './styles.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 
 const FlashCard = ({ product }) => {
   const { cart } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [active, setActive] = useState(0);
-  const [sizeActive, setSizeActive] = useState(0);
-  const [productDataCache, setProductDataCache] = useState({});
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `/api/product/${product.parentId}?style=${active}&size=${sizeActive}`
-      );
-      setProductDataCache({
-        ...productDataCache,
-        [`${product._id}_${active}_${sizeActive}`]: response.data,
-      });
-    };
-
-    fetchData();
-  }, [product, active, sizeActive]);
 
   return (
     <div className={styled.flashDeals__item}>
@@ -76,16 +57,7 @@ const FlashCard = ({ product }) => {
           <button
             className={styled.flashDeals__item_btn}
             onClick={(e) =>
-              addToCartHandler(
-                e,
-                product.parentId,
-                product.style,
-                0,
-                cart,
-                dispatch,
-                productDataCache,
-                setProductDataCache
-              )
+              addToCartHandler(e, product.parentId, 0, 0, cart, dispatch)
             }
           >
             <span>

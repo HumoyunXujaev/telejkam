@@ -1,16 +1,16 @@
-import NextAuth from "next-auth";
-import TwitterProvider from "next-auth/providers/twitter";
-import FacebookProvider from "next-auth/providers/facebook";
-import GoogleProvider from "next-auth/providers/google";
-import GitHubProvider from "next-auth/providers/github";
-import Auth0Provider from "next-auth/providers/auth0";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-import bcrypt from "bcrypt";
-import db from "@/utils/db";
+import NextAuth from 'next-auth';
+import TwitterProvider from 'next-auth/providers/twitter';
+import FacebookProvider from 'next-auth/providers/facebook';
+import GoogleProvider from 'next-auth/providers/google';
+import GitHubProvider from 'next-auth/providers/github';
+import Auth0Provider from 'next-auth/providers/auth0';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
+import bcrypt from 'bcrypt';
+import db from '@/utils/db';
 
-import clientPromise from "@/lib/mongodb";
-import { User } from "@/models/User";
+import clientPromise from '@/lib/mongodb';
+import { User } from '@/models/User';
 
 db.connectDb();
 
@@ -53,7 +53,7 @@ export default NextAuth({
           return SignInUser({ password, user });
         } else {
           // Nếu user không tồn tại trong database, return error
-          throw new Error("This email does not exist");
+          throw new Error('This email does not exist');
         }
       },
     }),
@@ -64,23 +64,23 @@ export default NextAuth({
       let user = await User.findById(token.sub);
       //Bổ sung thêm thông tin cho user của session
       session.user.id = token.sub || user._id.toString();
-      session.user.role = user.role || "user";
-      token.role = user.role || "user";
+      session.user.role = user.role || 'user';
+      token.role = user.role || 'user';
       return session;
     },
   },
   pages: {
-    signIn: "/signin",
+    signIn: '/signin',
   },
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
   secret: process.env.JWT_SECRET,
 });
 
 const SignInUser = async ({ password, user }) => {
   if (!user.password) {
-    throw new Error("Please enter your password");
+    throw new Error('Please enter your password');
   }
 
   // Dùng compare của bcrypt để so sánh 2 password
@@ -88,7 +88,7 @@ const SignInUser = async ({ password, user }) => {
 
   // Nếu password không khớp
   if (!textPassword) {
-    throw new Error("Email or password is wrong");
+    throw new Error('Email or password is wrong');
   }
   return user;
 };

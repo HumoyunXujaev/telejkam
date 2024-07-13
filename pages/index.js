@@ -10,6 +10,8 @@ import AnimateWrapper from '@/components/AnimateWrapper';
 import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import React, { useCallback, useEffect } from 'react';
+import { se } from 'date-fns/locale';
+import axios from 'axios';
 const MemoizedHeader = React.memo(Header);
 const MemoizedAllProducts = React.memo(AllProducts);
 
@@ -22,6 +24,23 @@ export default function Home({
   featuredCategories,
 }) {
   const router = useRouter();
+
+  // SET THE PRODUCTS TO THE SESSION STORAGE
+  useEffect(() => {
+    const fetchData = async () => {
+      products.forEach(async (product) => {
+        const response = await axios.get(
+          `/api/product/${product._id}?style=0&size=0`
+        );
+        // set response.data to session storage as products
+        sessionStorage.setItem(product._id, JSON.stringify(response.data));
+
+        console.log('response', response);
+      });
+    };
+
+    fetchData();
+  }, []);
 
   const filter = useCallback(
     ({

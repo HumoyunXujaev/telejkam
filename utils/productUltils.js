@@ -35,62 +35,45 @@ export const calculatePercentage = (reviewsArr, numsOfStar) => {
   return ((reviewNumsByStar.length / reviewsArr.length) * 100).toFixed(1);
 };
 
-export const addToCartHandler = async (
-  e,
-  id,
-  style,
-  size,
-  cart,
-  dispatch,
-  productDataCache,
-  setProductDataCache
-) => {
+export const addToCartHandler = async (e, id, style, size, cart, dispatch) => {
   e.preventDefault();
   e.stopPropagation();
 
-  let data;
-  const cacheKey = `${id}_${style}_${size}`;
-  if (productDataCache[cacheKey]) {
-    data = productDataCache[cacheKey];
-  } else {
-    const response = await axios.get(
-      `/api/product/${id}?style=${style}&size=${size}`
-    );
-    data = response.data;
-    setProductDataCache({
-      ...productDataCache,
-      [cacheKey]: data,
-    });
+  // get the product data from cache session storage or fetch from server if not exist
+  const product = JSON.parse(sessionStorage.getItem(id));
+  if (!product) {
+    try {
+      const response = await axios.get(
+        `/api/product/${id}?style=${style}&size=${size}`
+      );
+      sessionStorage.setItem(id, JSON.stringify(response.data));
+    } catch (error) {
+      console.error('Error fetching product data:', error);
+      toast.error('Ошибка при загрузке данных продукта!');
+      return;
+    }
   }
 
-  if (data.quantity < 1) {
-    toast.error('Этот продукт закончился!');
+  let _uniqueId = `${id}_${style}_${size}`;
+  let exist = cart.cartItems.find((p) => p._uniqueId === _uniqueId);
+
+  if (exist) {
+    let newCart = cart.cartItems.map((p) =>
+      p._uniqueId === exist._uniqueId ? { ...p, qty: p.qty + 1 } : p
+    );
+    dispatch(updateCart(newCart));
+    toast.success('Продукт успешно добавлен в корзину!');
   } else {
-    let _uniqueId = `${id}_${style}_${size}`;
-
-    let exist = cart.cartItems.find((p) => p._uniqueId === _uniqueId);
-
-    if (exist) {
-      let newCart = cart.cartItems.map((p) => {
-        if (p._uniqueId === exist._uniqueId) {
-          return { ...p, qty: p.qty + 1 };
-        }
-        return p;
-      });
-      dispatch(updateCart(newCart));
-      toast.success('Продукт успешно добавлен в корзину!');
-    } else {
-      dispatch(
-        addToCart({
-          ...data,
-          qty: 1,
-          size: data.size,
-          sizeIndex: size,
-          _uniqueId,
-        })
-      );
-      toast.success('Продукт успешно добавлен в корзину!');
-    }
+    dispatch(
+      addToCart({
+        ...product,
+        qty: 1,
+        size: product.size,
+        sizeIndex: size,
+        _uniqueId,
+      })
+    );
+    toast.success('Продукт успешно добавлен в корзину!');
   }
 };
 
