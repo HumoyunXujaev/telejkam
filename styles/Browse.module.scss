@@ -161,9 +161,14 @@
 
   @media screen and (max-width: 950px) {
     &__store {
+      &_products_wrap {
+        box-shadow: none;
+        padding: none;
+        border-radius: none;
+        overflow: hidden;
+      }
       &_products {
         justify-content: center;
-        align-items: center;
       }
     }
   }
