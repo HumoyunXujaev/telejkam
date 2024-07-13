@@ -145,12 +145,12 @@ const Main = ({ searchHandler2 }) => {
                       <span>{t('header.katalog')}</span>
                     </div>
                   </Link>
-                  <Link href='/order-status/'>
+                  {/* <Link href='/order-status/'>
                     <div className={styled.drawer__item}>
                       <Icon.Inbox />
                       <span>{t('header.status')}</span>
                     </div>
-                  </Link>
+                  </Link> */}
                   <Link href='cart'>
                     <div className={styled.drawer__item}>
                       <Icon.ShoppingBag />
@@ -258,8 +258,8 @@ const Main = ({ searchHandler2 }) => {
             {!loading && <Icon.Search />}
           </button>
         </form>
-        <Link href={`order-status`}>
-          <div className={styled.orderStatus}>
+        {/* <Link href={`order-status`}> */}
+        {/* <div className={styled.orderStatus}>
             <Icon.Inbox />
             <span className={styled.orderStatus__text}>
               {t('header.status')}
@@ -285,7 +285,7 @@ const Main = ({ searchHandler2 }) => {
               </div>
             </div>
           </div>
-        </Link>
+        </Link> */}
 
         {/* Cart */}
         <Link href='cart'>
