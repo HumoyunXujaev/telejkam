@@ -1,6 +1,6 @@
-import { ErrorMessage, useField } from "formik";
+import { ErrorMessage, useField } from 'formik';
 
-import styled from "./styles.module.scss";
+import styled from './styles.module.scss';
 
 const AdminSelect = ({ placeholder, label, data, className, ...props }) => {
   const [field, meta] = useField(props);
@@ -9,24 +9,24 @@ const AdminSelect = ({ placeholder, label, data, className, ...props }) => {
     <div className={styled.wrapper}>
       <label
         className={`${styled.label} ${
-          meta.touched && meta.error ? styled.inputError : ""
-        } ${className ? styled[className] : ""}`}
+          meta.touched && meta.error ? styled.inputError : ''
+        } ${className ? styled[className] : ''}`}
       >
         <span>{label}</span>
         <select
           name={field.name}
-          defaultValue={""}
+          defaultValue={''}
           {...field}
           {...props}
           style={{
-            color: field.value == "" && "rgb(163, 163, 163)",
-            fontStyle: field.value == "" && "italic",
+            color: field.value == '' && 'rgb(163, 163, 163)',
+            fontStyle: field.value == '' && 'italic',
           }}
         >
-          <option value="" disabled>
+          <option value='' disabled>
             {placeholder}
           </option>
-          {data.map((item, index) => (
+          {data?.map((item, index) => (
             <option key={item._id} value={item._id || item.name}>
               {item.name}
             </option>

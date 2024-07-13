@@ -5,10 +5,12 @@ import db from '@/utils/db';
 import { User } from '@/models/User';
 
 import styled from '@/styles/Users.module.scss';
+import UserCreate from '@/components/Admin/User/UserCreate';
 
 export default function UserPage({ users }) {
   return (
     <Layout>
+      <UserCreate />
       <div className={styled.header}>Пользователи</div>
       <EnhancedTable rows={users} />
     </Layout>

@@ -135,19 +135,6 @@ const Main = ({ searchHandler2 }) => {
                       <span>{t('header.heart')}</span>
                     </div>
                   </Link>
-                  {session ? (
-                    <Link href={`profile`}>
-                      <div className={styled.drawer__item}>
-                        <Icon.User />
-                        <span>Аккаунт</span>
-                      </div>
-                    </Link>
-                  ) : (
-                    <div className={styled.drawer__item}>
-                      <Icon.User onClick={() => signIn()} />
-                      <span>{t('header.login')}</span>
-                    </div>
-                  )}
                 </div>
                 <div className={styled.drawer__body}>
                   <h1>{t('header.contacts')}</h1>
@@ -334,20 +321,6 @@ const Main = ({ searchHandler2 }) => {
             <span className={styled.wishlist__text}>{t('header.heart')}</span>
           </div>
         </Link>
-
-        {session ? (
-          <Link href={`profile`}>
-            <div className={styled.profile}>
-              <Icon.User />
-              <span className={styled.profile__text}>Аккаунт</span>
-            </div>
-          </Link>
-        ) : (
-          <div className={styled.profile}>
-            <Icon.User onClick={() => signIn()} />
-            <span className={styled.profile__text}>{t('header.login')}</span>
-          </div>
-        )}
       </div>
     </div>
   );

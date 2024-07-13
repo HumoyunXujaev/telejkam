@@ -1,12 +1,12 @@
-import React from "react";
-import { useState } from "react";
+import React from 'react';
+import { useState } from 'react';
 
-import db from "@/utils/db";
-import Layout from "../../../components/Admin/Layout";
-import { Category } from "@/models/Category";
-import { SubCategory } from "@/models/SubCategory";
-import SubCreate from "@/components/Admin/SubCategories/SubCreate";
-import SubList from "@/components/Admin/SubCategories/SubList";
+import db from '@/utils/db';
+import Layout from '../../../components/Admin/Layout';
+import { Category } from '@/models/Category';
+import { SubCategory } from '@/models/SubCategory';
+import SubCreate from '@/components/Admin/SubCategories/SubCreate';
+import SubList from '@/components/Admin/SubCategories/SubList';
 
 export default function SubCategoriesPage({ categories, subCategories }) {
   const [data, setData] = useState(subCategories);
@@ -27,7 +27,7 @@ export async function getServerSideProps(context) {
 
   const categories = await Category.find({}).sort({ updatedAt: -1 }).lean();
   const subCategories = await SubCategory.find({})
-    .populate({ path: "parent", model: Category })
+    .populate({ path: 'parent', model: Category })
     .lean()
     .sort({ updatedAt: -1 })
     .lean();
