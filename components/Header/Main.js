@@ -42,6 +42,9 @@ const Main = ({ searchHandler2 }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { t } = useTranslation();
   const [value, setValue] = useState('browse');
+  const [currentRoute, setCurrentRoute] = useState(
+    router.pathname.substring(1)
+  ); // Используйте substring, чтобы удалить первый символ "/"
 
   const navItems = [
     { label: 'Главная', icon: <Icon.Home />, route: '' },
@@ -58,7 +61,8 @@ const Main = ({ searchHandler2 }) => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    router.push(`/${newValue}`); // Navigate to the selected route
+    setCurrentRoute(newValue);
+    router.push(`/${newValue}`); // Навигация на выбранный маршрут
   };
 
   const searchChangeHandler = (e) => {
@@ -373,6 +377,9 @@ const Main = ({ searchHandler2 }) => {
                 label={item.label}
                 value={item.route}
                 icon={item.icon}
+                style={{
+                  color: currentRoute === item.route ? '#2196f3' : '#000',
+                }}
               />
             )
           )}
