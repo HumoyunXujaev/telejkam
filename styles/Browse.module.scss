@@ -161,12 +161,9 @@
 
   @media screen and (max-width: 950px) {
     &__store {
-      &_products_wrap {
-        justify-content: center;
-        align-items: center;
-      }
       &_products {
         justify-content: center;
+        align-items: center;
       }
     }
   }
