@@ -26,9 +26,9 @@ const ProductCard = ({ product, className, remove }) => {
   const [active, setActive] = useState(0);
   const [sizeActive, setSizeActive] = useState(0);
   const [showActions, setShowActions] = useState(false);
-  const [productDataCache, setProductDataCache] = useState({});
 
   const [images, setImages] = useState(product.subProducts[active]?.images);
+  const [productDataCache, setProductDataCache] = useState({});
 
   const [styles, setStyles] = useState(
     product.subProducts.map((p) => {
@@ -59,7 +59,7 @@ const ProductCard = ({ product, className, remove }) => {
     };
 
     fetchData();
-  }, [active, sizeActive]);
+  }, [product, active, sizeActive]);
 
   return (
     <div className={`${styled.product} ${className}`}>

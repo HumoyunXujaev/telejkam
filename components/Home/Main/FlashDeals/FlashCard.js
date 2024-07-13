@@ -16,18 +16,18 @@ const FlashCard = ({ product }) => {
   const { cart } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [active, setActive] = useState(0);
+  const [sizeActive, setSizeActive] = useState(0);
   const [productDataCache, setProductDataCache] = useState({});
-  const [active, setActive] = useState(0); // Переключатель активного продукта
-  const [sizeActive, setSizeActive] = useState(0); // Переключатель активного размера
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        `/api/product/${product.parentId}?style=${product.style}&size=${sizeActive}`
+        `/api/product/${product.parentId}?style=${active}&size=${sizeActive}`
       );
       setProductDataCache({
         ...productDataCache,
-        [`${product._id}_${product.style}_${sizeActive}`]: response.data,
+        [`${product._id}_${active}_${sizeActive}`]: response.data,
       });
     };
 
