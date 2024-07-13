@@ -854,3 +854,25 @@
     }
   }
 }
+
+.navigation {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navigation ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation ul li {
+  display: inline;
+  margin-right: 10px;
+}
+
+.navigation ul li a {
+  color: #fff;
+  text-decoration: none;
+}

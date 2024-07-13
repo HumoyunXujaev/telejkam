@@ -4,7 +4,12 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import NextImage from '../NextImage';
-import { Drawer, IconButton } from '@mui/material';
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Drawer,
+  IconButton,
+} from '@mui/material';
 
 import styled from './styles.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
@@ -36,6 +41,25 @@ const Main = ({ searchHandler2 }) => {
   const [loading, setLoading] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { t } = useTranslation();
+  const [value, setValue] = useState('browse');
+
+  const navItems = [
+    { label: 'Главная', icon: <Icon.Home />, route: '' },
+    { label: 'Каталог', icon: <Icon.Layers />, route: 'browse' },
+    // { label: 'Статус Заказа', icon: <Icon.Inbox />, route: 'order-status' },
+    { label: 'Корзина', icon: <Icon.ShoppingBag />, route: 'cart' },
+    { label: 'Избранное', icon: <Icon.Heart />, route: 'wishlist' },
+    {
+      label: 'Еще',
+      icon: <Icon.MoreHorizontal />,
+      onClick: () => setDrawerOpen(true),
+    },
+  ];
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    router.push(`/${newValue}`); // Navigate to the selected route
+  };
 
   const searchChangeHandler = (e) => {
     setQuery(e.target.value);
@@ -322,6 +346,38 @@ const Main = ({ searchHandler2 }) => {
           </div>
         </Link>
       </div>
+
+      {isSmall && (
+        <BottomNavigation
+          value={value}
+          onChange={handleChange}
+          showLabels
+          className={styled.navigation}
+          style={{
+            position: 'fixed',
+            height: '90px',
+            bottom: 0,
+            width: '100%',
+            backgroundColor: '#fff',
+            borderTop: '1px solid #ccc',
+          }}
+        >
+          {navItems.map((item) =>
+            item.onClick ? (
+              <IconButton key={item.route} onClick={item.onClick}>
+                {item.icon}
+              </IconButton>
+            ) : (
+              <BottomNavigationAction
+                key={item.route}
+                label={item.label}
+                value={item.route}
+                icon={item.icon}
+              />
+            )
+          )}
+        </BottomNavigation>
+      )}
     </div>
   );
 };
