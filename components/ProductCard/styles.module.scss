@@ -1,6 +1,7 @@
 .product {
   box-shadow: $shadow-3;
   margin: 1px;
+  border-radius: 7px;
 
   &__infos {
     padding: 10px;
@@ -129,6 +130,7 @@
     }
 
     &_discount {
+      border-radius: 7px;
       position: absolute;
       top: 0;
       left: 0;
@@ -148,6 +150,7 @@
       border-bottom-right-radius: 3px;
     }
     &_label {
+      border-radius: 7px;
       position: absolute;
       top: 0;
       right: 0;
@@ -201,6 +204,8 @@
   background-color: #fff;
 
   img {
+    border-radius: 7px;
+
     height: 320px;
     object-fit: cover;
     display: block;

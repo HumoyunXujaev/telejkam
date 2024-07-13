@@ -109,7 +109,7 @@ export default function Home({
           </AnimateWrapper>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

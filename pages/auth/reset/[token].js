@@ -1,52 +1,52 @@
-import { AiOutlineBackward } from "react-icons/ai";
-import { MdCancel } from "react-icons/md";
-import { useState } from "react";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import axios from "axios";
-import jwt from "jsonwebtoken";
-import { signIn } from "next-auth/react";
+import { AiOutlineBackward } from 'react-icons/ai';
+import { MdCancel } from 'react-icons/md';
+import { useState } from 'react';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import axios from 'axios';
+import jwt from 'jsonwebtoken';
+import { signIn } from 'next-auth/react';
 
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import LoginInput from "@/components/Input/LoginInput";
-import HasIconButton from "@/components/Button/HasIconButton";
-import styled from "../../../styles/Forgot.module.scss";
-import StyledDotLoader from "@/components/Loaders/DotLoader";
-import { getSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { BsCheckCircleFill } from "react-icons/bs";
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import LoginInput from '@/components/Input/LoginInput';
+import HasIconButton from '@/components/Button/HasIconButton';
+import styled from '../../../styles/Forgot.module.scss';
+import StyledDotLoader from '@/components/Loaders/DotLoader';
+import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { BsCheckCircleFill } from 'react-icons/bs';
 
 const ResetPassword = ({ user_id }) => {
   const router = useRouter();
-  const [password, setPassword] = useState("");
-  const [confirm_password, setConfirm_password] = useState("");
+  const [password, setPassword] = useState('');
+  const [confirm_password, setConfirm_password] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const passwordValidation = Yup.object({
     password: Yup.string()
-      .required("Please enter your new password")
-      .min(6, "Password must be atleast 6 characters")
+      .required('Please enter your new password')
+      .min(6, 'Password must be atleast 6 characters')
       .max(36, "Password can't be more than 36 characters"),
     confirm_password: Yup.string()
-      .required("Confirm your password")
-      .oneOf([Yup.ref("password")], "Passwords must match"),
+      .required('Confirm your password')
+      .oneOf([Yup.ref('password')], 'Passwords must match'),
   });
 
   const resetHandler = async () => {
     try {
       setLoading(true);
 
-      const { data } = await axios.put("/api/auth/reset", {
+      const { data } = await axios.put('/api/auth/reset', {
         user_id,
         password,
       });
 
       setLoading(false);
-      setError("");
-      setSuccess("Successfully! Back to Home Page after 2 seconds.");
+      setError('');
+      setSuccess('Successfully! Back to Home Page after 2 seconds.');
 
       let options = {
         redirect: false,
@@ -54,11 +54,11 @@ const ResetPassword = ({ user_id }) => {
         password: password,
       };
       setTimeout(async () => {
-        await signIn("credentials", options);
+        await signIn('credentials', options);
         window.location.reload(true);
       }, 2000);
     } catch (error) {
-      setSuccess("");
+      setSuccess('');
       setLoading(false);
       setError(error?.response?.data?.message);
     }
@@ -87,25 +87,25 @@ const ResetPassword = ({ user_id }) => {
               {(form) => (
                 <Form>
                   <LoginInput
-                    icon="password"
-                    label="Your new password"
-                    placeholder="At least 6 charaters"
-                    type="password"
-                    id="password"
-                    name="password"
+                    icon='password'
+                    label='Your new password'
+                    placeholder='At least 6 charaters'
+                    type='password'
+                    id='password'
+                    name='password'
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   <LoginInput
-                    icon="repeat"
-                    label="Confirm your new password"
-                    placeholder="Exactly match with your new password"
-                    type="password"
-                    id="confirm_password"
-                    name="confirm_password"
+                    icon='repeat'
+                    label='Confirm your new password'
+                    placeholder='Exactly match with your new password'
+                    type='password'
+                    id='confirm_password'
+                    name='confirm_password'
                     onChange={(e) => setConfirm_password(e.target.value)}
                   />
                   <div className={styled.btnWrap}>
-                    <HasIconButton type="submit">Change password</HasIconButton>
+                    <HasIconButton type='submit'>Change password</HasIconButton>
                   </div>
                   {success && !error && (
                     <span className={styled.success}>
@@ -125,7 +125,7 @@ const ResetPassword = ({ user_id }) => {
           </div>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
@@ -139,7 +139,7 @@ export async function getServerSideProps(context) {
   if (session) {
     return {
       redirect: {
-        destination: "/",
+        destination: '/',
       },
     };
   }

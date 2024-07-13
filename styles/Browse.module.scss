@@ -56,7 +56,7 @@
       text-align: center;
       box-shadow: $shadow-1;
       font-size: 12px;
-      border-radius: 3px;
+      border-radius: 7px;
       max-height: 100vh;
       overflow-y: scroll;
 
@@ -84,7 +84,7 @@
     &_products_wrap {
       box-shadow: $shadow-1;
       padding: 30px;
-      border-radius: 3px;
+      border-radius: 7px;
     }
 
     &_products {
@@ -117,7 +117,7 @@
 
   &__tags {
     padding: 1rem;
-    border-radius: 3px;
+    border-radius: 7px;
     box-shadow: $shadow-1;
     margin-bottom: 24px;
     max-width: 100%;

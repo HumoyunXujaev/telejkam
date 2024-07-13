@@ -70,18 +70,18 @@ export default function SimilarSwiper({ product }) {
                     <Image src={p.image} alt='fds' width={100} height={100} />
                   </div>
 
-                  <h4 className={styled.product__infos_name}>{p.name}</h4>
-
-                  <div className={styled.product__infos_flex}>
-                    <div className={styled.product__infos_price}>
-                      <span></span>
-                      <span></span>
-                      <span>
-                        {p.price_description.toLocaleString('ru-RU')}{' '}
-                        {t('price_def')}
-                      </span>
-                    </div>
-                  </div>
+                  <h4
+                    style={{
+                      textAlign: 'center',
+                      color: 'black',
+                      fontWeight: '600',
+                      overflowWrap: 'break-word',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {' '}
+                    {p.name}
+                  </h4>
                 </Link>
               </div>
             </div>

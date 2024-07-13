@@ -20,7 +20,7 @@
     overflow: hidden;
 
     img {
-      border-radius: 3px;
+      border-radius: 7px;
       object-fit: cover;
       cursor: none;
       object-position: center;
@@ -145,6 +145,7 @@
   padding: 2rem 2rem 0.25rem;
   background-color: #fff;
   box-shadow: $shadow-1;
+  border-radius: 7px;
 
   &__name {
     color: rgb(0, 0, 0);
@@ -715,6 +716,7 @@
 
 //Payment---------------------------------
 .payment {
+  border-radius: 7px;
   margin-top: 2.2rem;
   padding: 1.2rem 1rem 1.7rem;
   box-shadow: $shadow-1;
@@ -806,10 +808,17 @@
 .product {
   box-shadow: $shadow-3;
   margin: 1px;
+  border-radius: 7px;
+
+  &__container {
+    height: 25rem;
+    text-align: center;
+  }
 
   &__infos {
     padding: 10px;
     width: 100%;
+    border-radius: 7px;
 
     &_sizes {
       display: flex;

@@ -449,7 +449,7 @@ export default function BrowsePage({
           </div>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

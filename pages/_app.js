@@ -15,6 +15,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { appWithTranslation } from 'next-i18next';
 import { persistStore } from 'redux-persist';
 import 'swiper/swiper-bundle.css';
+import Footer from '@/components/Footer';
 
 NProgress.configure({
   minimum: 0.1,
@@ -81,6 +82,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
                   theme='colored'
                 />
                 <Component {...pageProps} />
+                <Footer />
                 <Analytics />
               </PayPalScriptProvider>
             </PersistGate>
