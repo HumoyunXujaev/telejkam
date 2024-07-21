@@ -19,14 +19,14 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/dashboard',
+        source: '/:path*',
         has: [
           {
             type: 'host',
             value: 'admin.telejkam.uz',
           },
         ],
-        destination: '/admin/dashboard', // обрабатывайте админку на субдомене
+        destination: '/admin/:path*', // обрабатывайте все пути для админки на субдомене
       },
       {
         source: '/:path*',
