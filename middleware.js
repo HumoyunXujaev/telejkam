@@ -27,8 +27,8 @@ export async function middleware(req) {
       }
     }
   } else {
-    if (pathname.startsWith('/admin')) {
-      console.log(`Redirecting from /admin to admin.telejkam.uz`);
+    if (session && pathname.startsWith('/admin')) {
+      console.log(`Redirecting to admin.telejkam.uz`);
       return NextResponse.redirect(
         `https://admin.telejkam.uz${pathname.replace('/admin', '')}`
       );
