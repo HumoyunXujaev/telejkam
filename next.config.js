@@ -19,16 +19,6 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/:path*',
-        has: [
-          {
-            type: 'host',
-            value: 'admin.telejkam.uz',
-          },
-        ],
-        destination: '/admin/:path*', // обрабатывайте все пути для админки на субдомене
-      },
-      {
         source: '/dashboard/:path*',
         has: [
           {
@@ -37,6 +27,16 @@ const nextConfig = {
           },
         ],
         destination: '/admin/dashboard/:path*', // обрабатывайте все подстраницы dashboard
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'admin.telejkam.uz',
+          },
+        ],
+        destination: '/admin/:path*', // обрабатывайте все пути для админки на субдомене
       },
       {
         source: '/:path*',

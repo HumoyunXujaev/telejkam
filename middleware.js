@@ -38,7 +38,7 @@ export async function middleware(req) {
     }
     if (pathname.startsWith('/profile') && !session) {
       console.log(`Redirecting to ${origin}`);
-      return NextResponse.redirect(origin);
+      return NextResponse.redirect(`${origin}/signin`);
     }
   }
 
