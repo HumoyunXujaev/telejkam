@@ -5,7 +5,6 @@ const path = require('node:path');
 
 const nextConfig = {
   experimental: { esmExternals: true },
-
   reactStrictMode: true,
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
@@ -16,6 +15,25 @@ const nextConfig = {
     unoptimized: true,
   },
   i18n, // добавьте i18n сюда
+
+  async rewrites() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'admin.telejkam.uz',
+          },
+        ],
+        destination: '/admin/:path*',
+      },
+      {
+        source: '/:path*',
+        destination: '/:path*',
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
