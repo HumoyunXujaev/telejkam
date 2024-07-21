@@ -80,17 +80,13 @@ const Sidebar = () => {
           </div>
           <ul className={styled.sidebar__list}>
             <li className={route === '/admin/dashboard' && styled.active}>
-              <Link href='/admin/dashboard'>
+              <Link href='/dashboard'>
                 <FcList />
                 <span className={styled.show}>Панель</span>
               </Link>
             </li>
 
-            <li
-              className={
-                route.includes('/admin/dashboard/sales') && styled.active
-              }
-            >
+            <li className={route.includes('/dashboard/sales') && styled.active}>
               <Link href='/admin/dashboard/sales'>
                 <FcSalesPerformance />
                 <span className={styled.show}>Sales</span>
@@ -98,22 +94,16 @@ const Sidebar = () => {
             </li>
 
             <li
-              className={
-                route.includes('/admin/dashboard/orders') && styled.active
-              }
+              className={route.includes('/dashboard/orders') && styled.active}
             >
-              <Link href='/admin/dashboard/orders'>
+              <Link href='/dashboard/orders'>
                 <FcCurrencyExchange />
                 <span className={styled.show}>Заказы</span>
               </Link>
             </li>
 
-            <li
-              className={
-                route.includes('/admin/dashboard/users') && styled.active
-              }
-            >
-              <Link href='/admin/dashboard/users'>
+            <li className={route.includes('/dashboard/users') && styled.active}>
+              <Link href='/dashboard/users'>
                 <FcPortraitMode />
                 <span className={styled.show}>Пользователи</span>
               </Link>
@@ -141,10 +131,10 @@ const Sidebar = () => {
           <ul className={styled.sidebar__list}>
             <li
               className={
-                route.includes('/admin/dashboard/product/all') && styled.active
+                route.includes('/dashboard/product/all') && styled.active
               }
             >
-              <Link href='/admin/dashboard/product/all'>
+              <Link href='/dashboard/product/all'>
                 <FcShop />
                 <span className={styled.show}>Все Продукты</span>
               </Link>
@@ -152,11 +142,10 @@ const Sidebar = () => {
 
             <li
               className={
-                route.includes('/admin/dashboard/product/create') &&
-                styled.active
+                route.includes('/dashboard/product/create') && styled.active
               }
             >
-              <Link href='/admin/dashboard/product/create'>
+              <Link href='/dashboard/product/create'>
                 <FcPlus />
                 <span className={styled.show}>Добавить Продукт</span>
               </Link>
@@ -171,10 +160,10 @@ const Sidebar = () => {
           <ul className={styled.sidebar__list}>
             <li
               className={
-                route.includes('/admin/dashboard/categories') && styled.active
+                route.includes('/dashboard/categories') && styled.active
               }
             >
-              <Link href='/admin/dashboard/categories'>
+              <Link href='/dashboard/categories'>
                 <FcParallelTasks />
                 <span className={styled.show}>Родительские Категории</span>
               </Link>
@@ -182,11 +171,10 @@ const Sidebar = () => {
 
             <li
               className={
-                route.includes('/admin/dashboard/subcategories') &&
-                styled.active
+                route.includes('/dashboard/subcategories') && styled.active
               }
             >
-              <Link href='/admin/dashboard/subcategories'>
+              <Link href='/dashboard/subcategories'>
                 <FcTimeline />
                 <span className={styled.show}>Подкатегории</span>
               </Link>
@@ -201,11 +189,9 @@ const Sidebar = () => {
           </div>
           <ul className={styled.sidebar__list}>
             <li
-              className={
-                route.includes('/admin/dashboard/coupons') && styled.active
-              }
+              className={route.includes('/dashboard/coupons') && styled.active}
             >
-              <Link href='/admin/dashboard/coupons'>
+              <Link href='/dashboard/coupons'>
                 <FcPuzzle />
                 <span className={styled.show}>Купоны</span>
               </Link>
