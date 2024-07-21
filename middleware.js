@@ -19,9 +19,10 @@ export async function middleware(req) {
     if (!session) {
       console.log(`User is not signed in, redirecting to signin`);
       return NextResponse.redirect(
-        `https://${origin}/signin?callbackUrl=${encodeURIComponent(
-          req.nextUrl.href
-        )}`
+        `https://${host.replace(
+          'admin.',
+          ''
+        )}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
       );
     }
     if (session.role !== 'admin') {
