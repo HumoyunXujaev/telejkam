@@ -27,6 +27,13 @@ export async function middleware(req) {
       }
     }
   } else {
+    if (pathname.startsWith('/admin')) {
+      console.log(`Redirecting from /admin to admin.telejkam.uz`);
+      return NextResponse.redirect(
+        `https://admin.telejkam.uz${pathname.replace('/admin', '')}`
+      );
+    }
+
     // Логика для основного домена
     if (pathname.startsWith('/profile') && !session) {
       console.log(`Redirecting to ${origin}`);
