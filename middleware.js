@@ -7,12 +7,15 @@ export async function middleware(req) {
 
   console.log(`Middleware called for path: ${pathname}`);
   console.log(`Session:`, session);
+  console.log(`Host: ${host}`);
 
   const isAdminSubdomain = host.startsWith('admin.');
 
   if (isAdminSubdomain) {
-    // Логика для субдомена admin.telejkam.uz
+    console.log(`Request on admin subdomain`);
+
     if (pathname === '/') {
+      console.log(`Redirecting to /dashboard`);
       return NextResponse.redirect(`https://${host}/dashboard`);
     }
 
@@ -25,19 +28,22 @@ export async function middleware(req) {
         )}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
       );
     }
+
     if (session.role !== 'admin') {
       console.log(`User is not admin, redirecting to home`);
       return NextResponse.redirect(`https://${host.replace('admin.', '')}`);
     }
   } else {
-    // Логика для основного домена
+    console.log(`Request on main domain`);
+
     if (pathname.startsWith('/admin')) {
       console.log(`Redirecting from /admin to admin.telejkam.uz`);
       const newPath = pathname.replace('/admin', '');
       return NextResponse.redirect(`https://admin.telejkam.uz${newPath}`);
     }
+
     if (pathname.startsWith('/profile') && !session) {
-      console.log(`Redirecting to ${origin}`);
+      console.log(`Redirecting to ${origin}/signin`);
       return NextResponse.redirect(`${origin}/signin`);
     }
   }
