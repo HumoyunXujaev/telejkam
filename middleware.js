@@ -22,16 +22,15 @@ export async function middleware(req) {
     if (!session) {
       console.log(`User is not signed in, redirecting to signin`);
       return NextResponse.redirect(
-        `https://${host.replace(
-          'admin.',
-          ''
-        )}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
+        `https://${host}/signin?callbackUrl=${encodeURIComponent(
+          req.nextUrl.href
+        )}`
       );
     }
 
     if (session.role !== 'admin') {
       console.log(`User is not admin, redirecting to home`);
-      return NextResponse.redirect(`https://${host.replace('admin.', '')}`);
+      return NextResponse.redirect(`${origin}`);
     }
   } else {
     console.log(`Request on main domain`);
@@ -43,8 +42,8 @@ export async function middleware(req) {
     }
 
     if (pathname.startsWith('/profile') && !session) {
-      console.log(`Redirecting to ${origin}/signin`);
-      return NextResponse.redirect(`${origin}/signin`);
+      console.log(`Redirecting to ${origin}`);
+      return NextResponse.redirect(`${origin}`);
     }
   }
 
