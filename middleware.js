@@ -8,6 +8,7 @@ export async function middleware(req) {
   console.log(`Middleware called for path: ${pathname}`);
   console.log(`Session:`, session);
   console.log(`Host: ${host}`);
+  console.log(`Origin: ${origin}`);
 
   const isAdminSubdomain = host.startsWith('admin.');
 
@@ -22,9 +23,10 @@ export async function middleware(req) {
     if (!session) {
       console.log(`User is not signed in, redirecting to signin`);
       return NextResponse.redirect(
-        `https://${host}/signin?callbackUrl=${encodeURIComponent(
-          req.nextUrl.href
-        )}`
+        `https://${host.replace(
+          'admin.',
+          ''
+        )}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
       );
     }
 
