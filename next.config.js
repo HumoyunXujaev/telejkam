@@ -29,6 +29,16 @@ const nextConfig = {
         destination: '/admin/:path*', // обрабатывайте все пути для админки на субдомене
       },
       {
+        source: '/dashboard/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'admin.telejkam.uz',
+          },
+        ],
+        destination: '/admin/dashboard/:path*', // обрабатывайте все подстраницы dashboard
+      },
+      {
         source: '/:path*',
         destination: '/:path*',
       },

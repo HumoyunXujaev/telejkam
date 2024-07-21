@@ -46,5 +46,5 @@ export async function middleware(req) {
 
 // Enable the middleware for specific routes
 export const config = {
-  matcher: ['/profile/:path*', '/admin/:path*', '/'], // Обрабатывайте как /admin, так и общий маршрут
+  matcher: ['/profile/:path*', '/admin/:path*', '/dashboard/:path*', '/'], // Обрабатывайте как /admin, так и общий маршрут
 };
