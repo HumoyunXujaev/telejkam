@@ -79,7 +79,7 @@ const Sidebar = () => {
             <div className={styled.show}>Общее</div>
           </div>
           <ul className={styled.sidebar__list}>
-            <li className={route === '/admin/dashboard' && styled.active}>
+            <li className={route === '/dashboard' && styled.active}>
               <Link href='/dashboard'>
                 <FcList />
                 <span className={styled.show}>Панель</span>
@@ -87,7 +87,7 @@ const Sidebar = () => {
             </li>
 
             <li className={route.includes('/dashboard/sales') && styled.active}>
-              <Link href='/admin/dashboard/sales'>
+              <Link href='/dashboard/sales'>
                 <FcSalesPerformance />
                 <span className={styled.show}>Sales</span>
               </Link>

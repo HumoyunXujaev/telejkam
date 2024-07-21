@@ -19,7 +19,7 @@ export async function middleware(req) {
     if (!session) {
       console.log(`User is not signed in, redirecting to signin`);
       return NextResponse.redirect(
-        `https://${host}/signin?callbackUrl=${encodeURIComponent(
+        `https://${origin}/signin?callbackUrl=${encodeURIComponent(
           req.nextUrl.href
         )}`
       );
