@@ -14,19 +14,19 @@ const nextConfig = {
     domains: ['localhost', 'res.cloudinary.com'],
     unoptimized: true,
   },
-  i18n, // добавьте i18n сюда
+  i18n,
 
   async rewrites() {
     return [
       {
-        source: '/:path*',
+        source: '/admin/:path*',
         has: [
           {
             type: 'host',
             value: 'admin.telejkam.uz',
           },
         ],
-        destination: '/admin/:path*',
+        destination: '/admin/:path*', // обрабатывайте админку на субдомене
       },
       {
         source: '/:path*',

@@ -28,6 +28,10 @@ export async function middleware(req) {
     }
   } else {
     // Логика для основного домена
+    if (pathname.startsWith('/admin')) {
+      console.log(`Redirecting from /admin to admin.telejkam.uz`);
+      return NextResponse.redirect(`https://admin.telejkam.uz${pathname}`);
+    }
     if (pathname.startsWith('/profile') && !session) {
       console.log(`Redirecting to ${origin}`);
       return NextResponse.redirect(origin);
@@ -39,5 +43,5 @@ export async function middleware(req) {
 
 // Enable the middleware for specific routes
 export const config = {
-  matcher: ['/profile/:path*', '/:path*'], // `/admin/:path*` теперь должен быть на субдомене
+  matcher: ['/profile/:path*', '/admin/:path*'], // Обрабатывайте как /admin, так и общий маршрут
 };
