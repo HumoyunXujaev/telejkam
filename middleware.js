@@ -10,6 +10,13 @@ export async function middleware(req) {
 
   const isAdminSubdomain = host.startsWith('admin.');
 
+  if (session && pathname.startsWith('/admin')) {
+    console.log(`Redirecting to admin.telejkam.uz`);
+    return NextResponse.redirect(
+      `https://admin.telejkam.uz${pathname.replace('/admin', '')}`
+    );
+  }
+
   if (isAdminSubdomain) {
     // Логика для субдомена admin.telejkam.uz
     if (pathname.startsWith('/')) {
