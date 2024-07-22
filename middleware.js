@@ -5,24 +5,30 @@ export async function middleware(req) {
   const { pathname, origin, host } = req.nextUrl;
   const session = await getToken({ req, secret: process.env.JWT_SECRET });
 
-  console.log(`Middleware called for path: ${pathname}`);
-  console.log(`Session:`, session);
-  console.log(`Origin: ${origin}`);
-  console.log(`Host: ${host}`);
-  console.log(`Pathname: ${pathname}`);
-
   const isAdminSubdomain = host.startsWith('admin.');
+
+  if (pathname.startsWith('/admin') && !isAdminSubdomain) {
+    if (!session) {
+      return NextResponse.redirect(
+        `${origin}/signin?callbackUrl=${origin}/admin/dashboard`
+      );
+    }
+
+    if (session.role !== 'admin') {
+      return NextResponse.redirect(`${origin}`);
+    }
+
+    return NextResponse.redirect(`https://admin.telejkam.uz${pathname}`);
+  }
 
   if (isAdminSubdomain) {
     if (!session) {
-      console.log(`User is not signed in, redirecting to signin`);
       return NextResponse.redirect(
         'https://www.telejkam.uz/signin?callbackUrl=https://admin.telejkam.uz/dashboard'
       );
     }
 
     if (session.role !== 'admin') {
-      console.log(`User is not admin, redirecting to www.telejkam.uz`);
       return NextResponse.redirect('https://www.telejkam.uz');
     }
 
@@ -30,17 +36,7 @@ export async function middleware(req) {
   }
 
   if (pathname.startsWith('/profile') && !session) {
-    console.log(`Redirecting to ${origin}`);
     return NextResponse.redirect(origin);
-  }
-
-  if (pathname.startsWith('/admin') && !session) {
-    console.log(
-      `Redirecting to https://www.telejkam.uz/signin?callbackUrl=https://admin.telejkam.uz/dashboard`
-    );
-    return NextResponse.redirect(
-      'https://www.telejkam.uz/signin?callbackUrl=https://admin.telejkam.uz/dashboard'
-    );
   }
 
   return NextResponse.next();
