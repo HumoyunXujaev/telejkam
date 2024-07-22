@@ -12,20 +12,24 @@ export async function middleware(req) {
 
   if (isAdminSubdomain) {
     if (!session) {
-      console.log(`User is not signed in, redirecting to signin`);
+      console.log(
+        `User is not signed in, redirecting to  ${origin}/signin?callbackUrl=${encodeURIComponent(
+          req.nextUrl.href
+        )}}`
+      );
       return NextResponse.redirect(
         `${origin}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
       );
     }
 
     if (session.role !== 'admin') {
-      console.log(`User is not admin, redirecting to home`);
+      console.log(`User is not admin, redirecting to www.telejkam.uz`);
       return NextResponse.redirect('https://www.telejkam.uz');
     }
 
     // Prevent redirect loop by checking if already on dashboard
     if (pathname === '/' || pathname === '/admin') {
-      console.log(`Admin accessing root, redirecting to /dashboard`);
+      console.log(`Admin accessing root, redirecting to ${origin}/dashboard`);
       return NextResponse.redirect(`${origin}/dashboard`);
     }
 
