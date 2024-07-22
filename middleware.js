@@ -26,22 +26,19 @@ export async function middleware(req) {
       return NextResponse.redirect('https://www.telejkam.uz');
     }
 
-    // Prevent redirect loop by checking if already on dashboard
     if (pathname === '/' || pathname === '/admin') {
       console.log(`Admin accessing root, redirecting to /dashboard`);
-      return NextResponse.redirect('/dashboard');
+      return NextResponse.redirect(`${origin}/dashboard`);
     }
 
     return NextResponse.next();
   }
 
-  // Redirect to home if not authenticated and trying to access profile
   if (pathname.startsWith('/profile') && !session) {
     console.log(`Redirecting to ${origin}`);
     return NextResponse.redirect(origin);
   }
 
-  // Redirect to signin if not authenticated or not admin and trying to access admin routes on main domain
   if (pathname.startsWith('/admin')) {
     if (!session) {
       console.log(`User is not signed in, redirecting to signin`);
@@ -55,7 +52,6 @@ export async function middleware(req) {
       return NextResponse.redirect(origin);
     }
 
-    // Redirect admins to the subdomain
     console.log(`Redirecting to admin subdomain`);
     return NextResponse.redirect('https://admin.telejkam.uz/dashboard');
   }
@@ -63,7 +59,6 @@ export async function middleware(req) {
   return NextResponse.next();
 }
 
-// Enable the middleware for specific routes
 export const config = {
   matcher: [
     '/',
