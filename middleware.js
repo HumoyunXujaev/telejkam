@@ -17,9 +17,7 @@ export async function middleware(req) {
     if (!session) {
       console.log(`User is not signed in, redirecting to signin`);
       return NextResponse.redirect(
-        `https://${host}/signin?callbackUrl=${encodeURIComponent(
-          req.nextUrl.href
-        )}`
+        'https://admin.telejkam.uz/signin?callbackUrl=admin.telejkam.uz/dashboard'
       );
     }
 
@@ -36,9 +34,13 @@ export async function middleware(req) {
     return NextResponse.redirect(origin);
   }
 
-  if (pathname.startsWith('/admin') && session && session.role === 'admin') {
-    console.log(`Redirecting to admin dashboard`);
-    return NextResponse.redirect('https://admin.telejkam.uz/dashboard');
+  if (pathname.startsWith('/admin') && !session) {
+    console.log(
+      `Redirecting to https://admin.telejkam.uz/signin?callbackUrl=admin.telejkam.uz/dashboard`
+    );
+    return NextResponse.redirect(
+      'https://admin.telejkam.uz/signin?callbackUrl=admin.telejkam.uz/dashboard'
+    );
   }
 
   return NextResponse.next();

@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/admin/:path*",
+      "destination": "https://admin.telejkam.uz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/signin",
+      "destination": "https://admin.telejkam.uz/signin?callbackUrl=https://admin.telejkam.uz/dashboard",
+      "permanent": false
+    }
+  ]
+}
