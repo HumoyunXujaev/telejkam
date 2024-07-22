@@ -42,15 +42,10 @@ export async function middleware(req) {
   const isAdminSubdomain = host.startsWith('admin.');
 
   if (isAdminSubdomain) {
-    if (!session) {
+    if (!session || session.role !== 'admin') {
       return NextResponse.redirect(
         `${origin}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
       );
-    }
-
-    if (session.role !== 'admin') {
-      console.log(`User is not admin, redirecting to home`);
-      return NextResponse.redirect(origin);
     }
   }
 
