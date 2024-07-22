@@ -26,11 +26,6 @@ export async function middleware(req) {
       return NextResponse.redirect('https://www.telejkam.uz');
     }
 
-    if (pathname === '/' || pathname === '/admin') {
-      console.log(`Admin accessing root, redirecting to /dashboard`);
-      return NextResponse.redirect(`${origin}/dashboard`);
-    }
-
     return NextResponse.next();
   }
 
@@ -40,18 +35,6 @@ export async function middleware(req) {
   }
 
   if (pathname.startsWith('/admin')) {
-    if (!session) {
-      console.log(`User is not signed in, redirecting to signin`);
-      return NextResponse.redirect(
-        `${origin}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
-      );
-    }
-
-    if (session.role !== 'admin') {
-      console.log(`User is not admin, redirecting to home`);
-      return NextResponse.redirect(origin);
-    }
-
     console.log(`Redirecting to admin subdomain`);
     return NextResponse.redirect('https://admin.telejkam.uz/dashboard');
   }
