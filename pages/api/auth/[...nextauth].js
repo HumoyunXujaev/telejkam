@@ -8,7 +8,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import bcrypt from 'bcrypt';
 import db from '@/utils/db';
-
 import clientPromise from '@/lib/mongodb';
 import { User } from '@/models/User';
 
