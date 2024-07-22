@@ -2,7 +2,7 @@
   "redirects": [
     {
       "source": "/admin/:path*",
-      "destination": "https://admin.telejkam.uz/:path*",
+      "destination": "https://admin.telejkam.uz/dashboard",
       "permanent": true
     },
     {
