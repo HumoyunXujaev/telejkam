@@ -7,6 +7,9 @@ export async function middleware(req) {
 
   console.log(`Middleware called for path: ${pathname}`);
   console.log(`Session:`, session);
+  console.log(`Origin: ${origin}`);
+  console.log(`Host: ${host}`);
+  console.log(`Pathname: ${pathname}`);
 
   const isAdminSubdomain = host.startsWith('admin.');
 
@@ -34,8 +37,8 @@ export async function middleware(req) {
     return NextResponse.redirect(origin);
   }
 
-  if (pathname.startsWith('/admin')) {
-    console.log(`Redirecting to admin subdomain`);
+  if (pathname.startsWith('/admin') && session && session.role === 'admin') {
+    console.log(`Redirecting to admin dashboard`);
     return NextResponse.redirect('https://admin.telejkam.uz/dashboard');
   }
 

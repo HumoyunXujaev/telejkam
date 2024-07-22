@@ -13,7 +13,6 @@ const nextConfig = {
     unoptimized: true,
   },
   i18n,
-
   async rewrites() {
     return [
       {
@@ -24,7 +23,7 @@ const nextConfig = {
             value: 'admin.telejkam.uz',
           },
         ],
-        destination: '/admin/dashboard/:path*', // обрабатывайте все подстраницы dashboard
+        destination: '/admin/dashboard/:path*',
       },
       {
         source: '/:path*',
@@ -34,7 +33,7 @@ const nextConfig = {
             value: 'admin.telejkam.uz',
           },
         ],
-        destination: '/admin/:path*', // обрабатывайте все пути для админки на субдомене
+        destination: '/admin/:path*',
       },
       {
         source: '/:path*',

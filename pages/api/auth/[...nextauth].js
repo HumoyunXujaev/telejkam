@@ -56,7 +56,7 @@ export default NextAuth({
   ],
   callbacks: {
     async session({ session, token }) {
-      let user = await User.findById(token.sub);
+      const user = await User.findById(token.sub);
       session.user.id = token.sub || user._id.toString();
       session.user.role = user.role || 'user';
       token.role = user.role || 'user';
@@ -84,7 +84,7 @@ export default NextAuth({
         sameSite: 'lax',
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        domain: '.telejkam.uz', // Set the cookie domain to the root domain
+        domain: '.telejkam.uz',
       },
     },
     callbackUrl: {
@@ -93,7 +93,7 @@ export default NextAuth({
         sameSite: 'lax',
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        domain: '.telejkam.uz', // Set the cookie domain to the root domain
+        domain: '.telejkam.uz',
       },
     },
     csrfToken: {
@@ -103,7 +103,7 @@ export default NextAuth({
         sameSite: 'lax',
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        domain: '.telejkam.uz', // Set the cookie domain to the root domain
+        domain: '.telejkam.uz',
       },
     },
   },
