@@ -62,9 +62,6 @@ export async function middleware(req) {
     if (session) {
       console.log(`User is signed in, role: ${session.role}`);
 
-      if (session.role === 'admin' && pathname.startsWith('/admin')) {
-        NextResponse.redirect('https://admin.telejkam.uz/dashboard');
-      }
       if (session.role !== 'admin') {
         console.log(`User is not admin, redirecting to home`);
         return NextResponse.redirect(origin);
@@ -77,6 +74,8 @@ export async function middleware(req) {
         `${origin}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
       );
     }
+
+    return NextResponse.redirect('https://admin.telejkam.uz/dashboard');
   }
 
   return NextResponse.next();
