@@ -62,7 +62,7 @@ export async function middleware(req) {
     if (session) {
       console.log(`User is signed in, role: ${session.role}`);
 
-      if (session.role === 'admin' && pathname === '/admin') {
+      if (session.role === 'admin' && pathname.startsWith('/admin')) {
         NextResponse.redirect('https://admin.telejkam.uz/dashboard');
       }
       if (session.role !== 'admin') {
