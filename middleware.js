@@ -7,6 +7,9 @@ export async function middleware(req) {
 
   console.log(`Middleware called for path: ${pathname}`);
   console.log(`Session:`, session);
+  console.log(`Origin: ${origin}`);
+  console.log(`Host: ${host}`);
+  console.log(`Pathname: ${pathname}`);
 
   const isAdminSubdomain = host.startsWith('admin.');
 
