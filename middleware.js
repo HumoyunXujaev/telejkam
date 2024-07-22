@@ -12,13 +12,12 @@ export async function middleware(req) {
 
   if (isAdminSubdomain) {
     if (!session) {
-      console.log(
-        `User is not signed in, redirecting to  ${origin}/signin?callbackUrl=${encodeURIComponent(
-          req.nextUrl.href
-        )}}`
-      );
+      console.log(`User is not signed in, redirecting to signin`);
       return NextResponse.redirect(
-        `${origin}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
+        `${origin.replace(
+          'admin.',
+          ''
+        )}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
       );
     }
 
@@ -29,8 +28,8 @@ export async function middleware(req) {
 
     // Prevent redirect loop by checking if already on dashboard
     if (pathname === '/' || pathname === '/admin') {
-      console.log(`Admin accessing root, redirecting to ${origin}/dashboard`);
-      return NextResponse.redirect(`${origin}/dashboard`);
+      console.log(`Admin accessing root, redirecting to /dashboard`);
+      return NextResponse.redirect('/dashboard');
     }
 
     return NextResponse.next();
