@@ -1,34 +1,3 @@
-// import { getToken } from 'next-auth/jwt';
-// import { NextResponse } from 'next/server';
-
-// export async function middleware(req) {
-//   const { pathname, origin, host } = req.nextUrl;
-//   const session = await getToken({ req, secret: process.env.JWT_SECRET });
-
-//     if (session.role !== 'admin') {
-//       return NextResponse.redirect(origin.replace('admin.', ''));
-//     }
-
-//     if (pathname === '/') {
-//       return NextResponse.redirect(`${origin}/dashboard`);
-//     }
-//   } else {
-//     if (pathname.startsWith('/admin')) {
-//       return NextResponse.redirect(
-//         `https://admin.telejkam.uz${pathname.replace('/admin', '')}`
-//       );
-//     }
-
-//     if (!session && pathname.startsWith('/profile')) {
-//       return NextResponse.redirect(
-//         `${origin}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
-//       );
-//     }
-//   }
-
-//   return NextResponse.next();
-// }
-
 import { getToken } from 'next-auth/jwt';
 import { NextResponse } from 'next/server';
 
@@ -42,11 +11,25 @@ export async function middleware(req) {
   const isAdminSubdomain = host.startsWith('admin.');
 
   if (isAdminSubdomain) {
-    if (!session || session.role !== 'admin') {
+    if (!session) {
+      console.log(`User is not signed in, redirecting to signin`);
       return NextResponse.redirect(
         `${origin}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
       );
     }
+
+    if (session.role !== 'admin') {
+      console.log(`User is not admin, redirecting to home`);
+      return NextResponse.redirect('https://www.telejkam.uz');
+    }
+
+    // Prevent redirect loop by checking if already on dashboard
+    if (pathname === '/' || pathname === '/admin') {
+      console.log(`Admin accessing root, redirecting to /dashboard`);
+      return NextResponse.redirect(`${origin}/dashboard`);
+    }
+
+    return NextResponse.next();
   }
 
   // Redirect to home if not authenticated and trying to access profile
@@ -55,17 +38,8 @@ export async function middleware(req) {
     return NextResponse.redirect(origin);
   }
 
-  // Redirect to signin if not authenticated or not admin and trying to access admin routes
+  // Redirect to signin if not authenticated or not admin and trying to access admin routes on main domain
   if (pathname.startsWith('/admin')) {
-    if (session) {
-      console.log(`User is signed in, role: ${session.role}`);
-
-      if (session.role !== 'admin') {
-        console.log(`User is not admin, redirecting to home`);
-        return NextResponse.redirect(origin);
-      }
-    }
-
     if (!session) {
       console.log(`User is not signed in, redirecting to signin`);
       return NextResponse.redirect(
@@ -73,6 +47,13 @@ export async function middleware(req) {
       );
     }
 
+    if (session.role !== 'admin') {
+      console.log(`User is not admin, redirecting to home`);
+      return NextResponse.redirect(origin);
+    }
+
+    // Redirect admins to the subdomain
+    console.log(`Redirecting to admin subdomain`);
     return NextResponse.redirect('https://admin.telejkam.uz/dashboard');
   }
 
