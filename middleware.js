@@ -8,30 +8,33 @@ export async function middleware(req) {
   const isAdminSubdomain = host.startsWith('admin.');
 
   if (isAdminSubdomain) {
-    if (pathname === '/') {
-      return NextResponse.redirect(`https://${host}/dashboard`);
-    }
-
     if (!session) {
       return NextResponse.redirect(
-        `https://${host.replace(
+        `${origin.replace(
           'admin.',
           ''
         )}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
       );
     }
 
-    if (session && session.role !== 'admin') {
-      return NextResponse.redirect(`${origin}`);
+    if (session.role !== 'admin') {
+      return NextResponse.redirect(origin.replace('admin.', ''));
+    }
+
+    if (pathname === '/') {
+      return NextResponse.redirect(`${origin}/dashboard`);
     }
   } else {
     if (pathname.startsWith('/admin')) {
-      const newPath = pathname.replace('/admin', '');
-      return NextResponse.redirect(`https://admin.telejkam.uz${newPath}`);
+      return NextResponse.redirect(
+        `https://admin.telejkam.uz${pathname.replace('/admin', '')}`
+      );
     }
 
-    if (pathname.startsWith('/profile') && !session) {
-      return NextResponse.redirect(`${origin}`);
+    if (!session && pathname.startsWith('/profile')) {
+      return NextResponse.redirect(
+        `${origin}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
+      );
     }
   }
 
@@ -40,5 +43,11 @@ export async function middleware(req) {
 
 // Enable the middleware for specific routes
 export const config = {
-  matcher: ['/profile/:path*', '/admin/:path*', '/dashboard/:path*', '/'], // Обрабатывайте как /admin, так и общий маршрут
+  matcher: [
+    '/',
+    '/admin/:path*',
+    '/dashboard/:path*',
+    '/profile/:path*',
+    '/signin',
+  ],
 };
