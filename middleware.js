@@ -5,18 +5,6 @@
 //   const { pathname, origin, host } = req.nextUrl;
 //   const session = await getToken({ req, secret: process.env.JWT_SECRET });
 
-//   const isAdminSubdomain = host.startsWith('admin.');
-
-//   if (isAdminSubdomain) {
-//     if (!session) {
-//       return NextResponse.redirect(
-//         `${origin.replace(
-//           'admin.',
-//           ''
-//         )}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
-//       );
-//     }
-
 //     if (session.role !== 'admin') {
 //       return NextResponse.redirect(origin.replace('admin.', ''));
 //     }
@@ -50,6 +38,21 @@ export async function middleware(req) {
 
   console.log(`Middleware called for path: ${pathname}`);
   console.log(`Session:`, session);
+
+  const isAdminSubdomain = host.startsWith('admin.');
+
+  if (isAdminSubdomain) {
+    if (!session) {
+      return NextResponse.redirect(
+        `${origin}/signin?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`
+      );
+    }
+
+    if (session.role !== 'admin') {
+      console.log(`User is not admin, redirecting to home`);
+      return NextResponse.redirect(origin);
+    }
+  }
 
   // Redirect to home if not authenticated and trying to access profile
   if (pathname.startsWith('/profile') && !session) {
