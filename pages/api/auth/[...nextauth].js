@@ -17,7 +17,6 @@ db.connectDb();
 export default NextAuth({
   adapter: MongoDBAdapter(clientPromise),
   providers: [
-    // OAuth authentication providers...
     TwitterProvider({
       clientId: process.env.TWITTER_ID,
       clientSecret: process.env.TWITTER_SECRET,
