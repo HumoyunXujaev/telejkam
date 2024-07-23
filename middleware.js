@@ -7,6 +7,7 @@ export async function middleware(req) {
 
   const isAdminSubdomain = host.startsWith('admin.');
 
+  // Перенаправляем админов с www.telejkam.uz/admin на admin.telejkam.uz
   if (pathname.startsWith('/admin') && !isAdminSubdomain) {
     if (!session) {
       return NextResponse.redirect(
@@ -23,6 +24,7 @@ export async function middleware(req) {
     );
   }
 
+  // Проверяем доступ к админским страницам на поддомене
   if (isAdminSubdomain) {
     if (!session) {
       return NextResponse.redirect(
@@ -35,6 +37,13 @@ export async function middleware(req) {
     }
 
     return NextResponse.next();
+  }
+
+  // Если пользователь не авторизован и пытается получить доступ к профилю
+  if (pathname.startsWith('/profile') && !session) {
+    return NextResponse.redirect(
+      `${origin}/signin?callbackUrl=${origin}${pathname}`
+    );
   }
 
   return NextResponse.next();

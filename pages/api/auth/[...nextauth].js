@@ -69,6 +69,17 @@ export default NextAuth({
   session: {
     strategy: 'jwt',
   },
+  cookies: {
+    sessionToken: {
+      name: `__Secure-next-auth.session-token`,
+      options: {
+        domain: '.telejkam.uz',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+      },
+    },
+  },
   secret: process.env.JWT_SECRET,
 });
 
