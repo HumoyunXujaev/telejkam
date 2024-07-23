@@ -307,7 +307,7 @@ const SigninPage = ({ providers, callbackUrl, csrfToken }) => {
         </div>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
