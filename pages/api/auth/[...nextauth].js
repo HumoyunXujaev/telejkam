@@ -48,11 +48,8 @@ export default NextAuth({
         const user = await User.findOne({ email });
 
         if (user) {
-          // Nếu user đã được tạo trước đó trong database, gọi hàm SignInUser với
-          //đối số là object chứa password và user
           return SignInUser({ password, user });
         } else {
-          // Nếu user không tồn tại trong database, return error
           throw new Error('This email does not exist');
         }
       },
@@ -60,9 +57,7 @@ export default NextAuth({
   ],
   callbacks: {
     async session({ session, token }) {
-      //Sub của Token là field chứa _id của user trong Database.
-      let user = await User.findById(token.sub);
-      //Bổ sung thêm thông tin cho user của session
+      const user = await User.findById(token.sub);
       session.user.id = token.sub || user._id.toString();
       session.user.role = user.role || 'user';
       token.role = user.role || 'user';
@@ -83,10 +78,8 @@ const SignInUser = async ({ password, user }) => {
     throw new Error('Please enter your password');
   }
 
-  // Dùng compare của bcrypt để so sánh 2 password
   const textPassword = await bcrypt.compare(password, user.password);
 
-  // Nếu password không khớp
   if (!textPassword) {
     throw new Error('Email or password is wrong');
   }
