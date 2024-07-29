@@ -9,7 +9,7 @@ import { MdAssignmentAdd } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import styled from './styles.module.scss';
 import Popup from '@/components/Popup';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 
 export default function ListItem({
   categories,
@@ -21,7 +21,7 @@ export default function ListItem({
   const [open, setOpen] = useState('');
   const [name, setName] = useState('');
   const [parent, setParent] = useState('');
-
+  const router = useRouter();
   const updateHandler = async (id) => {
     Popup(
       'Are you sure?',
@@ -38,7 +38,7 @@ export default function ListItem({
 
           setSubCategories(data.subCategories);
           setOpen(false);
-          Router.reload();
+          router.reload();
         } catch (error) {
           toast.error(error?.response?.data.message);
         }

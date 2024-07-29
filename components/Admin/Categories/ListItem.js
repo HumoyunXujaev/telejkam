@@ -9,10 +9,11 @@ import { MdAssignmentAdd } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import styled from './styles.module.scss';
 import Popup from '@/components/Popup';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 
 export default function ListItem({ category, setCategories }) {
   const input = useRef(null);
+  const router = useRouter();
 
   const [open, setOpen] = useState('');
   const [name, setName] = useState('');
@@ -28,7 +29,7 @@ export default function ListItem({ category, setCategories }) {
           const { data } = await axios.put('/api/admin/category', { id, name });
           setCategories(data.categories);
           setOpen(false);
-          Router.reload();
+          router.reload();
         } catch (error) {
           toast.error(error?.response?.data.message);
         }

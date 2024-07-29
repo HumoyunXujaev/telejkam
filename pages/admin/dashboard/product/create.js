@@ -26,7 +26,7 @@ import Swal from 'sweetalert2';
 import dataURItoBlob from '@/utils/dataURItoBlob';
 import { uploadHandler } from '@/utils/request';
 import StyledDotLoader from '@/components/Loaders/DotLoader';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 
 const initialState = {
   name: '',
@@ -74,6 +74,7 @@ export default function CreateProductPage({ parents, categories }) {
   const [images, setImages] = useState([]);
   const [description_images, setDescription_images] = useState([]);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   // на русском
   const validate = Yup.object({
@@ -228,7 +229,7 @@ export default function CreateProductPage({ parents, categories }) {
       setLoading(false);
 
       toast.success(data.message);
-      Router.push('/admin/dashboard/product/all');
+      router.push('/admin/dashboard/product/all');
 
       // window.location.reload(false);
     } catch (error) {
