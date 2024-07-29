@@ -39,10 +39,11 @@ const Create = ({ setCategories }) => {
   const submitHandler = async () => {
     try {
       const { data } = await axios.post('/api/admin/category', { name });
+      router.reload();
+
       setCategories(data.categories);
       setName('');
       toast.success(data.message);
-      router.reload();
     } catch (error) {
       toast.error(error.response.data.message);
     }

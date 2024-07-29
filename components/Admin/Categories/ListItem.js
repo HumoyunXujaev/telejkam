@@ -27,9 +27,9 @@ export default function ListItem({ category, setCategories }) {
       async () => {
         try {
           const { data } = await axios.put('/api/admin/category', { id, name });
+          router.reload();
           setCategories(data.categories);
           setOpen(false);
-          router.reload();
         } catch (error) {
           toast.error(error?.response?.data.message);
         }

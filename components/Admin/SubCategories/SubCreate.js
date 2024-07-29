@@ -48,12 +48,13 @@ const SubCreate = ({ categories, setSubCategories }) => {
         name,
         parent,
       });
+      router.reload();
+
       setSubCategories(data.subCategories);
       setName('');
       setParent('');
       console.log(data);
       toast.success(data.message);
-      router.reload();
     } catch (error) {
       toast.error(error.response.data.message);
     }
