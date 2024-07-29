@@ -18,10 +18,7 @@ async function connectDb() {
   }
 
   //   Thực hiện connect lần đầu tiên nếu trước đó chưa connect lần nào
-  const db = await mongoose.connect(process.env.MONGODB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  const db = await mongoose.connect(process.env.MONGODB_URL, {});
   console.log('New connection to the database.');
   connection.isConnected = db.connections[0].readyState;
 }
