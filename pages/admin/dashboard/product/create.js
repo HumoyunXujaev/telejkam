@@ -26,6 +26,7 @@ import Swal from 'sweetalert2';
 import dataURItoBlob from '@/utils/dataURItoBlob';
 import { uploadHandler } from '@/utils/request';
 import StyledDotLoader from '@/components/Loaders/DotLoader';
+import Router from 'next/router';
 
 const initialState = {
   name: '',
@@ -227,6 +228,7 @@ export default function CreateProductPage({ parents, categories }) {
       setLoading(false);
 
       toast.success(data.message);
+      Router.push('/admin/dashboard/product/all');
 
       // window.location.reload(false);
     } catch (error) {
@@ -238,7 +240,7 @@ export default function CreateProductPage({ parents, categories }) {
   return (
     <Layout>
       {loading && <StyledDotLoader />}
-      <div className={styled.header}>Добавит продукт</div>
+      <div className={styled.header}>Добавить продукт</div>
       <Formik
         enableReinitialize
         initialValues={{

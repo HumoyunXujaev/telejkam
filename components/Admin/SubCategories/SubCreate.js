@@ -11,6 +11,7 @@ import AdminInput from '@/components/Input/AdminInput';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import AdminSelect from '@/components/Input/AdminSelect';
+import Router from 'next/router';
 
 const SubCreate = ({ categories, setSubCategories }) => {
   const [name, setName] = useState('');
@@ -51,6 +52,7 @@ const SubCreate = ({ categories, setSubCategories }) => {
       setParent('');
       console.log(data);
       toast.success(data.message);
+      Router.reload();
     } catch (error) {
       toast.error(error.response.data.message);
     }

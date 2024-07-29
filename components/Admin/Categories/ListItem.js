@@ -1,47 +1,49 @@
-import { Button } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
-import axios from "axios";
-import { useRef } from "react";
-import { useState } from "react";
-import { AiFillDelete, AiTwotoneEdit, AiFillCloseSquare } from "react-icons/ai";
-import { GiCancel } from "react-icons/gi";
-import { MdAssignmentAdd } from "react-icons/md";
-import { toast } from "react-toastify";
-import styled from "./styles.module.scss";
-import Popup from "@/components/Popup";
+import { Button } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
+import axios from 'axios';
+import { useRef } from 'react';
+import { useState } from 'react';
+import { AiFillDelete, AiTwotoneEdit, AiFillCloseSquare } from 'react-icons/ai';
+import { GiCancel } from 'react-icons/gi';
+import { MdAssignmentAdd } from 'react-icons/md';
+import { toast } from 'react-toastify';
+import styled from './styles.module.scss';
+import Popup from '@/components/Popup';
+import Router from 'next/router';
 
 export default function ListItem({ category, setCategories }) {
   const input = useRef(null);
 
-  const [open, setOpen] = useState("");
-  const [name, setName] = useState("");
+  const [open, setOpen] = useState('');
+  const [name, setName] = useState('');
 
   const updateHandler = async (id) => {
     Popup(
-      "Are you sure?",
+      'Are you sure?',
       `${category.name} category will be changed to ${name}.`,
-      "question",
-      "Yes, update it!",
+      'question',
+      'Yes, update it!',
       async () => {
         try {
-          const { data } = await axios.put("/api/admin/category", { id, name });
+          const { data } = await axios.put('/api/admin/category', { id, name });
           setCategories(data.categories);
           setOpen(false);
+          Router.reload();
         } catch (error) {
           toast.error(error?.response?.data.message);
         }
       },
-      "Succesfully!",
-      "Category has been updated successfully."
+      'Succesfully!',
+      'Category has been updated successfully.'
     );
   };
 
   const removeHandler = async (id) => {
     Popup(
-      "Are you sure?",
+      'Are you sure?',
       `We'll delete ${category.name} category and you won't be able to revert this.`,
-      "warning",
-      "Yes, delete it!",
+      'warning',
+      'Yes, delete it!',
       async () => {
         try {
           const { data } = await axios.delete(`/api/admin/category?id=${id}`);
@@ -50,7 +52,7 @@ export default function ListItem({ category, setCategories }) {
           toast.error(error?.response?.data.message);
         }
       },
-      "Deleted!",
+      'Deleted!',
       `${category.name} category has been deleted.`
     );
   };
@@ -59,9 +61,9 @@ export default function ListItem({ category, setCategories }) {
     <tr className={styled.list__item}>
       <td>
         <input
-          style={{ borderBottom: open ? "1px dashed #1976d2" : "none" }}
-          className={open ? styled.open : ""}
-          type="text"
+          style={{ borderBottom: open ? '1px dashed #1976d2' : 'none' }}
+          className={open ? styled.open : ''}
+          type='text'
           value={name ? name : category.name}
           onChange={(e) => setName(e.target.value)}
           //Dựa vào state open để kích hoạt / disable input
@@ -75,8 +77,8 @@ export default function ListItem({ category, setCategories }) {
           <div className={`${styled.btn} ${styled.cateBtn}`}>
             <Button
               onClick={() => updateHandler(category._id)}
-              variant="contained"
-              color="info"
+              variant='contained'
+              color='info'
               startIcon={<MdAssignmentAdd />}
             >
               Save
@@ -87,10 +89,10 @@ export default function ListItem({ category, setCategories }) {
             <Button
               onClick={() => {
                 setOpen(false);
-                setName("");
+                setName('');
               }}
-              variant="contained"
-              color="error"
+              variant='contained'
+              color='error'
               startIcon={<GiCancel />}
             >
               Cancel
@@ -111,8 +113,8 @@ export default function ListItem({ category, setCategories }) {
                 setOpen((prev) => !prev);
                 input.current.focus();
               }}
-              variant="contained"
-              color="info"
+              variant='contained'
+              color='info'
               startIcon={<AiTwotoneEdit />}
             >
               Edit
@@ -121,11 +123,11 @@ export default function ListItem({ category, setCategories }) {
         ) : (
           <div className={`${styled.btn} ${styled.cateBtn}`}>
             <LoadingButton
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               startIcon={<AiTwotoneEdit />}
               loading
-              loadingPosition="start"
+              loadingPosition='start'
             >
               Editing...
             </LoadingButton>
@@ -138,8 +140,8 @@ export default function ListItem({ category, setCategories }) {
               removeHandler(category._id);
               input.current.focus();
             }}
-            variant="contained"
-            color="error"
+            variant='contained'
+            color='error'
             startIcon={<AiFillDelete />}
           >
             Delete

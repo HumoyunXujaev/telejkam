@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AdminInput from '@/components/Input/AdminInput';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import Router from 'next/router';
 
 const Create = ({ setCategories }) => {
   useEffect(() => {
@@ -40,6 +41,7 @@ const Create = ({ setCategories }) => {
       setCategories(data.categories);
       setName('');
       toast.success(data.message);
+      Router.reload();
     } catch (error) {
       toast.error(error.response.data.message);
     }
