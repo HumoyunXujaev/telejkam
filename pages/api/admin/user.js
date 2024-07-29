@@ -2,17 +2,14 @@ import db from '@/utils/db';
 import { User } from '@/models/User';
 import auth from '@/middleware/auth';
 import admin from '@/middleware/admin';
-import { id } from 'date-fns/locale';
 import { createRouter } from 'next-connect';
+
 const router = createRouter().use(auth).use(admin);
 
 router.put(async (req, res) => {
   try {
     const { _id, role, emailVerified } = req.body;
     await db.connectDb();
-
-    console.log('Request Body:', req.body);
-    console.log('_id:', _id);
 
     const user = await User.findByIdAndUpdate(
       _id,
@@ -24,8 +21,7 @@ router.put(async (req, res) => {
 
     if (!user) {
       return res.status(404).json({
-        message:
-          'User not found for ID: and request body is ' + id + ' ' + req.body,
+        message: `User not found for ID: ${_id}`,
       });
     }
 
@@ -34,6 +30,7 @@ router.put(async (req, res) => {
       user,
     });
   } catch (error) {
+    await db.disConnectDb();
     res.status(500).json({ message: error.message });
   }
 });
@@ -41,7 +38,6 @@ router.put(async (req, res) => {
 router.delete(async (req, res) => {
   try {
     const { id } = req.query;
-    // const { _id } = req.body;
     await db.connectDb();
 
     const user = await User.findByIdAndDelete(id);
@@ -50,7 +46,7 @@ router.delete(async (req, res) => {
 
     if (!user) {
       return res.status(404).json({
-        message: 'User not found for ID: ' + id,
+        message: `User not found for ID: ${id}`,
       });
     }
 
@@ -58,6 +54,7 @@ router.delete(async (req, res) => {
       message: 'User deleted successfully.',
     });
   } catch (error) {
+    await db.disConnectDb();
     res.status(500).json({ message: error.message });
   }
 });
@@ -82,6 +79,7 @@ router.post(async (req, res) => {
       user,
     });
   } catch (error) {
+    await db.disConnectDb();
     res.status(500).json({ message: error.message });
   }
 });

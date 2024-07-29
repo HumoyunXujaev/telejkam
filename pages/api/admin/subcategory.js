@@ -5,6 +5,7 @@ import slugify from 'slugify';
 import auth from '../../../middleware/auth';
 import admin from '../../../middleware/admin';
 import { createRouter } from 'next-connect';
+
 const router = createRouter().use(auth).use(admin);
 
 router.get(async (req, res) => {
@@ -23,6 +24,7 @@ router.get(async (req, res) => {
 
     return res.json(results);
   } catch (error) {
+    await db.disConnectDb();
     res.status(500).json({ message: error.message });
   }
 });
@@ -35,6 +37,7 @@ router.post(async (req, res) => {
     const test = await SubCategory.findOne({ name });
 
     if (test) {
+      await db.disConnectDb();
       return res.status(400).json({
         message: 'Sub-Category already exists, try a different name.',
       });
@@ -42,15 +45,18 @@ router.post(async (req, res) => {
 
     await new SubCategory({ name, parent, slug: slugify(name) }).save();
 
-    db.disConnectDb();
+    const subCategories = await SubCategory.find({})
+      .populate({ path: 'parent', model: Category })
+      .sort({ updatedAt: -1 });
+
+    await db.disConnectDb();
 
     res.status(201).json({
-      subCategories: await SubCategory.find({})
-        .populate({ path: 'parent', model: Category })
-        .sort({ updatedAt: -1 }),
+      subCategories,
       message: `Sub-Category ${name} has been created successfully.`,
     });
   } catch (error) {
+    await db.disConnectDb();
     res.status(500).json({ message: error.message });
   }
 });
@@ -62,15 +68,18 @@ router.delete(async (req, res) => {
 
     await SubCategory.findByIdAndDelete(id);
 
-    db.disConnectDb();
+    const subCategories = await SubCategory.find({})
+      .populate({ path: 'parent', model: Category })
+      .sort({ updatedAt: -1 });
+
+    await db.disConnectDb();
 
     return res.json({
       message: 'Sub-Category has been deleted successfully.',
-      subCategories: await SubCategory.find({})
-        .populate({ path: 'parent', model: Category })
-        .sort({ updatedAt: -1 }),
+      subCategories,
     });
   } catch (error) {
+    await db.disConnectDb();
     res.status(500).json({ message: error.message });
   }
 });
@@ -87,15 +96,18 @@ router.put(async (req, res) => {
       slug: slugify(name),
     });
 
+    const subCategories = await SubCategory.find({})
+      .populate({ path: 'parent', model: Category })
+      .sort({ createdAt: -1 });
+
     await db.disConnectDb();
 
     return res.json({
       message: 'Sub-Category has been updated successfully.',
-      subCategories: await SubCategory.find({})
-        .populate({ path: 'parent', model: Category })
-        .sort({ createdAt: -1 }),
+      subCategories,
     });
   } catch (error) {
+    await db.disConnectDb();
     res.status(500).json({ message: error.message });
   }
 });
