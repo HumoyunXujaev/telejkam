@@ -9,7 +9,7 @@ const CategoriesPage = ({ categories }) => {
   const [data, setData] = useState(categories);
 
   useEffect(() => {
-    return () => {};
+    setData(categories); // Ensure state is updated when categories prop changes
   }, [categories]);
 
   return (

@@ -3,22 +3,16 @@ import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { MdAssignmentAdd } from 'react-icons/md';
-
 import styled from './styles.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
-
 import AdminInput from '@/components/Input/AdminInput';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
 const Create = ({ setCategories }) => {
-  useEffect(() => {
-    return () => {};
-  }, [setCategories]);
-  const router = useRouter;
+  const router = useRouter();
   const [name, setName] = useState('');
-  // на русском
 
   const validate = Yup.object({
     name: Yup.string()
@@ -27,22 +21,14 @@ const Create = ({ setCategories }) => {
       .max(30, 'Имя категории должно быть от 2 до 30 символов.'),
   });
 
-  // const validate = Yup.object({
-  //   name: Yup.string()
-  //     .required("Category name is required.")
-  //     .min(2, "Category name must be bewteen 2 and 30 characters.")
-  //     .max(30, "Category name must be bewteen 2 and 30 characters."),
-  // });
-
   const inputChangeHandler = (e) => setName(e.target.value);
 
-  const submitHandler = async () => {
+  const submitHandler = async (values, { resetForm }) => {
     try {
       const { data } = await axios.post('/api/admin/category', { name });
-      router.reload();
-
-      setCategories(data.categories);
-      setName('');
+      setCategories(data.categories); // Update the categories state immediately
+      console.log(data);
+      resetForm(); // Reset form fields
       toast.success(data.message);
     } catch (error) {
       toast.error(error.response.data.message);
