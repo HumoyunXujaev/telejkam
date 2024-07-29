@@ -38,7 +38,7 @@ router.delete(async (req, res) => {
     await db.connectDb();
     const { id } = req.query;
 
-    await Coupon.findByIdAndRemove(id);
+    await Coupon.findByIdAndDelete(id);
 
     db.disConnectDb();
 

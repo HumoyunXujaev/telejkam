@@ -1,12 +1,16 @@
-import Create from "@/components/Admin/Categories/Create";
-import List from "@/components/Admin/Categories/List";
-import { Category } from "@/models/Category";
-import db from "@/utils/db";
-import { useState } from "react";
-import Layout from "../../../components/Admin/Layout";
+import Create from '@/components/Admin/Categories/Create';
+import List from '@/components/Admin/Categories/List';
+import { Category } from '@/models/Category';
+import db from '@/utils/db';
+import { useEffect, useState } from 'react';
+import Layout from '../../../components/Admin/Layout';
 
 const CategoriesPage = ({ categories }) => {
   const [data, setData] = useState(categories);
+
+  useEffect(() => {
+    return () => {};
+  }, [categories]);
 
   return (
     <Layout>

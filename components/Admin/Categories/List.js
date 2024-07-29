@@ -1,7 +1,11 @@
+import { useEffect } from 'react';
 import ListItem from './ListItem';
 import styled from './styles.module.scss';
 
 export default function List({ categories, setCategories }) {
+  useEffect(() => {
+    return () => {};
+  }, [categories]);
   return (
     <>
       <div className={styled.header}>Список категорий</div>

@@ -60,7 +60,7 @@ router.delete(async (req, res) => {
     await db.connectDb();
     const { id } = req.query;
 
-    await SubCategory.findByIdAndRemove(id);
+    await SubCategory.findByIdAndDelete(id);
 
     db.disConnectDb();
 

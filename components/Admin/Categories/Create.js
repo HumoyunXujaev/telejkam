@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import { Form, Formik } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { MdAssignmentAdd } from 'react-icons/md';
 
@@ -12,6 +12,9 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 
 const Create = ({ setCategories }) => {
+  useEffect(() => {
+    return () => {};
+  }, [setCategories]);
   const [name, setName] = useState('');
   // на русском
 
