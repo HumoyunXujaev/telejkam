@@ -1,11 +1,3 @@
-// a page for updating a product
-// this page is only accessible by admin
-// it contains a form with multiple steps to update a product
-// the form is validated using formik and yup
-// the form is submitted to the backend using axios
-// the form contains multiple components for uploading images, selecting colors, sizes, details, and questions
-// the form is prefilled with the product data fetched from the backend
-
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
 import Router, { useRouter } from 'next/router';

@@ -3,7 +3,8 @@ import cloudinary from 'cloudinary';
 import bodyParser from 'body-parser';
 import fs from 'fs';
 import fileUpload from 'express-fileupload';
-
+import os from 'os';
+import path from 'path';
 import { imgMiddleware } from '@/middleware/imgMiddleware';
 
 cloudinary.config({
@@ -14,8 +15,10 @@ cloudinary.config({
 
 import { createRouter } from 'next-connect';
 const router = createRouter();
-//Dùng middleware express-fileupload
-router.use(fileUpload({ useTempFiles: true }));
+const tempDir = path.join(os.tmpdir(), 'myapp');
+fs.mkdirSync(tempDir, { recursive: true });
+
+router.use(fileUpload({ useTempFiles: true, tempFileDir: tempDir }));
 //Dùng middleware imgMiddleware
 router.use(imgMiddleware);
 

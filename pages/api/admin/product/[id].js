@@ -9,8 +9,7 @@ const router = createRouter().use(auth).use(admin);
 router.get(async (req, res) => {
   try {
     await db.connectDb();
-    const productId = req.query?.id;
-
+    const productId = req.query.id;
     const product = await Product.findById(productId).lean();
 
     if (!product) {
@@ -19,7 +18,6 @@ router.get(async (req, res) => {
     }
 
     await db.disConnectDb();
-
     res.status(200).json(product);
   } catch (error) {
     await db.disConnectDb();
@@ -48,7 +46,6 @@ router.put(async (req, res) => {
     } = req.body;
 
     const updatedProduct = await Product.findById(productId);
-
     if (!updatedProduct) {
       await db.disConnectDb();
       return res.status(404).json({ message: 'Product not found!' });
@@ -63,20 +60,18 @@ router.put(async (req, res) => {
     updatedProduct.details = details;
     updatedProduct.questions = questions;
 
-    const updatedSubProducts = updatedProduct.subProducts.map((subProduct) => {
-      subProduct.sku = sku;
-      subProduct.color = color;
-      subProduct.images = [...subProduct.images, ...images]; // Add new images to existing ones
-      subProduct.sizes = sizes;
-      subProduct.discount = discount;
-
-      return subProduct;
-    });
-
-    updatedProduct.subProducts = updatedSubProducts;
+    updatedProduct.subProducts = updatedProduct.subProducts.map(
+      (subProduct) => {
+        subProduct.sku = sku;
+        subProduct.color = color;
+        subProduct.images = [...subProduct.images, ...images];
+        subProduct.sizes = sizes;
+        subProduct.discount = discount;
+        return subProduct;
+      }
+    );
 
     await updatedProduct.save();
-
     await db.disConnectDb();
 
     res.status(200).json({
@@ -85,8 +80,7 @@ router.put(async (req, res) => {
     });
   } catch (error) {
     await db.disConnectDb();
-    console.log(error);
-    res.status(500).json({ message: error });
+    res.status(500).json({ message: error.message });
   }
 });
 
@@ -94,7 +88,6 @@ router.delete(async (req, res) => {
   try {
     await db.connectDb();
     const productId = req.query.id;
-
     const product = await Product.findByIdAndDelete(productId);
 
     if (!product) {
@@ -103,7 +96,6 @@ router.delete(async (req, res) => {
     }
 
     await db.disConnectDb();
-
     res.status(200).json({ message: 'Product deleted successfully!' });
   } catch (error) {
     await db.disConnectDb();
