@@ -89,12 +89,14 @@ router.delete(async (req, res) => {
     await db.connectDb();
     const productId = req.query.id;
     const product = await Product.findByIdAndDelete(productId);
+
     if (!product) {
       await db.disConnectDb();
-      return res.status(404).json({ message: 'Продукт не найден!' });
+      return res.status(404).json({ message: 'Product not found!' });
     }
+
     await db.disConnectDb();
-    res.status(200).json({ message: 'Продукт успешно удален!' });
+    res.status(200).json({ message: 'Product deleted successfully!' });
   } catch (error) {
     await db.disConnectDb();
     res.status(500).json({ message: error.message });

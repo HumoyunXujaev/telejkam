@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import styled from './styles.module.scss';
 
-export default function ProductCard({ product, handleDelete }) {
+export default function ProductCard({ product }) {
   const sizes = product.subProducts.map((s) => s.sizes).flat();
   const stock = sizes.reduce((a, c) => a + c.qty, 0);
 
@@ -32,9 +32,6 @@ export default function ProductCard({ product, handleDelete }) {
         </td>
         <td>{stock} items</td>
         <td>{format(new Date(product?.createdAt), 'MM/dd/yyyy')} </td>
-        <td>
-          <button onClick={() => handleDelete(product._id)}>Удалить</button>
-        </td>
       </tr>
     </div>
   );

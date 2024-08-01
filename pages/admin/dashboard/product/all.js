@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useMemo } from 'react';
 import styled from '@/styles/AllProducts.module.scss';
 import Layout from '@/components/Admin/Layout';
 import { Category } from '@/models/Category';
@@ -8,12 +7,11 @@ import { Product } from '@/models/Product';
 import db from '@/utils/db';
 import ProductCard from '@/components/Admin/AllProducts/ProductCard';
 import ProductItem from '@/components/Admin/AllProducts/ProductItem';
+import { useMemo } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-
-export default function AllProductsPage({ initialProducts }) {
-  const [products, setProducts] = useState(initialProducts);
-
+import Router from 'next/router';
+export default function AllProductsPage({ products }) {
   const statistics = useMemo(() => {
     const subProductsSizes = products.map((p) =>
       p.subProducts.map((s) => s.sizes).flat()
@@ -33,12 +31,13 @@ export default function AllProductsPage({ initialProducts }) {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/admin/product/${id}`);
-      setProducts(products.filter((product) => product._id !== id));
-      toast.success('Продукт успешно удален!');
+      await axios.post(`/api/admin/product/delete/${id}`);
+      Router.reload();
+      console.log('Продукт успешно удален!');
+      // toast.success('Product deleted successfully!');
     } catch (err) {
       console.error(err);
-      toast.error('Что-то пошло не так!');
+      // toast.error('Something went wrong!', { error: err.message });
     }
   };
 
@@ -73,22 +72,15 @@ export default function AllProductsPage({ initialProducts }) {
       <div className={styled.products__table}>
         <table className={styled.list}>
           <thead>
-            <tr>
-              <th>Имя Продукта</th>
-              <th>Категория</th>
-              <th>Стили</th>
-              <th>Склад</th>
-              <th>Дата добавления</th>
-              <th>Действия</th>
-            </tr>
+            <th>Имя Продукта</th>
+            <th>Категория</th>
+            <th>Стили</th>
+            <th>Склад</th>
+            <th>Дата добавления</th>
           </thead>
           <tbody>
             {products?.map((product) => (
-              <ProductItem
-                key={product._id}
-                product={product}
-                handleDelete={handleDelete}
-              />
+              <ProductItem key={product._id} product={product} />
             ))}
           </tbody>
         </table>
@@ -112,7 +104,7 @@ export default function AllProductsPage({ initialProducts }) {
 export async function getServerSideProps(context) {
   await db.connectDb();
 
-  const initialProducts = await Product.find({})
+  const products = await Product.find({})
     .populate({ path: 'category', model: Category })
     .sort({ createdAt: -1 })
     .lean();
@@ -121,7 +113,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      initialProducts: JSON.parse(JSON.stringify(initialProducts)),
+      products: JSON.parse(JSON.stringify(products)),
     },
   };
 }
