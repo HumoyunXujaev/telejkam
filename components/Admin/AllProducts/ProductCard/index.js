@@ -1,7 +1,3 @@
-'use client';
-
-/* eslint-disable @next/next/no-img-element */
-import styles from './styles.module.scss';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -10,9 +6,6 @@ import { TbEdit } from 'react-icons/tb';
 import { AiOutlineEye } from 'react-icons/ai';
 import { RiDeleteBin2Line } from 'react-icons/ri';
 import { Navigation } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/pagination';
-
 import styled from './styles.module.scss';
 import { format } from 'date-fns';
 
