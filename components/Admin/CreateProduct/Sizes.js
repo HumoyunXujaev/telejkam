@@ -120,20 +120,13 @@ export default function Sizes({ sizes, product, setProduct }) {
                 } selectInput`}
               >
                 {!noSize && (
-                  <select
-                    name='size'
-                    value={noSize ? '' : size.size}
-                    disabled={noSize}
-                    style={{ display: `${noSize ? 'none' : ''}` }}
-                    onChange={(e) => changeSizeHandler(i, e)}
-                  >
-                    <option value=''>Выберите размер</option>
-                    {sizesList.map((s) => (
-                      <option value={s} key={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </select>
+                  <input
+                  type='text'
+                  name='size'
+                  placeholder='Введите размер'
+                  value={size.size}
+                  onChange={(e) => changeSizeHandler(i, e)}
+                />
                 )}
                 <input
                   type='number'
@@ -148,7 +141,7 @@ export default function Sizes({ sizes, product, setProduct }) {
                 <input
                   type='number'
                   name='price'
-                  placeholder={noSize ? 'Цена продукта' : 'Цена размера'}
+                  placeholder={noSize ? 'Цена продукта(рассрочка)' : 'Цена размера'}
                   min={1}
                   value={size.price}
                   onChange={(e) => changeSizeHandler(i, e)}
@@ -158,7 +151,7 @@ export default function Sizes({ sizes, product, setProduct }) {
                   type='number'
                   name='price_description'
                   placeholder={
-                    noSize ? 'Общая цена продукта' : 'Общая цена размера'
+                    noSize ? 'Общая цена продукта(наличкой)' : 'Общая цена размера'
                   }
                   min={1}
                   value={size.price_description}

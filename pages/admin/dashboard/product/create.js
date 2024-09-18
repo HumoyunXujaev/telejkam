@@ -270,14 +270,14 @@ export default function CreateProductPage({ parents, categories }) {
                 (обязательно)
               </div>
               <div className={styled.form__row_flex}>
-                <SingularSelect
+                {/* <SingularSelect
                   name='parent'
                   value={product.parent}
                   placeholder='Родительский продукт'
                   data={parents}
                   header='Add to an existing product'
                   handleChange={selectHandleChange}
-                />
+                /> */}
 
                 <SingularSelect
                   name='category'
@@ -430,7 +430,7 @@ export default function CreateProductPage({ parents, categories }) {
               />
             </div>
 
-            <div className={styled.form__row_section}>
+            {/* <div className={styled.form__row_section}>
               <div className={styled.subHeader}>
                 <span>Шаг 6 :</span> &nbsp;Остальные детали (желательно)
               </div>
@@ -451,7 +451,7 @@ export default function CreateProductPage({ parents, categories }) {
                 product={product}
                 setProduct={setProduct}
               />
-            </div>
+            </div> */}
 
             <div className={`${styled.btn} ${styled.submit_btn}`}>
               <Button

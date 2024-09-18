@@ -92,7 +92,7 @@
   }
 
   .active {
-    border: 2px dashed $blue-color;
+    border: 2px dashed $admin-text;
   }
 
   .default {
@@ -101,7 +101,7 @@
     right: 15px;
     display: block;
     font-size: 11px;
-    background-color: $blue-color;
+    background-color: $admin-text;
     padding: 1px 4px;
     border-radius: 2px;
     color: #fff;
@@ -186,7 +186,7 @@
     margin-top: 20px;
     border-top: 1px solid rgb(221, 221, 221);
     font-size: 13px;
-    background-color: #1976d2;
+    background-color: #230d73;
     color: #fff;
     border-radius: 3px;
     padding: 10px;
@@ -527,7 +527,7 @@
 
 .profileHeading {
   text-transform: uppercase;
-  color: $blue-color;
+  color: $admin-text;
   font-size: 25px;
   padding: 1rem 0;
   text-align: center;

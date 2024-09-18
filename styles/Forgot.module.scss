@@ -36,12 +36,12 @@
       }
 
       &:hover {
-        border-color: $blue-color;
+        border-color: $admin-text;
         transition: $transition-1;
-        color: $blue-color;
+        color: $admin-text;
 
         svg {
-          fill: $blue-color;
+          fill: $admin-text;
         }
       }
     }
@@ -52,7 +52,7 @@
       line-height: 35px;
 
       a {
-        color: $blue-color;
+        color: $admin-text;
         cursor: pointer;
         text-decoration: underline;
         font-weight: 700;

@@ -54,7 +54,7 @@
           transition: color 0.3s;
 
           &:hover {
-            color: $blue-color;
+            color: $admin-text;
           }
         }
       }
@@ -62,7 +62,7 @@
   }
 
   &__copyright {
-    background-color: $blue-color;
+    background-color: $admin-text;
     color: #fff;
     text-align: center;
     padding: 0.5rem 0;
@@ -129,7 +129,7 @@
 
 //         &:hover {
 //           a {
-//             color: $blue-color;
+//             color: $admin-text;
 //             transition: $transition-1;
 //           }
 //         }
@@ -157,7 +157,7 @@
 //           font-size: 1rem;
 
 //           &:hover {
-//             color: $blue-color;
+//             color: $admin-text;
 //             transition: $transition-1;
 //           }
 //         }
@@ -179,7 +179,7 @@
 //       color: #666;
 
 //       a {
-//         color: $blue-color;
+//         color: $admin-text;
 //         text-decoration: underline;
 //       }
 //     }
@@ -275,7 +275,7 @@
 //         }
 
 //         &:hover {
-//           color: $blue-color;
+//           color: $admin-text;
 //         }
 //       }
 //     }
@@ -284,7 +284,7 @@
 //   &__copyright {
 //     font-size: 13px;
 //     color: #fff;
-//     background-color: $blue-color;
+//     background-color: $admin-text;
 //     padding: 5px 0;
 //     text-align: center;
 //   }
@@ -298,7 +298,7 @@
 //     &__copyright {
 //       font-size: 13px;
 //       color: #fff;
-//       background-color: $blue-color;
+//       background-color: $admin-text;
 //       padding: 5px 0;
 //       text-align: center;
 //     }

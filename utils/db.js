@@ -17,23 +17,28 @@ async function connectDb() {
     await mongoose.disconnect();
   }
 
-  //   Thực hiện connect lần đầu tiên nếu trước đó chưa connect lần nào
-  const db = await mongoose.connect(process.env.MONGODB_URL, {});
-  console.log('New connection to the database.');
-  connection.isConnected = db.connections[0].readyState;
+  // New connection to the database
+  try {
+    const db = await mongoose.connect(process.env.MONGODB_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      maxPoolSize: 15,  // Adjust the pool size as needed
+    });
+    console.log('New connection to the database.');
+    connection.isConnected = db.connections[0].readyState;
+  } catch (err) {
+    console.error('Error connecting to the database:', err);
+  }
 }
 
-// Tại Dev mode, mỗi lần connect tới db thì không nhất thiết đều phải disconnect.
-// Chi khi ở Production evironment với nhiều user, mới cần disconnect để giảm thiểu connection với database.
 async function disConnectDb() {
   if (connection.isConnected) {
-    // Tại Production thực hiện disconnect
     if (process.env.NODE_ENV === 'production') {
       await mongoose.disconnect();
       connection.isConnected = false;
+      console.log('Disconnected from the database in production.');
     } else {
-      // Tại Development, không cần phải làm gì
-      console.log('No need to disconnect from the database.');
+      console.log('No need to disconnect from the database in development.');
     }
   }
 }

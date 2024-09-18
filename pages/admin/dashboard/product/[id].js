@@ -83,7 +83,7 @@ export default function UpdateProductPage({ parents, categories }) {
   useEffect(() => {
     if (id) {
       axios
-        .get(`/api/admin/product/${id}`)
+        .get(`https://www.telejkam.uz/api/admin/product/${id}`)
         .then(({ data }) => {
           setProduct({
             ...data,

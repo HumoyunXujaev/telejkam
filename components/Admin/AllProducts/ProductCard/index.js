@@ -65,13 +65,13 @@ export default function ProductCard({ product, handleDelete }) {
                 <img src={p.images[0].url} alt='' />
               </div>
               <div className={styled.product__actions}>
-                <Link href={`/admin/dashboard/product/${product._id}`}>
+                <Link href={`/dashboard/product/${product._id}`}>
                   <TbEdit />
                 </Link>
-                <Link href={`/product/${product.slug}?style=${i}`}>
+                <Link href={`https://www.telejkam.uz/product/${product.slug}?style=${i}`}>
                   <AiOutlineEye />
                 </Link>
-                <RiDeleteBin2Line onClick={() => handleDelete(product._id)} />
+                <RiDeleteBin2Line onClick={handleDelete(product._id)}/>
               </div>
             </div>
           </SwiperSlide>

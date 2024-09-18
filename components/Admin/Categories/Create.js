@@ -28,8 +28,10 @@ const Create = ({ setCategories }) => {
       const { data } = await axios.post('/api/admin/category', { name });
       setCategories(data.categories); // Update the categories state immediately
       console.log(data);
-      resetForm(); // Reset form fields
+
+      setName('')
       toast.success(data.message);
+
     } catch (error) {
       toast.error(error.response.data.message);
     }

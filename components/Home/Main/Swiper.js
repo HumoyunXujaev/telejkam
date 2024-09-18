@@ -27,7 +27,7 @@ export default function App() {
         }}
         className='mainSwiper'
       >
-        {[...Array(4).keys()].map((i) => (
+        {[...Array(3).keys()].map((i) => (
           <SwiperSlide key={i}>
             <div className={styled.mainSwiper__wrapper}>
               <NextImage

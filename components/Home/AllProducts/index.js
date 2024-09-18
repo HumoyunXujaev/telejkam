@@ -81,7 +81,7 @@ export default function AllProducts({ products }) {
         <h4 className={styled.allProducts__title}>{t('all_products')}</h4>
       </div>
       <div className={styled.allProducts__moreBtn}>
-        <Button variant='contained' onClick={showMoreHandler}>
+        <Button className={styled.allProducts__moreBtn__btn} onClick={showMoreHandler}>
           {t('more')} <Icon.ChevronDown />
         </Button>
       </div>

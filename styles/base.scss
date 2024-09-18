@@ -1,6 +1,6 @@
-$blue-color: #1976d2;
+$admin-text: #1976d2;
 $hover-color: #0569ff;
-$dark-blue-color: #314385;
+$dark-admin-text: #314385;
 $gray-color: #eeeeeebe;
 $yellow-color: #fac80f;
 $success-color: #45b44a;
@@ -10,7 +10,7 @@ $redish-color: #bf323f;
 $violet-color: #a03988;
 $home-text: #4d4d4d;
 $admin-bg: rgb(234 232 251);
-$admin-text: #1976d2;
+$admin-text: #230d73;
 $admin-border: #c6c1f463;
 $admin-content-border: #cccccc8e;
 $shadow-1: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -39,13 +39,13 @@ $cubic-bezier: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   align-items: center;
   justify-content: center;
   gap: 5px;
-  background: $blue-color;
+  background: $admin-text;
   color: #fff;
   font-weight: 600;
   cursor: pointer;
   width: 100%;
   border-radius: 2px;
-  border: 1px solid $blue-color;
+  border: 1px solid $admin-text;
 }
 
 .btn__outline {
@@ -54,8 +54,8 @@ $cubic-bezier: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   justify-content: center;
   gap: 5px;
   background: transparent;
-  color: $blue-color;
-  border: 1px solid $blue-color;
+  color: $admin-text;
+  border: 1px solid $admin-text;
   font-weight: 600;
   cursor: pointer;
   width: 100%;
@@ -235,7 +235,7 @@ $cubic-bezier: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-  border-color: $blue-color !important;
+  border-color: $admin-text !important;
   border-width: 0.5px !important;
 }
 

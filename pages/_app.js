@@ -3,9 +3,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import store from '@/store';
 import Head from 'next/head';
 import { SessionProvider } from 'next-auth/react';
-import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { ToastContainer } from 'react-toastify';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import '@/styles/globals.scss';
 import { useEffect, useState } from 'react';
 import NProgress from 'nprogress';
@@ -50,7 +49,10 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
       Router.events.off('routeChangeError', handleRouteComplete);
     };
   }, []);
+  const router = useRouter()
+  const isAdminpath = router.pathname.startsWith("/admin")
 
+  const showHeaderFooter = router.pathname !== '/signin' && !isAdminpath;
   return (
     <>
       <Head>
@@ -68,7 +70,6 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
         <SessionProvider session={session}>
           <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-              <PayPalScriptProvider deferLoading={true}>
                 <ToastContainer
                   position='top-right'
                   autoClose={2000}
@@ -82,9 +83,8 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
                   theme='colored'
                 />
                 <Component {...pageProps} />
-                <Footer />
+                {showHeaderFooter && <Footer />}
                 <Analytics />
-              </PayPalScriptProvider>
             </PersistGate>
           </Provider>
         </SessionProvider>

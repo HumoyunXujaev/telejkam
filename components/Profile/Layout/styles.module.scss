@@ -32,7 +32,7 @@
   &__name {
     margin: 5px 0 10px;
     font-weight: 700;
-    color: $blue-color;
+    color: $admin-text;
     text-transform: capitalize;
   }
 
@@ -102,6 +102,6 @@
 .active {
   a {
     font-weight: 500;
-    color: $blue-color;
+    color: $admin-text;
   }
 }

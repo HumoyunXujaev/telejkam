@@ -88,15 +88,15 @@
 }
 
 .activeFilter {
-  border: 2px solid $blue-color;
+  border: 2px solid $admin-text;
 
   &:hover {
-    border: 2px solid $blue-color;
+    border: 2px solid $admin-text;
   }
 }
 
 .colorActiveFilter {
-  outline: 2px solid $blue-color;
+  outline: 2px solid $admin-text;
   outline-offset: 2px;
 }
 

@@ -132,10 +132,9 @@ const SigninPage = ({ providers, callbackUrl, csrfToken }) => {
   return (
     <>
       {loading && <StyledDotLoader />}
-      <Header />
       <div className={styled.login}>
         <div className={styled.login__container}>
-          <div className={styled.login__header}>
+          {/* <div className={styled.login__header}>
             <div onClick={() => Router.back()} className={styled.back__svg}>
               <AiOutlineBackward />
             </div>
@@ -143,7 +142,7 @@ const SigninPage = ({ providers, callbackUrl, csrfToken }) => {
               Мы рады видеть вас снова!
               <Link href='/browse'>Пойти в Покупки</Link>
             </span>
-          </div>
+          </div> */}
           <div className={styled.login__form}>
             <h1>Войти</h1>
             <p>Войдите в свой аккаунт</p>
@@ -183,11 +182,8 @@ const SigninPage = ({ providers, callbackUrl, csrfToken }) => {
                     type='password'
                     onChange={inputChangeHandler}
                   />
-                  <div className={styled.forgot}>
-                    <Link href='/auth/forgot'>Забыли пароль?</Link>
-                  </div>
                   <div className={styled.signInBtnWrap}>
-                    <HasIconButton type='submit'>Войти</HasIconButton>
+                    <button className='button' type='submit' >Войти</button>
                   </div>
                   {login_error && (
                     <span className={styled.error}>
@@ -197,7 +193,7 @@ const SigninPage = ({ providers, callbackUrl, csrfToken }) => {
                 </Form>
               )}
             </Formik>
-            <div className={styled.login__socials}>
+            {/* <div className={styled.login__socials}>
               <span className={styled.or}>Или продолжить с</span>
               <div className={styled.login__socials_wrap}>
                 {providers.map((provider) => {
@@ -220,11 +216,11 @@ const SigninPage = ({ providers, callbackUrl, csrfToken }) => {
                   );
                 })}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
-        <div className={styled.login__container}>
+        {/* <div className={styled.login__container}>
           <div className={styled.login__form}>
             <h2>Регистрация</h2>
             <p>Зарегестрируйтесь чтобы получить права на аккаунт</p>
@@ -304,7 +300,7 @@ const SigninPage = ({ providers, callbackUrl, csrfToken }) => {
               )}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* <Footer /> */}

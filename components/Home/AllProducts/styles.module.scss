@@ -49,6 +49,9 @@
   &__moreBtn {
     padding: 0 0 20px;
 
+    :hover{
+      background-color: $admin-text;
+    }
     button {
       font-family: 'Poppins', sans-serif;
       height: 50px;
@@ -56,10 +59,21 @@
       display: flex;
       align-items: center;
       gap: 3px;
+      background-color: $admin-text;
+      color: white;
 
       svg {
         width: 20px;
         height: 20px;
+      }
+      :hover{
+        background-color: $admin-text;
+      }
+      &__btn{
+        background-color: $admin-text;
+        :hover{
+          background-color: $admin-text;
+        }
       }
     }
   }
