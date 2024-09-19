@@ -11,7 +11,6 @@ import { useMemo } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Router from 'next/router';
-import { useSession, getSession } from 'next-auth/react';
 import Cookies from 'js-cookie';
 export default function AllProductsPage({ products }) {
   const statistics = useMemo(() => {
@@ -31,10 +30,12 @@ export default function AllProductsPage({ products }) {
     return { itemQty, outStock, productUniqueCategories };
   }, [products]);
 
+  const token = Cookies.get('__Secure-next-auth.session-token'); // Cookie name as per your NextAuth config
+
+  console.log(token, '-token')
+
   const handleDelete = async (id) => {
     try {
-      const token = Cookies.get('__Secure-next-auth.session-token'); // Cookie name as per your NextAuth config
-
       await axios.post(
         `https://www.telejkam.uz/api/admin/product/delete/${id}`,
         {
