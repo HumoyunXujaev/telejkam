@@ -26,6 +26,7 @@ import Swal from 'sweetalert2';
 import dataURItoBlob from '@/utils/dataURItoBlob';
 import { uploadHandler } from '@/utils/request';
 import StyledDotLoader from '@/components/Loaders/DotLoader';
+import { useSession, getSession } from 'next-auth/react';
 
 // initial state for the product
 const initialState = {
@@ -81,30 +82,51 @@ export default function UpdateProductPage({ parents, categories }) {
   const [newImages, setNewImages] = useState([]);
 
   useEffect(() => {
-    if (id) {
-      axios
-        .get(`https://www.telejkam.uz/api/admin/product/${id}`)
-        .then(({ data }) => {
-          setProduct({
-            ...data,
-            category: data.category,
-            subCategories: data.subCategories[0],
-            images: data.subProducts
-              .map((s) => s.images.map((i) => i.url))
-              .flat(),
-            description_images: data.subProducts
-              .map((s) => s?.description_images?.map((i) => i?.url))
-              .flat(),
-            color: data.subProducts.map((s) => s.color),
-            sizes: data.subProducts.map((s) => s.sizes[0]),
-            discount: data.subProducts.map((s) => s.discount),
-            sku: data.subProducts.map((s) => s.sku),
-          });
+    const fetchProduct = async () => {
+      const session = await getSession();
 
-          console.log('fetched product data:', data);
-          console.log('subcategories:', data.subCategories[0]);
-        })
-        .catch((e) => console.log(e));
+      if (!session) {
+        console.error('No session found, user is unauthorized');
+        return;
+      }
+
+      const token = session.accessToken;
+
+      try {
+        const { data } = await axios.get(
+          `https://www.telejkam.uz/api/admin/product/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setProduct({
+          ...data,
+          category: data.category,
+          subCategories: data.subCategories[0],
+          images: data.subProducts
+            .map((s) => s.images.map((i) => i.url))
+            .flat(),
+          description_images: data.subProducts
+            .map((s) => s?.description_images?.map((i) => i?.url))
+            .flat(),
+          color: data.subProducts.map((s) => s.color),
+          sizes: data.subProducts.map((s) => s.sizes[0]),
+          discount: data.subProducts.map((s) => s.discount),
+          sku: data.subProducts.map((s) => s.sku),
+        });
+
+        console.log('Fetched product data:', data);
+        console.log('Subcategories:', data.subCategories[0]);
+      } catch (e) {
+        console.log('Error fetching product:', e);
+      }
+    };
+
+    if (id) {
+      fetchProduct();
     }
   }, [id]);
 

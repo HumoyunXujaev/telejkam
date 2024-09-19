@@ -11,6 +11,8 @@ import { useMemo } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Router from 'next/router';
+import { useSession, getSession } from 'next-auth/react';
+
 export default function AllProductsPage({ products }) {
   const statistics = useMemo(() => {
     const subProductsSizes = products.map((p) =>
@@ -31,7 +33,22 @@ export default function AllProductsPage({ products }) {
 
   const handleDelete = async (id) => {
     try {
-      await axios.post(`/api/admin/product/delete/${id}`);
+      const session = await getSession();
+
+      if (!session) {
+        console.error('No session found, user is unauthorized');
+        return;
+      }
+
+      const token = session.accessToken;
+      await axios.post(
+        `https://www.telejkam.uz/api/admin/product/delete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       Router.reload();
       console.log('Продукт успешно удален!');
       // toast.success('Product deleted successfully!');
