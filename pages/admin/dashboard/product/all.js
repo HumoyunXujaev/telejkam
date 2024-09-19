@@ -7,7 +7,7 @@ import { Product } from '@/models/Product';
 import db from '@/utils/db';
 import ProductCard from '@/components/Admin/AllProducts/ProductCard';
 import ProductItem from '@/components/Admin/AllProducts/ProductItem';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Router from 'next/router';
