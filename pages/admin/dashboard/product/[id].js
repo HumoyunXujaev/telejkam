@@ -26,8 +26,7 @@ import Swal from 'sweetalert2';
 import dataURItoBlob from '@/utils/dataURItoBlob';
 import { uploadHandler } from '@/utils/request';
 import StyledDotLoader from '@/components/Loaders/DotLoader';
-import { useSession, getSession } from 'next-auth/react';
-
+import Cookies from 'js-cookie';
 // initial state for the product
 const initialState = {
   name: '',
@@ -81,17 +80,13 @@ export default function UpdateProductPage({ parents, categories }) {
   const [subs, setSubs] = useState([]);
   const [newImages, setNewImages] = useState([]);
 
+  
+
+  const token = Cookies.get('__Secure-next-auth.session-token'); // Cookie name as per your NextAuth config
+
+  console.log(token, '-token');
   useEffect(() => {
     const fetchProduct = async () => {
-      const session = await getSession();
-
-      if (!session) {
-        console.error('No session found, user is unauthorized');
-        return;
-      }
-
-      const token = session.accessToken;
-
       try {
         const { data } = await axios.get(
           `https://www.telejkam.uz/api/admin/product/${id}`,
