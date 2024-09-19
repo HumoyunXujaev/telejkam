@@ -12,7 +12,16 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import Router from 'next/router';
 import Cookies from 'js-cookie';
+
 export default function AllProductsPage({ products }) {
+  const [token, setToken] = useState('');
+
+  // Fetch the token when the component mounts
+  useEffect(() => {
+    const tokenFromCookies = Cookies.get('__Secure-next-auth.session-token');
+    setToken(tokenFromCookies);
+  }, []);
+
   const statistics = useMemo(() => {
     const subProductsSizes = products.map((p) =>
       p.subProducts.map((s) => s.sizes).flat()
@@ -30,14 +39,17 @@ export default function AllProductsPage({ products }) {
     return { itemQty, outStock, productUniqueCategories };
   }, [products]);
 
-  const token = Cookies.get('__Secure-next-auth.session-token'); // Cookie name as per your NextAuth config
-
-  console.log(token, '-token')
+  console.log(token, '-token');
 
   const handleDelete = async (id) => {
     try {
+      if (!token) {
+        console.error('Token is not available');
+        return;
+      }
       await axios.post(
         `https://www.telejkam.uz/api/admin/product/delete/${id}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
