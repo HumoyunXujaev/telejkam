@@ -1,11 +1,11 @@
-@import "../base";
+@import '../base';
 
 .dropdown {
   position: relative;
   z-index: 99;
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 100%;
     right: 0;
@@ -129,7 +129,7 @@
   z-index: 99;
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 100%;
     right: 0;
@@ -172,15 +172,6 @@
 
     &::-webkit-scrollbar {
       display: none;
-    }
-
-    &_notifications {
-      height: 73vh;
-      overflow-y: scroll;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
     }
 
     &_notification {

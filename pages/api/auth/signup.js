@@ -1,7 +1,5 @@
-import { activateEmailTemplate } from '@/emails/activateEmailTemplate';
 import { User } from '@/models/User';
 import db from '@/utils/db';
-import { sendEmail } from '@/utils/sendEmails';
 import { validateEmail } from '@/utils/validation';
 import bcrypt from 'bcrypt';
 
@@ -48,16 +46,7 @@ async function handler(req, res) {
 
       const activation_token = createActivationToken({
         id: newUser._id.toString(),
-      });
-
-      const activation_url = `${process.env.BASE_URL}/activate/${activation_token}?email=${email}`;
-      sendEmail(
-        email,
-        activation_url,
-        '',
-        'Activate your account',
-        activateEmailTemplate
-      );
+      });     
 
       await db.disConnectDb();
 

@@ -210,15 +210,6 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
           <div className={`${styled.order__actions} ${styled.card}`}>
             <h2 className={styled.heading}>Покупатель</h2>
             <div className={styled.order__address}>
-              {/* <div className={styled.order__address_userInfos}>
-                <div className={styled.order__address_userImage}>
-                  <NextImage src={orderData.user.image} />
-                </div>
-                <div className={styled.order__address_userName}>
-                  <span>{orderData.user.name}</span>
-                  <span>{orderData.user.email}</span>
-                </div>
-              </div> */}
               <div className={styled.order__address_shipping}>
                 <h3>{t('address')}</h3>
                 <div className={styled.order__address_line}>

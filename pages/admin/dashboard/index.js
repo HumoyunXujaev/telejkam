@@ -9,7 +9,6 @@ import { ImEye } from 'react-icons/im';
 
 import styled from '@/styles/Dashboard.module.scss';
 import AdminLayout from '@/components/Admin/Layout';
-import Notification from '@/components/Admin/Dashboard/Notification';
 import { Order } from '@/models/Order';
 import { Product } from '@/models/Product';
 import { User } from '@/models/User';
@@ -28,17 +27,7 @@ const Dashboard = ({ users, orders, products }) => {
       </Head>
       <AdminLayout>
         <div className={styled.header}>Панель</div>
-        {/* <div className={styled.heading}>
-          <div className={styled.heading__search}>
-            <label htmlFor=''>
-              <input type='text' placeholder='Search here...' />
-            </label>
-          </div>
-          <div className={styled.heading__right}>
-            <Dropdown userImage={session?.user.image} />
-            <Notification />
-          </div>
-        </div> */}
+     
 
         <div className={styled.cards}>
           <div className={styled.card}>

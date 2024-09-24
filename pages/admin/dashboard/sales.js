@@ -9,7 +9,6 @@ import { ImEye } from 'react-icons/im';
 
 import styled from '@/styles/Dashboard.module.scss';
 import AdminLayout from '@/components/Admin/Layout';
-import Notification from '@/components/Admin/Dashboard/Notification';
 import { Order } from '@/models/Order';
 import { Product } from '@/models/Product';
 import { User } from '@/models/User';

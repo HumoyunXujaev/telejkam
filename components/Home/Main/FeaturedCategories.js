@@ -10,7 +10,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import styled from './styles.module.scss';
-import { menuArray } from '@/data/home';
 import CommonSwiper2 from './CommonSwiper2';
 import { useTranslation } from 'next-i18next';
 

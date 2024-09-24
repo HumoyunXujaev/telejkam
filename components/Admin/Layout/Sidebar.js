@@ -197,13 +197,7 @@ const Sidebar = () => {
               </Link>
             </li>
 
-            {/* <li>
-              <Link href=''>
-                <FcAdvertising />{' '}
-                <span className={styled.show}>Notifications</span>
-              </Link>
-            </li> */}
-
+         
             <li>
               <Link href=''>
                 <FcCustomerSupport />

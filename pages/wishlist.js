@@ -3,7 +3,6 @@ import BreadCrumb from '@/components/BreadCrumb';
 import Header from '@/components/Header';
 import NextImage from '@/components/NextImage';
 import ProductCard from '@/components/ProductCard';
-import Layout from '@/components/Profile/Layout';
 import styled from '@/styles/Browse.module.scss';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Image from 'next/image';

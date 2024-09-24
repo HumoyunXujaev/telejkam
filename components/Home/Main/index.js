@@ -68,9 +68,6 @@ const Main = ({
           <AnimateWrapper origin='top'>
             <FreeShippingProducts freeShippingProducts={freeShippingProducts} />
           </AnimateWrapper>
-          {/* <AnimateWrapper origin='right'>
-            <GoodPrice />
-          </AnimateWrapper> */}
 
           <AnimateWrapper origin='top'>
             <FlashDeals flashDeals={flashDeals} />
