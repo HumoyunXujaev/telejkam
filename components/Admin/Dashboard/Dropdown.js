@@ -87,11 +87,6 @@ export default function Dropdown({ userImage }) {
               <FcTimeline />
             </Link>
           </div>
-          <div className={styled.dropdown__content_icons_icon}>
-            <Link href="/admin/dashboard/coupons">
-              <FcPuzzle />
-            </Link>
-          </div>
         </div>
 
         <div className={styled.dropdown__content_items}>

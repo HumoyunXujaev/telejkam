@@ -182,22 +182,7 @@ const Sidebar = () => {
           </ul>
         </div>
 
-        {/* Section 3 */}
-        <div className={styled.sidebar__dropdown}>
-          <div className={styled.sidebar__dropdown_heading}>
-            <div className={styled.show}>Скидки</div>
-          </div>
-          <ul className={styled.sidebar__list}>
-            <li
-              className={route.includes('/dashboard/coupons') && styled.active}
-            >
-              <Link href='/dashboard/coupons'>
-                <FcPuzzle />
-                <span className={styled.show}>Купоны</span>
-              </Link>
-            </li>
-          </ul>
-        </div>
+        
 
         {/* Section 4 */}
         <div className={styled.sidebar__dropdown}>

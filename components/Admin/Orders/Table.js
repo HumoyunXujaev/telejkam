@@ -150,7 +150,6 @@ function Row(props) {
             row.status
           )}
         </TableCell>
-        <TableCell align='left'>{row.couponApplied || '-'}</TableCell>
         <TableCell align='left'>`{row.total} сум`</TableCell>
         <TableCell align='left'>
           {isEditing ? (
@@ -328,7 +327,6 @@ Row.propTypes = {
     status: PropTypes.string.isRequired,
     isPaid: PropTypes.bool.isRequired,
     paymentMethod: PropTypes.string.isRequired,
-    couponApplied: PropTypes.string,
     total: PropTypes.number.isRequired,
     user: PropTypes.shape({
       _id: PropTypes.string.isRequired,
@@ -394,7 +392,6 @@ CollapsibleTable.propTypes = {
       paymentMethod: PropTypes.string.isRequired,
       isPaid: PropTypes.bool.isRequired,
       status: PropTypes.string.isRequired,
-      couponApplied: PropTypes.string,
       total: PropTypes.number.isRequired,
       user: PropTypes.shape({
         name: PropTypes.string.isRequired,

@@ -6,8 +6,6 @@ import Swal from 'sweetalert2';
 import { useTranslation } from 'next-i18next';
 
 import styled from './styles.module.scss';
-// import ShippingInput from '../Input/ShippingInput';
-// import { applyCoupon } from '@/utils/request';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import {
@@ -26,7 +24,6 @@ const Summary = ({
   paymentMethod,
   selectedAddress,
 }) => {
-  // const [coupon, setCoupon] = useState('');
   const [discount, setDiscount] = useState('');
   const [error, setError] = useState('');
   const [orderError, setOrderError] = useState('');
@@ -35,42 +32,6 @@ const Summary = ({
   const [loading, setLoading] = useState(false);
 
   const Router = useRouter();
-
-  // const validateCoupon = Yup.object({
-  //   coupon: Yup.string().required('Please enter a coupon first (if any)'),
-  // });
-
-  // const shipping = useMemo(() => {
-  //   return cart?.products?.reduce((a, c) => a + (c.shipping || 0), 0);
-  // }, [cart.products]);
-
-  // const applyCouponHandler = async () => {
-  //   const res = await applyCoupon(coupon, user._id);
-  //   if (res.message) {
-  //     setError(res.message);
-  //   } else {
-  //     setTotalAfterDiscount(res.totalAfterDiscount);
-  //     setDiscount(res.discount);
-  //     Swal.fire({
-  //       icon: 'success',
-  //       title: 'Applied successfully!',
-  //       text: "Let's place the order now with the cheapest price.",
-  //       showConfirmButton: true,
-  //     });
-  //     setError('');
-  //   }
-  // };
-
-  // const total = useMemo(() => {
-  //   const totalAfterDiscountValue = totalAfterDiscount || 0;
-  //   const cartTotalValue = cart.cartTotal || 0;
-  //   const shippingValue = shipping || 0;
-  //   return discount > 0
-  //     ? totalAfterDiscountValue + shippingValue
-  //     : cartTotalValue + shippingValue;
-  // }, [discount, totalAfterDiscount, shipping, cart.cartTotal]);
-
-  // console.log('Total:', total);
 
   console.log(cart);
   const placeOrderHandler = async () => {
@@ -102,7 +63,6 @@ const Summary = ({
         ),
 
         // totalBeforeDiscount: cart.cartTotal,
-        // couponApplied: coupon,
         // user_id: user._id,
       });
 

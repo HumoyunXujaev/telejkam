@@ -80,7 +80,6 @@ export default function CreateProductPage({ parents, categories }) {
   const validate = Yup.object({
     name: Yup.string()
       .required('Пожалуйста, добавьте название')
-      .min(10, 'Название продукта должно быть от 10 до 300 символов.')
       .max(300, 'Название продукта должно быть от 10 до 300 символов.'),
     brand: Yup.string().required('Пожалуйста, добавьте бренд'),
     label: Yup.string().required('Пожалуйста, добавьте метку'),

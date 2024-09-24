@@ -36,30 +36,6 @@ const ProductPage = ({ product }) => {
 
   const [activeImg, setActiveImg] = useState('');
   const [images, setImages] = useState(product?.images);
-  const [ratings, setRatings] = useState([]);
-  const [loadRatings, setLoadRatings] = useState(false);
-
-  useEffect(() => {
-    const fetchRatings = async () => {
-      setLoadRatings(true);
-      const { data } = await axios.get(`/api/product/${product._id}/review`);
-      setRatings([
-        { percentage: calculatePercentage(data, 5) },
-        { percentage: calculatePercentage(data, 4) },
-        { percentage: calculatePercentage(data, 3) },
-        { percentage: calculatePercentage(data, 2) },
-        { percentage: calculatePercentage(data, 1) },
-      ]);
-      setLoadRatings(false);
-    };
-
-    try {
-      fetchRatings();
-    } catch (error) {
-      setLoadRatings(false);
-      toast.error(error.response.data.message);
-    }
-  }, [product?._id]);
 
   useEffect(() => {
     let recentIds = JSON.parse(localStorage.getItem('recent-ids')) || [];
@@ -108,11 +84,6 @@ const ProductPage = ({ product }) => {
           <br />
 
           <SimilarSwiper product={product} />
-          {/* <Reviews
-            product={product}
-            ratings={ratings}
-            loadRatings={loadRatings}
-          /> */}
         </div>
       </div>
       {/* <Footer /> */}

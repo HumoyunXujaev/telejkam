@@ -67,13 +67,6 @@ export const removeAddress = (address) => {
 //   }
 // };
 
-export const applyCoupon = async (coupon, user_id) => {
-  const { data } = await axios.post('/api/user/applyCoupon', {
-    coupon,
-    user_id,
-  });
-  return data;
-};
 
 export const uploadHandler = async (formData) => {
   const { data } = await axios.post('/api/cloudinary', formData, {

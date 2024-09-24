@@ -23,8 +23,6 @@ const ShippingInput = (props) => {
                 <TbAbc />
               ) : props.icon === 'number' ? (
                 <TbNumber123 />
-              ) : props.icon === 'coupon' ? (
-                <MdDiscount />
               ) : (
                 ''
               )}

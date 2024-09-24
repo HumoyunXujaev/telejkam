@@ -27,14 +27,6 @@ export const findAllSizes = (subProducts) => {
   return [...new Set(sizeArr)];
 };
 
-export const calculatePercentage = (reviewsArr, numsOfStar) => {
-  const reviewNumsByStar = reviewsArr.filter(
-    (r) => r.rating === numsOfStar || r.rating - 0.5 === numsOfStar
-  );
-
-  return ((reviewNumsByStar.length / reviewsArr.length) * 100).toFixed(1);
-};
-
 export const addToCartHandler = async (e, id, style, size, cart, dispatch) => {
   e.preventDefault();
   e.stopPropagation();

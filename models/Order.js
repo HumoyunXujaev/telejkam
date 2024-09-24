@@ -49,9 +49,6 @@ const orderSchema = new mongoose.Schema(
     totalBeforeDiscount: {
       type: Number,
     },
-    couponApplied: {
-      type: String,
-    },
     shippingPrice: {
       type: Number,
       required: true,

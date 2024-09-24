@@ -12,10 +12,7 @@ async function handler(req, res) {
         paymentMethod,
         total,
 
-        // user_id,
-        // shippingPrice,
-        // totalBeforeDiscount,
-        // couponApplied,
+    
       } = req.body;
 
       // const user = await User.findById(user_id);
@@ -26,8 +23,7 @@ async function handler(req, res) {
         // shippingPrice,
         paymentMethod,
         total,
-        // totalBeforeDiscount,
-        // couponApplied,
+    
       }).save();
 
       db.disConnectDb();

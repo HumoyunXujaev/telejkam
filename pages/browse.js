@@ -567,8 +567,6 @@ export async function getServerSideProps(ctx) {
       ? { createdAt: -1 }
       : sortQuery == 'topSelling'
       ? { 'subProducts.sold': -1 }
-      : sortQuery == 'topReviewed'
-      ? { rating: -1 }
       : sortQuery == 'priceHighToLow'
       ? { 'subProducts.sizes.price': -1 }
       : sortQuery == 'priceLowToHigh'
@@ -670,10 +668,6 @@ const sortingOptions = [
   {
     name: 'Хиты продаж',
     value: 'topSelling',
-  },
-  {
-    name: 'Лучшие отзывы',
-    value: 'topReviewed',
   },
   {
     name: 'Цена (низкая - высокая)',

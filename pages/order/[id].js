@@ -155,8 +155,7 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                 </div>
               ))}
               <div className={styled.order__total}>
-                {orderData.couponApplied &&
-                orderData.totalBeforeDiscount > orderData.total ? (
+                {orderData.totalBeforeDiscount > orderData.total ? (
                   <>
                     <div className={styled.order__total_sub}>
                       <span>{t('header.cart_subtotal')}</span>

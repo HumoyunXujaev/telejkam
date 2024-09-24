@@ -61,6 +61,7 @@ export default function ListItem({
           );
           setSubCategories(data.subCategories);
           console.log(data);
+          router.reload()
         } catch (error) {
           toast.error(error?.response?.data.message);
         }
