@@ -150,6 +150,7 @@ export default function CreateProductPage({ parents, categories }) {
 
   const createProductHandler = async (e) => {
     if (images.length < 1) {
+      toast.error('Пожалуйста загрузите хотябы одну фотку продукта (Шаг 2).');
       Swal.fire({
         icon: 'error',
         title: 'Не найдено картинок!',
@@ -159,6 +160,8 @@ export default function CreateProductPage({ parents, categories }) {
     }
 
     if (product.color.color == '' && product.color.image == '') {
+      toast.error('Пожалуйста выберите основной цвет продукта (Шаг 3).');
+
       Swal.fire({
         icon: 'error',
         title: 'Не найдено цвета!',
@@ -174,6 +177,8 @@ export default function CreateProductPage({ parents, categories }) {
         product.sizes[i].price_description == '' ||
         product.sizes[i].qty == ''
       ) {
+        toast.error('Пожалуйста, заполните все поля размеров (Шаг 5).');
+
         Swal.fire({
           icon: 'error',
           title: 'Избыток информации о размерах!',

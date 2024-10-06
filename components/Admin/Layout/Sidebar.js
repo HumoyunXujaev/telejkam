@@ -79,36 +79,36 @@ const Sidebar = () => {
             <div className={styled.show}>Общее</div>
           </div>
           <ul className={styled.sidebar__list}>
-            <li className={route === '/dashboard' && styled.active}>
-              <Link href='/dashboard'>
+            <Link href='/dashboard'>
+              <li className={route === '/dashboard' && styled.active}>
                 <FcList />
                 <span className={styled.show}>Панель</span>
-              </Link>
-            </li>
-
-            <li className={route.includes('/dashboard/sales') && styled.active}>
-              <Link href='/dashboard/sales'>
+              </li>
+            </Link>
+            <Link href='/dashboard/sales'>
+              <li
+                className={route.includes('/dashboard/sales') && styled.active}
+              >
                 <FcSalesPerformance />
                 <span className={styled.show}>Sales</span>
-              </Link>
-            </li>
-
-            <li
-              className={route.includes('/dashboard/orders') && styled.active}
-            >
-              <Link href='/dashboard/orders'>
+              </li>
+            </Link>
+            <Link href='/dashboard/orders'>
+              <li
+                className={route.includes('/dashboard/orders') && styled.active}
+              >
                 <FcCurrencyExchange />
                 <span className={styled.show}>Заказы</span>
-              </Link>
-            </li>
-
-            <li className={route.includes('/dashboard/users') && styled.active}>
-              <Link href='/dashboard/users'>
+              </li>
+            </Link>
+            <Link href='/dashboard/users'>
+              <li
+                className={route.includes('/dashboard/users') && styled.active}
+              >
                 <FcPortraitMode />
                 <span className={styled.show}>Пользователи</span>
-              </Link>
-            </li>
-
+              </li>
+            </Link>
             {/* <li
               className={
                 route.includes('/admin/dashboard/messages') && styled.active
@@ -129,27 +129,26 @@ const Sidebar = () => {
           </div>
 
           <ul className={styled.sidebar__list}>
-            <li
-              className={
-                route.includes('/dashboard/product/all') && styled.active
-              }
-            >
-              <Link href='/dashboard/product/all'>
+            <Link href='/dashboard/product/all'>
+              <li
+                className={
+                  route.includes('/dashboard/product/all') && styled.active
+                }
+              >
                 <FcShop />
                 <span className={styled.show}>Все Продукты</span>
-              </Link>
-            </li>
-
-            <li
-              className={
-                route.includes('/dashboard/product/create') && styled.active
-              }
-            >
-              <Link href='/dashboard/product/create'>
+              </li>
+            </Link>{' '}
+            <Link href='/dashboard/product/create'>
+              <li
+                className={
+                  route.includes('/dashboard/product/create') && styled.active
+                }
+              >
                 <FcPlus />
                 <span className={styled.show}>Добавить Продукт</span>
-              </Link>
-            </li>
+              </li>
+            </Link>
           </ul>
         </div>
 
@@ -158,31 +157,29 @@ const Sidebar = () => {
             <div className={styled.show}>Категории</div>
           </div>
           <ul className={styled.sidebar__list}>
-            <li
-              className={
-                route.includes('/dashboard/categories') && styled.active
-              }
-            >
-              <Link href='/dashboard/categories'>
-                <FcParallelTasks />
+            {' '}
+            <Link href='/dashboard/categories'>
+              <FcParallelTasks />
+              <li
+                className={
+                  route.includes('/dashboard/categories') && styled.active
+                }
+              >
                 <span className={styled.show}>Родительские Категории</span>
-              </Link>
-            </li>
-
-            <li
-              className={
-                route.includes('/dashboard/subcategories') && styled.active
-              }
-            >
-              <Link href='/dashboard/subcategories'>
+              </li>
+            </Link>{' '}
+            <Link href='/dashboard/subcategories'>
+              <li
+                className={
+                  route.includes('/dashboard/subcategories') && styled.active
+                }
+              >
                 <FcTimeline />
                 <span className={styled.show}>Подкатегории</span>
-              </Link>
-            </li>
+              </li>{' '}
+            </Link>
           </ul>
         </div>
-
-        
 
         {/* Section 4 */}
         <div className={styled.sidebar__dropdown}>
@@ -190,21 +187,19 @@ const Sidebar = () => {
             <div className={styled.show}>Действия</div>
           </div>
           <ul className={styled.sidebar__list}>
-            <li>
-              <Link href=''>
+            {' '}
+            <Link href=''>
+              <li>
                 <FcSettings />
                 <span className={styled.show}>Параметры</span>
-              </Link>
-            </li>
-
-         
+              </li>
+            </Link>
             <li>
               <Link href=''>
                 <FcCustomerSupport />
                 <span className={styled.show}>Пользовательская помощь</span>
               </Link>
             </li>
-
             <li>
               <Link href=''>
                 <FcSynchronize />
