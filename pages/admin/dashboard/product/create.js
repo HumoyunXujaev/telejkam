@@ -369,7 +369,7 @@ export default function CreateProductPage({ categories }) {
 export async function getServerSideProps(ctx) {
   await db.connectDb();
   const categories = await Category.find().lean();
-  db.disconnectDb();
+  db.disConnectDb();
 
   return {
     props: {
