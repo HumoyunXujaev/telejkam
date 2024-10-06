@@ -20,6 +20,7 @@ import { uploadHandler } from '@/utils/request';
 import dataURItoBlob from '@/utils/dataURItoBlob';
 import db from '@/utils/db';
 import { Category } from '@/models/Category';
+import Styles from '@/components/Admin/CreateProduct/Styles';
 
 const initialState = {
   name: '',
@@ -400,7 +401,7 @@ export async function getServerSideProps() {
   try {
     await db.connectDb();
     const categories = await Category.find().lean();
-    await db.disconnectDb();
+    await db.disConnectDb();
 
     return {
       props: {
