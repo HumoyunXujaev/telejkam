@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Form, Formik } from 'formik';
@@ -5,7 +6,6 @@ import * as Yup from 'yup';
 import { MdAssignmentAdd } from 'react-icons/md';
 import { Button } from '@mui/material';
 import { toast } from 'react-toastify';
-import Swal from 'sweetalert2';
 
 import styled from '@/styles/CreateProduct.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,10 +20,13 @@ import Images from '@/components/Admin/CreateProduct/Images';
 import Colors from '@/components/Admin/CreateProduct/Colors';
 import Styles from '@/components/Admin/CreateProduct/Styles';
 import Sizes from '@/components/Admin/CreateProduct/Sizes';
+import Details from '@/components/Admin/CreateProduct/Details';
+import Questions from '@/components/Admin/CreateProduct/Questions';
+import Swal from 'sweetalert2';
 import dataURItoBlob from '@/utils/dataURItoBlob';
 import { uploadHandler } from '@/utils/request';
 import StyledDotLoader from '@/components/Loaders/DotLoader';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 
 const initialState = {
   name: '',
@@ -34,6 +37,7 @@ const initialState = {
   discount: '',
   images: [],
   description_images: [],
+  parent: '',
   category: '',
   subCategories: [],
   color: {
@@ -48,6 +52,19 @@ const initialState = {
       price_description: '',
     },
   ],
+  details: [
+    {
+      name: '',
+      value: '',
+    },
+  ],
+  questions: [
+    {
+      question: '',
+      answer: '',
+    },
+  ],
+  shippingFee: '',
 };
 
 export default function CreateProductPage({ categories }) {
@@ -55,33 +72,36 @@ export default function CreateProductPage({ categories }) {
   const [subs, setSubs] = useState([]);
   const [colorImage, setColorImage] = useState('');
   const [images, setImages] = useState([]);
+  const [description_images, setDescription_images] = useState([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  // на русском
   const validate = Yup.object({
     name: Yup.string()
       .required('Пожалуйста, добавьте название')
-      .max(300, 'Название продукта должно быть не более 300 символов.'),
+      .max(300, 'Название продукта должно быть от 10 до 300 символов.'),
     brand: Yup.string().required('Пожалуйста, добавьте бренд'),
     label: Yup.string().required('Пожалуйста, добавьте метку'),
-    category: Yup.string().required('Пожалуйста, выберите категорию'),
+    category: Yup.string().required('Пожалуйста, выберите категорию.'),
     sku: Yup.string().required('Пожалуйста, добавьте sku/номер'),
+    color: Yup.string().required('Пожалуйста, добавьте цвет'),
     description: Yup.string().required('Пожалуйста, добавьте описание'),
   });
 
   useEffect(() => {
-    if (product.category) {
-      axios
-        .get(`/api/admin/subcategory?category=${product.category}`)
-        .then(({ data }) => setSubs(data))
-        .catch((error) =>
-          console.error('Error fetching subcategories:', error)
-        );
-    }
+    axios
+      .get(`/api/admin/subcategory?category=${product.category}`)
+      .then(({ data }) => {
+        setSubs(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [product.category]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { value, name } = e.target;
     setProduct((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -89,83 +109,77 @@ export default function CreateProductPage({ categories }) {
     setProduct((prev) => ({ ...prev, [name]: value }));
   };
 
-  const validateProduct = () => {
-    let errors = [];
-
-    if (images.length < 1) {
-      errors.push('Пожалуйста загрузите хотя бы одну фотку продукта (Шаг 2)');
-    }
-
-    if (product.color.color === '' && product.color.image === '') {
-      errors.push('Пожалуйста выберите основной цвет продукта (Шаг 3)');
-    }
-
-    if (
-      product.sizes.some(
-        (size) =>
-          size.size === '' ||
-          size.price === '' ||
-          size.price_description === '' ||
-          size.qty === ''
-      )
-    ) {
-      errors.push('Пожалуйста, заполните все поля размеров (Шаг 5)');
-    }
-
-    // Проверка остальных полей
-    const requiredFields = [
-      'name',
-      'description',
-      'brand',
-      'label',
-      'sku',
-      'category',
-    ];
-    requiredFields.forEach((field) => {
-      if (!product[field]) {
-        errors.push(`Пожалуйста, заполните поле ${field}`);
-      }
-    });
-
-    return errors;
-  };
-
   const createProductHandler = async (e) => {
-    e.preventDefault();
-    const errors = validateProduct();
-
-    if (errors.length > 0) {
+    if (images.length < 1) {
+      toast.error('Пожалуйста загрузите хотябы одну фотку продукта (Шаг 2).');
       Swal.fire({
         icon: 'error',
-        title: 'Ошибка валидации',
-        html: errors.join('<br>'),
+        title: 'Не найдено картинок!',
+        text: 'Пожалуйста загрузите хотябы одну фотку продукта (Шаг 2).',
       });
       return;
     }
 
+    if (product.color.color == '' && product.color.image == '') {
+      toast.error('Пожалуйста выберите основной цвет продукта (Шаг 3).');
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Не найдено цвета!',
+        text: 'Пожалуйста выберите основной цвет продукта (Шаг 3).',
+      });
+      return;
+    }
+
+    for (let i = 0; i < product.sizes.length; i++) {
+      if (
+        product.sizes[i].size == '' ||
+        product.sizes[i].price == '' ||
+        product.sizes[i].price_description == '' ||
+        product.sizes[i].qty == ''
+      ) {
+        toast.error('Пожалуйста, заполните все поля размеров (Шаг 5).');
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Избыток информации о размерах!',
+          text: 'Пожалуйста, заполните все поля размеров (Шаг 5).',
+        });
+        setLoading(false);
+
+        return;
+      }
+    }
+
     setLoading(true);
 
+    let uploaded_images = [];
+    let style_image = '';
+
+    if (images) {
+      let temp = images.map((img) => dataURItoBlob(img));
+      const path = 'product images';
+      let formData = new FormData();
+      formData.append('path', path);
+      temp.forEach((image) => {
+        formData.append('file', image);
+      });
+      //Upload ảnh product lên Cloudinary và nhận về mảng chứa các URL
+      uploaded_images = await uploadHandler(formData);
+    }
+
+    if (product.color.image) {
+      let temp = dataURItoBlob(product.color.image);
+      const path = 'product style images';
+      let formData = new FormData();
+      formData.append('path', path);
+      formData.append('file', temp);
+      //Upload Color image lên Cloudinary và nhận về URL
+      let cloudinary_style_img = await uploadHandler(formData);
+      style_image = cloudinary_style_img[0].url;
+    }
+
     try {
-      let uploaded_images = [];
-      let style_image = '';
-
-      if (images.length > 0) {
-        const formData = new FormData();
-        formData.append('path', 'product images');
-        images.forEach((image) => {
-          formData.append('file', dataURItoBlob(image));
-        });
-        uploaded_images = await uploadHandler(formData);
-      }
-
-      if (product.color.image) {
-        const formData = new FormData();
-        formData.append('path', 'product style images');
-        formData.append('file', dataURItoBlob(product.color.image));
-        const cloudinary_style_img = await uploadHandler(formData);
-        style_image = cloudinary_style_img[0].url;
-      }
-
       const { data } = await axios.post('/api/admin/product', {
         ...product,
         images: uploaded_images,
@@ -176,15 +190,20 @@ export default function CreateProductPage({ categories }) {
         subCategories: product.subCategories,
       });
 
+      console.log('subcategorqs:', product.subCategories);
       setLoading(false);
-      toast.success(data?.message || 'Продукт успешно создан');
+
+      toast.success(data?.message || 'успешно');
       router.push('/admin/dashboard/product/all');
+
+      // window.location.reload(false);
     } catch (error) {
       setLoading(false);
       toast.error(
         error.response?.data?.message ||
-          'Произошла ошибка при создании продукта'
+          'Произошла ошибка при создании продукта (проверьте все)'
       );
+      // toast.error(error.response.data.message);
     }
   };
 
@@ -194,8 +213,22 @@ export default function CreateProductPage({ categories }) {
       <div className={styled.header}>Добавить продукт</div>
       <Formik
         enableReinitialize
-        initialValues={product}
+        initialValues={{
+          name: product.name,
+          brand: product.brand,
+          label: product.label,
+          description: product.description,
+          category: product.category,
+          subCategories: product.subCategories,
+          parent: product.parent,
+          sku: product.sku,
+          discount: product.discount,
+          color: product.color.color,
+          imageInputFile: '',
+          styleInput: '',
+        }}
         validationSchema={validate}
+        validator={() => ({})}
         onSubmit={createProductHandler}
       >
         {(formik) => (
@@ -213,16 +246,21 @@ export default function CreateProductPage({ categories }) {
                   data={categories}
                   header='Select a category'
                   handleChange={selectHandleChange}
+                  disabled={product.parent}
                 />
               </div>
+
               <MultipleSelect
-                value={product.subCategories}
+                value={product.category}
                 data={subs}
                 header='подкатегории'
                 name='subCategories'
-                handleChange={(e) =>
-                  setProduct({ ...product, subCategories: e.target.value })
-                }
+                handleChange={(e) => {
+                  // Обработчик для выбора подкатегорий
+                  setProduct({ ...product, subCategories: e.target.value });
+                }}
+                // handleChange={handleChange}
+                disabled={product.parent}
               />
             </div>
 
@@ -244,6 +282,7 @@ export default function CreateProductPage({ categories }) {
               <div className={styled.subHeader}>
                 <span>Шаг 3 :</span> &nbsp;Выберите цвет продукта (обязательно)
               </div>
+
               <Colors
                 name='color'
                 product={product}
@@ -252,16 +291,18 @@ export default function CreateProductPage({ categories }) {
                 setColorImage={setColorImage}
                 images={images}
               />
-              {product.color.color && (
-                <div className={styled.color_span}>
-                  <span>
-                    Цвет&nbsp;
-                    <b style={{ fontWeight: 600 }}>{product.color.color}</b>
-                    &nbsp;был выбран
-                  </span>
-                  <span style={{ background: product.color.color }}></span>
-                </div>
-              )}
+              <div className={styled.form__row_flex}>
+                {product.color.color && (
+                  <div className={styled.color_span}>
+                    <span>
+                      Цвет&nbsp;
+                      <b style={{ fontWeight: 600 }}>{product.color.color}</b>
+                      &nbsp;был выбран
+                    </span>
+                    <span style={{ background: product.color.color }}></span>
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className={styled.form__row_section}>
@@ -349,6 +390,29 @@ export default function CreateProductPage({ categories }) {
               />
             </div>
 
+            {/* <div className={styled.form__row_section}>
+              <div className={styled.subHeader}>
+                <span>Шаг 6 :</span> &nbsp;Остальные детали (желательно)
+              </div>
+              <Details
+                details={product.details}
+                product={product}
+                setProduct={setProduct}
+              />
+            </div>
+
+            <div className={styled.form__row_section}>
+              <div className={styled.subHeader}>
+                <span>Шаг 7 :</span> &nbsp;Частые вопросы (желательно)
+              </div>
+
+              <Questions
+                questions={product.questions}
+                product={product}
+                setProduct={setProduct}
+              />
+            </div> */}
+
             <div className={`${styled.btn} ${styled.submit_btn}`}>
               <Button
                 variant='contained'
@@ -369,6 +433,7 @@ export default function CreateProductPage({ categories }) {
 export async function getServerSideProps(ctx) {
   await db.connectDb();
   const categories = await Category.find().lean();
+
   db.disConnectDb();
 
   return {
