@@ -34,7 +34,7 @@ export default function FeaturedCategories({ featuredCategories }) {
               <SwiperSlide key={index}>
                 <Link
                   className={styled.featuredCategories__item}
-                  href={`/browse?category=${category?._id}`}
+                  href={`/browse?category=${category?.slug}`}
                 >
                   {/* <div style={{ display: 'grid', placeItems: 'center' }}>
                     <div className={styled.featuredCategories__item_img}>
