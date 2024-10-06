@@ -163,11 +163,6 @@ export async function getStaticProps({ locale }) {
     .filter((p) => p.shipping === 0)
     .slice(0, 10);
 
-  const featuredCategories = categories.map((category) => ({
-    name: category.name,
-    slug: category.slug,
-  }));
-
   return {
     props: {
       ...(await serverSideTranslations(locale, ['common'])),
@@ -175,7 +170,7 @@ export async function getStaticProps({ locale }) {
       flashDeals: JSON.parse(JSON.stringify(flashDealsArray)),
       featuredProducts: JSON.parse(JSON.stringify(featuredProducts)),
       freeShippingProducts: JSON.parse(JSON.stringify(freeShippingProducts)),
-      featuredCategories: JSON.parse(JSON.stringify(featuredCategories)),
+      featuredCategories: JSON.parse(JSON.stringify(categories)),
     },
     revalidate: 60,
   };
