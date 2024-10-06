@@ -89,45 +89,6 @@ export default function CreateProductPage({ parents, categories }) {
     description: Yup.string().required('Пожалуйста, добавьте описание'),
   });
 
-  // const validate = Yup.object({
-  //   name: Yup.string()
-  //     .required('Please add a name')
-  //     .min(10, 'Product name must bewteen 10 and 300 characters.')
-  //     .max(300, 'Product name must bewteen 10 and 300 characters.'),
-  //   brand: Yup.string().required('Please add a brand'),
-  //   label: Yup.string().required('Please add a label'),
-  //   category: Yup.string().required('Please select a category.'),
-  //   sku: Yup.string().required('Please add a sku/number'),
-  //   color: Yup.string().required('Please add a color'),
-  //   description: Yup.string().required('Please add a description'),
-  // });
-
-  //Khi change parent input field, thực hiện fetch API theo _id của parent product để nhận về data
-  useEffect(() => {
-    axios
-      .get(`/api/admin/product/${product.parent}`)
-      .then(({ data }) => {
-        if (data) {
-          setProduct({
-            ...product,
-            name: data.name,
-            description: data.description,
-            brand: data.brand,
-            label: data.label,
-            category: data.category,
-            subCategories: data.subCategories,
-            questions: [],
-            details: [],
-          });
-
-          toast.success(
-            'Выбран существующий продукт. Пожалуйста, заполните оставшиеся поля.'
-          );
-        }
-      })
-      .catch((e) => console.log(e));
-  }, [product, product.parent]);
-
   useEffect(() => {
     axios
       .get(`/api/admin/subcategory?category=${product.category}`)
@@ -232,13 +193,17 @@ export default function CreateProductPage({ parents, categories }) {
       console.log('subcategorqs:', product.subCategories);
       setLoading(false);
 
-      toast.success(data.message);
+      toast.success(data?.message || 'успешно');
       router.push('/admin/dashboard/product/all');
 
       // window.location.reload(false);
     } catch (error) {
       setLoading(false);
-      toast.error(error.response.data.message);
+      toast.error(
+        error.response?.data?.message ||
+          'Произошла ошибка при создании продукта (проверьте все)'
+      );
+      // toast.error(error.response.data.message);
     }
   };
 
@@ -274,15 +239,6 @@ export default function CreateProductPage({ parents, categories }) {
                 (обязательно)
               </div>
               <div className={styled.form__row_flex}>
-                {/* <SingularSelect
-                  name='parent'
-                  value={product.parent}
-                  placeholder='Родительский продукт'
-                  data={parents}
-                  header='Add to an existing product'
-                  handleChange={selectHandleChange}
-                /> */}
-
                 <SingularSelect
                   name='category'
                   value={product.category}
