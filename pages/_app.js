@@ -15,7 +15,6 @@ import { appWithTranslation } from 'next-i18next';
 import { persistStore } from 'redux-persist';
 import 'swiper/swiper-bundle.css';
 import Footer from '@/components/Footer';
-
 NProgress.configure({
   minimum: 0.1,
   easing: 'ease',
@@ -27,6 +26,12 @@ let persistor = persistStore(store);
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    import('sweetalert2').then((Swal) => {
+      window.Swal = Swal.default;
+    });
+  }, []);
 
   useEffect(() => {
     const handleRouteChange = (url) => {
@@ -49,8 +54,8 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
       Router.events.off('routeChangeError', handleRouteComplete);
     };
   }, []);
-  const router = useRouter()
-  const isAdminpath = router.pathname.startsWith("/admin")
+  const router = useRouter();
+  const isAdminpath = router.pathname.startsWith('/admin');
 
   const showHeaderFooter = router.pathname !== '/signin' && !isAdminpath;
   return (
@@ -70,21 +75,21 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
         <SessionProvider session={session}>
           <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-                <ToastContainer
-                  position='top-right'
-                  autoClose={2000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                  theme='colored'
-                />
-                <Component {...pageProps} />
-                {showHeaderFooter && <Footer />}
-                <Analytics />
+              <ToastContainer
+                position='top-right'
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme='colored'
+              />
+              <Component {...pageProps} />
+              {showHeaderFooter && <Footer />}
+              <Analytics />
             </PersistGate>
           </Provider>
         </SessionProvider>

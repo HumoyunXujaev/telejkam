@@ -1,26 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Formik, Form } from 'formik';
+import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { toast } from 'react-toastify';
-import { Button } from '@mui/material';
 import { MdAssignmentAdd } from 'react-icons/md';
+import { Button } from '@mui/material';
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 import styled from '@/styles/CreateProduct.module.scss';
+import 'react-toastify/dist/ReactToastify.css';
 import Layout from '@/components/Admin/Layout';
+import { Category } from '@/models/Category';
+import { Product } from '@/models/Product';
+import db from '@/utils/db';
 import SingularSelect from '@/components/Select/SingularSelect';
 import MultipleSelect from '@/components/Select/MultipleSelect';
 import AdminInput from '@/components/Input/AdminInput';
 import Images from '@/components/Admin/CreateProduct/Images';
 import Colors from '@/components/Admin/CreateProduct/Colors';
-import Sizes from '@/components/Admin/CreateProduct/Sizes';
-import StyledDotLoader from '@/components/Loaders/DotLoader';
-import { uploadHandler } from '@/utils/request';
-import dataURItoBlob from '@/utils/dataURItoBlob';
-import db from '@/utils/db';
-import { Category } from '@/models/Category';
 import Styles from '@/components/Admin/CreateProduct/Styles';
+import Sizes from '@/components/Admin/CreateProduct/Sizes';
+import dataURItoBlob from '@/utils/dataURItoBlob';
+import { uploadHandler } from '@/utils/request';
+import StyledDotLoader from '@/components/Loaders/DotLoader';
+import { useRouter } from 'next/router';
 
 const initialState = {
   name: '',
@@ -47,39 +50,6 @@ const initialState = {
   ],
 };
 
-const validationSchema = Yup.object({
-  name: Yup.string()
-    .required('Название продукта обязательно')
-    .max(300, 'Название продукта должно быть не более 300 символов'),
-  brand: Yup.string().required('Бренд обязателен'),
-  label: Yup.string().required('Метка обязательна'),
-  category: Yup.string().required('Категория обязательна'),
-  sku: Yup.string().required('SKU обязателен'),
-  description: Yup.string().required('Описание обязательно'),
-});
-
-const CustomErrorToast = ({ errors }) => (
-  <div>
-    <strong>Пожалуйста, исправьте следующие ошибки:</strong>
-    <ul>
-      {errors.split('\n').map((error, index) => (
-        <li key={index}>{error}</li>
-      ))}
-    </ul>
-  </div>
-);
-
-const showErrorToast = (errors) => {
-  toast.error(<CustomErrorToast errors={errors} />, {
-    position: 'top-right',
-    autoClose: false,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-  });
-};
-
 export default function CreateProductPage({ categories }) {
   const [product, setProduct] = useState(initialState);
   const [subs, setSubs] = useState([]);
@@ -88,19 +58,25 @@ export default function CreateProductPage({ categories }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  const validate = Yup.object({
+    name: Yup.string()
+      .required('Пожалуйста, добавьте название')
+      .max(300, 'Название продукта должно быть не более 300 символов.'),
+    brand: Yup.string().required('Пожалуйста, добавьте бренд'),
+    label: Yup.string().required('Пожалуйста, добавьте метку'),
+    category: Yup.string().required('Пожалуйста, выберите категорию'),
+    sku: Yup.string().required('Пожалуйста, добавьте sku/номер'),
+    description: Yup.string().required('Пожалуйста, добавьте описание'),
+  });
+
   useEffect(() => {
     if (product.category) {
-      // Здесь мы по-прежнему используем API для получения подкатегорий
-      // Так как это зависит от выбранной категории и может быть динамическим
       axios
         .get(`/api/admin/subcategory?category=${product.category}`)
-        .then(({ data }) => {
-          setSubs(data);
-        })
-        .catch((error) => {
-          console.error('Error fetching subcategories:', error);
-          toast.error('Не удалось загрузить подкатегории');
-        });
+        .then(({ data }) => setSubs(data))
+        .catch((error) =>
+          console.error('Error fetching subcategories:', error)
+        );
     }
   }, [product.category]);
 
@@ -113,85 +89,102 @@ export default function CreateProductPage({ categories }) {
     setProduct((prev) => ({ ...prev, [name]: value }));
   };
 
-  const validateProduct = (values) => {
-    const errors = [];
+  const validateProduct = () => {
+    let errors = [];
 
     if (images.length < 1) {
-      errors.push('Не загружено ни одной фотографии продукта (Шаг 2)');
+      errors.push('Пожалуйста загрузите хотя бы одну фотку продукта (Шаг 2)');
     }
 
-    if (values.color.color === '' && values.color.image === '') {
-      errors.push('Не выбран основной цвет продукта (Шаг 3)');
+    if (product.color.color === '' && product.color.image === '') {
+      errors.push('Пожалуйста выберите основной цвет продукта (Шаг 3)');
     }
 
-    if (values.sizes.length === 0) {
-      errors.push('Не добавлено ни одного размера (Шаг 5)');
-    } else {
-      values.sizes.forEach((size, index) => {
-        if (
+    if (
+      product.sizes.some(
+        (size) =>
           size.size === '' ||
           size.price === '' ||
           size.price_description === '' ||
           size.qty === ''
-        ) {
-          errors.push(`Размер #${index + 1} заполнен не полностью (Шаг 5)`);
-        }
-      });
+      )
+    ) {
+      errors.push('Пожалуйста, заполните все поля размеров (Шаг 5)');
     }
 
-    if (values.subCategories.length === 0) {
-      errors.push('Не выбрано ни одной подкатегории');
-    }
+    // Проверка остальных полей
+    const requiredFields = [
+      'name',
+      'description',
+      'brand',
+      'label',
+      'sku',
+      'category',
+    ];
+    requiredFields.forEach((field) => {
+      if (!product[field]) {
+        errors.push(`Пожалуйста, заполните поле ${field}`);
+      }
+    });
 
     return errors;
   };
 
-  const createProductHandler = async (values, { setSubmitting }) => {
+  const createProductHandler = async (e) => {
+    e.preventDefault();
+    const errors = validateProduct();
+
+    if (errors.length > 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Ошибка валидации',
+        html: errors.join('<br>'),
+      });
+      return;
+    }
+
+    setLoading(true);
+
     try {
-      setLoading(true);
-
-      const errors = validateProduct(values);
-      if (errors.length > 0) {
-        throw new Error(errors.join('\n'));
-      }
-
       let uploaded_images = [];
       let style_image = '';
 
       if (images.length > 0) {
         const formData = new FormData();
         formData.append('path', 'product images');
-        images.forEach((img) => {
-          formData.append('file', dataURItoBlob(img));
+        images.forEach((image) => {
+          formData.append('file', dataURItoBlob(image));
         });
         uploaded_images = await uploadHandler(formData);
       }
 
-      if (values.color.image) {
+      if (product.color.image) {
         const formData = new FormData();
         formData.append('path', 'product style images');
-        formData.append('file', dataURItoBlob(values.color.image));
+        formData.append('file', dataURItoBlob(product.color.image));
         const cloudinary_style_img = await uploadHandler(formData);
         style_image = cloudinary_style_img[0].url;
       }
 
       const { data } = await axios.post('/api/admin/product', {
-        ...values,
+        ...product,
         images: uploaded_images,
         color: {
           image: style_image,
-          color: values.color.color,
+          color: product.color.color,
         },
+        subCategories: product.subCategories,
       });
 
+      setLoading(false);
       toast.success(data?.message || 'Продукт успешно создан');
       router.push('/admin/dashboard/product/all');
     } catch (error) {
-      showErrorToast(error.message || 'Произошла ошибка при создании продукта');
-      console.error('Error creating product:', error);
-    } finally {
       setLoading(false);
-      setSubmitting(false);
+      toast.error(
+        error.response?.data?.message ||
+          'Произошла ошибка при создании продукта'
+      );
     }
   };
 
@@ -200,33 +193,35 @@ export default function CreateProductPage({ categories }) {
       {loading && <StyledDotLoader />}
       <div className={styled.header}>Добавить продукт</div>
       <Formik
+        enableReinitialize
         initialValues={product}
-        validationSchema={validationSchema}
+        validationSchema={validate}
         onSubmit={createProductHandler}
       >
         {(formik) => (
           <Form>
             <div className={styled.form__row_section}>
               <div className={styled.subHeader}>
-                <span>Шаг 1:</span> Выберите категорию и подкатегорию
+                <span>Шаг 1 :</span> &nbsp;Выберите категорию и подкатегорию
                 (обязательно)
               </div>
-              <SingularSelect
-                name='category'
-                value={formik.values.category}
-                placeholder='Категория'
-                data={categories}
-                handleChange={(value) =>
-                  formik.setFieldValue('category', value)
-                }
-              />
+              <div className={styled.form__row_flex}>
+                <SingularSelect
+                  name='category'
+                  value={product.category}
+                  placeholder='Категория'
+                  data={categories}
+                  header='Select a category'
+                  handleChange={selectHandleChange}
+                />
+              </div>
               <MultipleSelect
-                value={formik.values.subCategories}
+                value={product.subCategories}
                 data={subs}
-                header='Подкатегории'
+                header='подкатегории'
                 name='subCategories'
-                handleChange={(value) =>
-                  formik.setFieldValue('subCategories', value)
+                handleChange={(e) =>
+                  setProduct({ ...product, subCategories: e.target.value })
                 }
               />
             </div>
@@ -249,7 +244,6 @@ export default function CreateProductPage({ categories }) {
               <div className={styled.subHeader}>
                 <span>Шаг 3 :</span> &nbsp;Выберите цвет продукта (обязательно)
               </div>
-
               <Colors
                 name='color'
                 product={product}
@@ -258,18 +252,16 @@ export default function CreateProductPage({ categories }) {
                 setColorImage={setColorImage}
                 images={images}
               />
-              <div className={styled.form__row_flex}>
-                {product.color.color && (
-                  <div className={styled.color_span}>
-                    <span>
-                      Цвет&nbsp;
-                      <b style={{ fontWeight: 600 }}>{product.color.color}</b>
-                      &nbsp;был выбран
-                    </span>
-                    <span style={{ background: product.color.color }}></span>
-                  </div>
-                )}
-              </div>
+              {product.color.color && (
+                <div className={styled.color_span}>
+                  <span>
+                    Цвет&nbsp;
+                    <b style={{ fontWeight: 600 }}>{product.color.color}</b>
+                    &nbsp;был выбран
+                  </span>
+                  <span style={{ background: product.color.color }}></span>
+                </div>
+              )}
             </div>
 
             <div className={styled.form__row_section}>
@@ -357,35 +349,12 @@ export default function CreateProductPage({ categories }) {
               />
             </div>
 
-            {/* <div className={styled.form__row_section}>
-              <div className={styled.subHeader}>
-                <span>Шаг 6 :</span> &nbsp;Остальные детали (желательно)
-              </div>
-              <Details
-                details={product.details}
-                product={product}
-                setProduct={setProduct}
-              />
-            </div>
-
-            <div className={styled.form__row_section}>
-              <div className={styled.subHeader}>
-                <span>Шаг 7 :</span> &nbsp;Частые вопросы (желательно)
-              </div>
-
-              <Questions
-                questions={product.questions}
-                product={product}
-                setProduct={setProduct}
-              />
-            </div> */}
             <div className={`${styled.btn} ${styled.submit_btn}`}>
               <Button
                 variant='contained'
                 type='submit'
                 startIcon={<MdAssignmentAdd />}
                 color='info'
-                disabled={formik.isSubmitting || loading}
               >
                 Добавить продукт
               </Button>
@@ -397,23 +366,14 @@ export default function CreateProductPage({ categories }) {
   );
 }
 
-export async function getServerSideProps() {
-  try {
-    await db.connectDb();
-    const categories = await Category.find().lean();
-    await db.disConnectDb();
+export async function getServerSideProps(ctx) {
+  await db.connectDb();
+  const categories = await Category.find().lean();
+  db.disconnectDb();
 
-    return {
-      props: {
-        categories: JSON.parse(JSON.stringify(categories)),
-      },
-    };
-  } catch (error) {
-    console.error('Error fetching categories:', error);
-    return {
-      props: {
-        categories: [],
-      },
-    };
-  }
+  return {
+    props: {
+      categories: JSON.parse(JSON.stringify(categories)),
+    },
+  };
 }
