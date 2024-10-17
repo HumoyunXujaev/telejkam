@@ -67,9 +67,9 @@ const initialState = {
   shippingFee: '',
 };
 
-export default function CreateProductPage({ categories }) {
+export default function CreateProductPage({ categories, allSubCategories }) {
   const [product, setProduct] = useState(initialState);
-  const [subs, setSubs] = useState([]);
+  // const [subs, setSubs] = useState([]);
   const [colorImage, setColorImage] = useState('');
   const [images, setImages] = useState([]);
   const [description_images, setDescription_images] = useState([]);
@@ -89,16 +89,20 @@ export default function CreateProductPage({ categories }) {
     description: Yup.string().required('Пожалуйста, добавьте описание'),
   });
 
-  useEffect(() => {
-    axios
-      .get(`/api/admin/subcategory?category=${product.category}`)
-      .then(({ data }) => {
-        setSubs(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [product.category]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`/api/admin/subcategory?category=${product.category}`)
+  //     .then(({ data }) => {
+  //       setSubs(data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, [product.category]);
+
+  const filteredSubCategories = useMemo(() => {
+    return allSubCategories.filter((sub) => sub.parent === product.category);
+  }, [allSubCategories, product.category]);
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -251,8 +255,8 @@ export default function CreateProductPage({ categories }) {
               </div>
 
               <MultipleSelect
-                value={product.category}
-                data={subs}
+                value={product.subCategories}
+                data={filteredSubCategories}
                 header='подкатегории'
                 name='subCategories'
                 handleChange={(e) => {
@@ -260,7 +264,7 @@ export default function CreateProductPage({ categories }) {
                   setProduct({ ...product, subCategories: e.target.value });
                 }}
                 // handleChange={handleChange}
-                disabled={product.parent}
+                disabled={product.parent || !product.category}
               />
             </div>
 
@@ -433,12 +437,14 @@ export default function CreateProductPage({ categories }) {
 export async function getServerSideProps(ctx) {
   await db.connectDb();
   const categories = await Category.find().lean();
+  const allSubCategories = await SubCategory.find().lean();
 
   db.disConnectDb();
 
   return {
     props: {
       categories: JSON.parse(JSON.stringify(categories)),
+      allSubCategories: JSON.parse(JSON.stringify(allSubCategories)),
     },
   };
 }
