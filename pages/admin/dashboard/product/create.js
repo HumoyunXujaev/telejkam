@@ -11,6 +11,7 @@ import styled from '@/styles/CreateProduct.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from '@/components/Admin/Layout';
 import { Category } from '@/models/Category';
+import { SubCategory } from '@/models/SubCategory';
 import { Product } from '@/models/Product';
 import db from '@/utils/db';
 import SingularSelect from '@/components/Select/SingularSelect';
