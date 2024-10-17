@@ -331,7 +331,7 @@ export default function CreateProductPage({ categories, allSubCategories }) {
               </div>
               <AdminInput
                 type='text'
-                label='Name'
+                label='Имя'
                 name='name'
                 placeholder='имя продукта'
                 onChange={handleChange}
@@ -348,7 +348,7 @@ export default function CreateProductPage({ categories, allSubCategories }) {
                 />
                 <AdminInput
                   type='text'
-                  label='Description'
+                  label='Описание'
                   name='description'
                   placeholder='описание'
                   onChange={handleChange}
@@ -358,7 +358,7 @@ export default function CreateProductPage({ categories, allSubCategories }) {
               <div className={styled.form__row_flex}>
                 <AdminInput
                   type='text'
-                  label='Brand'
+                  label='Бренд'
                   name='brand'
                   placeholder='бренд'
                   onChange={handleChange}
@@ -366,7 +366,7 @@ export default function CreateProductPage({ categories, allSubCategories }) {
                 />
                 <AdminInput
                   type='text'
-                  label='Label'
+                  label='Метка'
                   name='label'
                   placeholder='(хиты,новинки,распродажа и т.д.)'
                   onChange={handleChange}
@@ -374,9 +374,9 @@ export default function CreateProductPage({ categories, allSubCategories }) {
                 />
                 <AdminInput
                   type='text'
-                  label='Discount'
+                  label='Скидка'
                   name='discount'
-                  placeholder='Скидка %'
+                  placeholder='Скидка % (1-100)'
                   onChange={handleChange}
                   className='fixSpan'
                 />

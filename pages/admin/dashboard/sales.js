@@ -69,13 +69,13 @@ export default function Sales({ users, orders, products }) {
       labels,
       datasets: [
         {
-          label: 'Sales $',
+          label: 'Продажи $',
           data,
           borderColor: 'rgb(53, 162, 235)',
           backgroundColor: 'rgb(53, 162, 235, 0.4)',
         },
         {
-          label: 'Orders',
+          label: 'Заказы',
           data: labels.map(
             (label) =>
               completedOrders.filter((o) => o.createdAt.split('T')[0] === label)
@@ -93,7 +93,7 @@ export default function Sales({ users, orders, products }) {
           beginAtZero: true,
           title: {
             display: true,
-            text: 'Amount',
+            text: 'количество',
           },
         },
       },

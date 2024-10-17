@@ -89,7 +89,7 @@ const Sidebar = () => {
             <li className={route.includes('/dashboard/sales') && styled.active}>
               <Link href='/dashboard/sales'>
                 <FcSalesPerformance />
-                <span className={styled.show}>Sales</span>
+                <span className={styled.show}>Продажи</span>
               </Link>
             </li>
 
