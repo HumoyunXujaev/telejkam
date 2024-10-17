@@ -305,7 +305,7 @@ export default function CreateProductPage({ categories }) {
               </div>
             </div>
 
-            {/* <div className={styled.form__row_section}>
+            <div className={styled.form__row_section}>
               <Styles
                 product={product}
                 setProduct={setProduct}
@@ -318,7 +318,7 @@ export default function CreateProductPage({ categories }) {
                   alt=''
                 />
               )}
-            </div> */}
+            </div>
 
             <div className={styled.form__row_section}>
               <div className={styled.subHeader}>
