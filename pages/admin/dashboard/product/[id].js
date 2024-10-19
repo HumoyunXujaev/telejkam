@@ -599,6 +599,11 @@ const validationSchema = Yup.object({
   description: Yup.string().required('Описание продукта обязательно'),
   brand: Yup.string().required('Бренд обязателен'),
   category: Yup.string().required('Категория обязательна'),
+  'subProducts[0].discount': Yup.number()
+    .min(0)
+    .max(100)
+    .nullable()
+    .transform((value, originalValue) => (originalValue === '' ? null : value)),
 });
 
 export default function UpdateProductPage({ categories }) {
@@ -670,17 +675,22 @@ export default function UpdateProductPage({ categories }) {
       setSubmitting(false);
       return;
     }
-  
+
     setLoading(true);
     let uploaded_images = [...images];
-  
+
     if (newImages.length > 0) {
       try {
         const formData = new FormData();
-        newImages.forEach((image) => formData.append('file', dataURItoBlob(image)));
+        newImages.forEach((image) =>
+          formData.append('file', dataURItoBlob(image))
+        );
         formData.append('path', 'product images');
         const newUploadedImages = await uploadHandler(formData);
-        uploaded_images = [...uploaded_images, ...newUploadedImages.map((img) => img.url)];
+        uploaded_images = [
+          ...uploaded_images,
+          ...newUploadedImages.map((img) => img.url),
+        ];
       } catch (error) {
         console.error('Error uploading images:', error);
         toast.error('Ошибка при загрузке изображений');
@@ -689,7 +699,7 @@ export default function UpdateProductPage({ categories }) {
         return;
       }
     }
-  
+
     let style_image = values.subProducts[0].color.image;
     if (typeof style_image === 'string' && style_image.startsWith('data:')) {
       try {
@@ -706,7 +716,7 @@ export default function UpdateProductPage({ categories }) {
         return;
       }
     }
-  
+
     const updatedProduct = {
       ...values,
       subProducts: [
@@ -714,17 +724,26 @@ export default function UpdateProductPage({ categories }) {
           ...values.subProducts[0],
           images: uploaded_images.map((url) => ({ url })),
           color: { ...values.subProducts[0].color, image: style_image },
+          discount:
+            values.subProducts[0].discount === ''
+              ? null
+              : values.subProducts[0].discount,
         },
       ],
     };
-  
+
     try {
-      const { data } = await axiosInstance.put(`/admin/product/${id}`, updatedProduct);
+      const { data } = await axiosInstance.put(
+        `/admin/product/${id}`,
+        updatedProduct
+      );
       toast.success(data.message);
       router.push('/admin/dashboard/product/all');
     } catch (error) {
       console.error('Error updating product:', error);
-      toast.error(error.response?.data?.message || 'Ошибка при обновлении продукта');
+      toast.error(
+        error.response?.data?.message || 'Ошибка при обновлении продукта'
+      );
     } finally {
       setLoading(false);
       setSubmitting(false);
@@ -754,6 +773,12 @@ export default function UpdateProductPage({ categories }) {
                   formik.setFieldValue(name, value)
                 }
               />
+              <div className={styled.subHeader}>
+                <span>
+                  ПРИ ОБНОВЛЕНИИ ПОЖАЛУЙСТА ВЫБЕРИТЕ ПОДКАТЕГОРИЮ
+                </span>{' '}
+                &nbsp;
+              </div>
               <MultipleSelect
                 name='subCategories'
                 value={formik.values.subCategories}
@@ -778,6 +803,12 @@ export default function UpdateProductPage({ categories }) {
               />
             </div>
 
+            <div className={styled.subHeader}>
+                <span>
+                  ПРИ ОБНОВЛЕНИИ ПОЖАЛУЙСТА ВЫБЕРИТЕ ЦВЕТ
+                </span>{' '}
+                &nbsp;
+              </div>
             <div className={styled.form__row_section}>
               <Colors
                 name='subProducts[0].color'
@@ -838,6 +869,7 @@ export default function UpdateProductPage({ categories }) {
                 name='subProducts[0].discount'
                 placeholder='Скидка в процентах'
               />
+
               <AdminInput
                 as='textarea'
                 label='Описание'
@@ -849,7 +881,7 @@ export default function UpdateProductPage({ categories }) {
             <div className={styled.form__row_section}>
               <div className={styled.subHeader}>
                 <span>
-                  ПОЖАЛУЙСТА НАЖМИТЕ НЕТ РАЗМЕРА ЕСЛИ НЕТ РАЗМЕРА У ПРОДУКТА
+                  ПРИ ОБНОВЛЕНИИ ПОЖАЛУЙСТА НАЖМИТЕ НИЖУ ЕСЛИ НЕТ РАЗМЕРА У ПРОДУКТА
                 </span>{' '}
                 &nbsp;
               </div>

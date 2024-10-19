@@ -67,7 +67,10 @@ router.put(async (req, res) => {
           color: subProduct.color || existingSubProduct.color,
           images: subProduct.images || existingSubProduct.images,
           sizes: subProduct.sizes || existingSubProduct.sizes,
-          discount: subProduct.discount || existingSubProduct.discount,
+          discount:
+            subProduct.discount !== undefined
+              ? subProduct.discount
+              : existingSubProduct.discount,
         };
       });
     }
