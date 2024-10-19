@@ -523,7 +523,6 @@
 //     },
 //   };
 // }
-
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
@@ -535,9 +534,6 @@ import { toast } from 'react-toastify';
 import styled from '@/styles/CreateProduct.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from '@/components/Admin/Layout';
-import { Category } from '@/models/Category';
-import { Product } from '@/models/Product';
-import db from '@/utils/db';
 import SingularSelect from '@/components/Select/SingularSelect';
 import MultipleSelect from '@/components/Select/MultipleSelect';
 import AdminInput from '@/components/Input/AdminInput';
@@ -551,6 +547,9 @@ import Swal from 'sweetalert2';
 import dataURItoBlob from '@/utils/dataURItoBlob';
 import { uploadHandler } from '@/utils/request';
 import StyledDotLoader from '@/components/Loaders/DotLoader';
+import Cookies from 'js-cookie';
+
+const API_BASE_URL = 'https://www.telejkam.uz/api';
 
 const initialState = {
   name: '',
@@ -608,6 +607,15 @@ export default function UpdateProductPage({ categories }) {
   const [loading, setLoading] = useState(false);
   const [subs, setSubs] = useState([]);
 
+  const token = Cookies.get('__Secure-next-auth.session-token');
+
+  const axiosInstance = axios.create({
+    baseURL: API_BASE_URL,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
   useEffect(() => {
     if (id) {
       fetchProduct();
@@ -622,7 +630,7 @@ export default function UpdateProductPage({ categories }) {
 
   const fetchProduct = async () => {
     try {
-      const { data } = await axios.get(`/api/admin/product/${id}`);
+      const { data } = await axiosInstance.get(`/admin/product/${id}`);
       setProduct({
         ...data,
         category: data.category,
@@ -645,18 +653,13 @@ export default function UpdateProductPage({ categories }) {
 
   const fetchSubcategories = async () => {
     try {
-      const { data } = await axios.get(
-        `/api/admin/subcategory?category=${product.category}`
+      const { data } = await axiosInstance.get(
+        `/admin/subcategory?category=${product.category}`
       );
       setSubs(data);
     } catch (error) {
       console.error('Error fetching subcategories:', error);
     }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProduct((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (values, { setSubmitting }) => {
@@ -721,8 +724,8 @@ export default function UpdateProductPage({ categories }) {
     };
 
     try {
-      const { data } = await axios.put(
-        `/api/admin/product/${id}`,
+      const { data } = await axiosInstance.put(
+        `/admin/product/${id}`,
         updatedProduct
       );
       toast.success(data.message);
@@ -862,7 +865,7 @@ export default function UpdateProductPage({ categories }) {
             <div className={styled.form__row_section}>
               <div className={styled.subHeader}>
                 <span>Шаг 5:</span> &nbsp;Размеры и цены ПОЖАЛУЙСТА НАЖМИТЕ НЕТ
-                РАЗМЕРОВ ЕСЛИ У ПРОДУКТА НЕТ РАЗМЕРА ПРИ ОБНОВЛЕНИИ!!!
+                РАЗМЕРА ЕСЛИ НЕТ РАЗМЕРА У ПРОДУКТА
               </div>
               <Sizes
                 sizes={formik.values.sizes}
@@ -879,7 +882,9 @@ export default function UpdateProductPage({ categories }) {
               </div>
               <Details
                 details={formik.values.details}
-                setProduct={(newValues) => formik.setValues({ ...formik.values, ...newValues })}
+                setProduct={(newValues) =>
+                  formik.setValues({ ...formik.values, ...newValues })
+                }
               />
             </div>
 
@@ -889,7 +894,9 @@ export default function UpdateProductPage({ categories }) {
               </div>
               <Questions
                 questions={formik.values.questions}
-                setProduct={(newValues) => formik.setValues({ ...formik.values, ...newValues })}
+                setProduct={(newValues) =>
+                  formik.setValues({ ...formik.values, ...newValues })
+                }
               />
             </div> */}
 
@@ -915,10 +922,9 @@ export async function getServerSideProps() {
   await db.connectDb();
   const categories = await Category.find().lean();
   await db.disConnectDb();
-
   return {
     props: {
-      categories: JSON.parse(JSON.stringify(categories)),
+      categories,
     },
   };
 }
