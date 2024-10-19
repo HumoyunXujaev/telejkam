@@ -526,7 +526,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
