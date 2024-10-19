@@ -523,8 +523,10 @@
 //     },
 //   };
 // }
+
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
@@ -548,6 +550,10 @@ import dataURItoBlob from '@/utils/dataURItoBlob';
 import { uploadHandler } from '@/utils/request';
 import StyledDotLoader from '@/components/Loaders/DotLoader';
 import Cookies from 'js-cookie';
+import axios from 'axios';
+import { Category } from '@/models/Category';
+import { Product } from '@/models/Product';
+import db from '@/utils/db';
 
 const API_BASE_URL = 'https://www.telejkam.uz/api';
 
