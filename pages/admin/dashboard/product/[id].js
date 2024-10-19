@@ -637,7 +637,7 @@ export default function UpdateProductPage({ categories }) {
       setProduct({
         ...data,
         category: data.category,
-        subCategories: data.subCategories,
+        subCategories: data.subCategories[0],
         images: data.subProducts.map((s) => s.images.map((i) => i.url)).flat(),
         description_images: data.subProducts
           .map((s) => s?.description_images?.map((i) => i?.url))
@@ -648,6 +648,7 @@ export default function UpdateProductPage({ categories }) {
         sku: data.subProducts[0].sku,
       });
       setImages(data.subProducts.map((s) => s.images.map((i) => i.url)).flat());
+      console.log(data)
     } catch (error) {
       console.error('Error fetching product:', error);
       toast.error('Ошибка при загрузке продукта');
