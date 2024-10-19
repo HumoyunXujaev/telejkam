@@ -1,9 +1,11 @@
+import React from 'react';
 import { ErrorMessage, useField } from "formik";
-
 import styled from "./styles.module.scss";
 
-const AdminInput = ({ placeholder, label, className, ...props }) => {
+const AdminInput = ({ placeholder, label, className, as, ...props }) => {
   const [field, meta] = useField(props);
+
+  const InputComponent = as === 'textarea' ? 'textarea' : 'input';
 
   return (
     <div>
@@ -13,12 +15,11 @@ const AdminInput = ({ placeholder, label, className, ...props }) => {
         } ${className ? styled[className] : ""} `}
       >
         <span>{label}</span>
-        <input
-          type={field.type}
-          name={field.name}
-          placeholder={placeholder}
+        <InputComponent
           {...field}
           {...props}
+          placeholder={placeholder}
+          className={styled.input}
         />
       </label>
       {meta.touched && meta.error ? (
