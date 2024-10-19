@@ -524,7 +524,6 @@
 //   };
 // }
 
-/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
@@ -549,7 +548,6 @@ import { uploadHandler } from '@/utils/request';
 import StyledDotLoader from '@/components/Loaders/DotLoader';
 import Cookies from 'js-cookie';
 import { Category } from '@/models/Category';
-import { Product } from '@/models/Product';
 import db from '@/utils/db';
 
 const API_BASE_URL = 'https://www.telejkam.uz/api';
@@ -559,22 +557,25 @@ const initialState = {
   description: '',
   brand: '',
   label: '',
-  sku: '',
-  discount: '',
-  images: [],
-  description_images: [],
   category: '',
   subCategories: [],
-  color: {
-    color: '',
-    image: '',
-  },
-  sizes: [
+  subProducts: [
     {
-      size: '',
-      qty: '',
-      price: '',
-      price_description: '',
+      sku: '',
+      discount: 0,
+      color: {
+        color: '',
+        image: '',
+      },
+      sizes: [
+        {
+          size: '',
+          qty: '',
+          price: '',
+          price_description: '',
+        },
+      ],
+      images: [],
     },
   ],
   details: [
@@ -589,6 +590,8 @@ const initialState = {
       answer: '',
     },
   ],
+  shipping: 0,
+  refundPolicy: '',
 };
 
 const validationSchema = Yup.object({
@@ -596,7 +599,6 @@ const validationSchema = Yup.object({
   description: Yup.string().required('Описание продукта обязательно'),
   brand: Yup.string().required('Бренд обязателен'),
   category: Yup.string().required('Категория обязательна'),
-  sku: Yup.string().required('SKU обязателен'),
 });
 
 export default function UpdateProductPage({ categories }) {
@@ -636,19 +638,11 @@ export default function UpdateProductPage({ categories }) {
       const { data } = await axiosInstance.get(`/admin/product/${id}`);
       setProduct({
         ...data,
-        category: data.category,
-        subCategories: data.subCategories[0],
-        images: data.subProducts.map((s) => s.images.map((i) => i.url)).flat(),
-        description_images: data.subProducts
-          .map((s) => s?.description_images?.map((i) => i?.url))
-          .flat(),
-        color: data.subProducts[0].color,
-        sizes: data.subProducts[0].sizes,
-        discount: data.subProducts[0].discount,
-        sku: data.subProducts[0].sku,
+        subCategories: data.subCategories,
       });
-      setImages(data.subProducts.map((s) => s.images.map((i) => i.url)).flat());
-      console.log(data)
+      setImages(data.subProducts[0].images.map((img) => img.url));
+      setColorImage(data.subProducts[0].color.image);
+      console.log(data);
     } catch (error) {
       console.error('Error fetching product:', error);
       toast.error('Ошибка при загрузке продукта');
@@ -701,14 +695,11 @@ export default function UpdateProductPage({ categories }) {
       }
     }
 
-    let style_image = values.color.image;
-    if (
-      typeof values.color.image === 'string' &&
-      values.color.image.startsWith('data:')
-    ) {
+    let style_image = values.subProducts[0].color.image;
+    if (typeof style_image === 'string' && style_image.startsWith('data:')) {
       try {
         const formData = new FormData();
-        formData.append('file', dataURItoBlob(values.color.image));
+        formData.append('file', dataURItoBlob(style_image));
         formData.append('path', 'product style images');
         const uploadedStyleImage = await uploadHandler(formData);
         style_image = uploadedStyleImage[0].url;
@@ -723,8 +714,13 @@ export default function UpdateProductPage({ categories }) {
 
     const updatedProduct = {
       ...values,
-      images: uploaded_images,
-      color: { ...values.color, image: style_image },
+      subProducts: [
+        {
+          ...values.subProducts[0],
+          images: uploaded_images.map((url) => ({ url })),
+          color: { ...values.subProducts[0].color, image: style_image },
+        },
+      ],
     };
 
     try {
@@ -758,9 +754,6 @@ export default function UpdateProductPage({ categories }) {
         {(formik) => (
           <Form>
             <div className={styled.form__row_section}>
-              {/* <div className={styled.subHeader}>
-                <span>Шаг 1:</span> &nbsp;Выберите категорию и подкатегорию
-              </div> */}
               <SingularSelect
                 name='category'
                 value={formik.values.category}
@@ -783,9 +776,6 @@ export default function UpdateProductPage({ categories }) {
             </div>
 
             <div className={styled.form__row_section}>
-              {/* <div className={styled.subHeader}>
-                <span>Шаг 2:</span> &nbsp;Загрузите изображения
-              </div> */}
               <Images
                 name='imageInputFile'
                 header=''
@@ -799,14 +789,14 @@ export default function UpdateProductPage({ categories }) {
             </div>
 
             <div className={styled.form__row_section}>
-              {/* <div className={styled.subHeader}>
-                <span>Шаг 3:</span> &nbsp;Выберите цвет продукта
-              </div> */}
               <Colors
-                name='color'
-                product={formik.values}
+                name='subProducts[0].color'
+                product={formik.values.subProducts[0]}
                 setProduct={(newValues) =>
-                  formik.setValues({ ...formik.values, ...newValues })
+                  formik.setFieldValue('subProducts[0]', {
+                    ...formik.values.subProducts[0],
+                    ...newValues,
+                  })
                 }
                 colorImage={colorImage}
                 setColorImage={setColorImage}
@@ -816,18 +806,18 @@ export default function UpdateProductPage({ categories }) {
 
             <div className={styled.form__row_section}>
               <Styles
-                product={formik.values}
+                product={formik.values.subProducts[0]}
                 setProduct={(newValues) =>
-                  formik.setValues({ ...formik.values, ...newValues })
+                  formik.setFieldValue('subProducts[0]', {
+                    ...formik.values.subProducts[0],
+                    ...newValues,
+                  })
                 }
                 colorImage={colorImage}
               />
             </div>
 
             <div className={styled.form__row_section}>
-              {/* <div className={styled.subHeader}>
-                <span>Шаг 4:</span> &nbsp;Основная информация
-              </div> */}
               <AdminInput
                 type='text'
                 label='Название'
@@ -837,7 +827,7 @@ export default function UpdateProductPage({ categories }) {
               <AdminInput
                 type='text'
                 label='SKU'
-                name='sku'
+                name='subProducts[0].sku'
                 placeholder='SKU продукта'
               />
               <AdminInput
@@ -855,7 +845,7 @@ export default function UpdateProductPage({ categories }) {
               <AdminInput
                 type='number'
                 label='Скидка'
-                name='discount'
+                name='subProducts[0].discount'
                 placeholder='Скидка в процентах'
               />
               <AdminInput
@@ -868,41 +858,22 @@ export default function UpdateProductPage({ categories }) {
 
             <div className={styled.form__row_section}>
               <div className={styled.subHeader}>
-                <span>Шаг 5:</span> &nbsp;Размеры и цены ПОЖАЛУЙСТА НАЖМИТЕ НЕТ
-                РАЗМЕРА ЕСЛИ НЕТ РАЗМЕРА У ПРОДУКТА
+                <span>
+                  ПОЖАЛУЙСТА НАЖМИТЕ НЕТ РАЗМЕРА ЕСЛИ НЕТ РАЗМЕРА У ПРОДУКТА
+                </span>{' '}
+                &nbsp;
               </div>
               <Sizes
-                sizes={formik.values.sizes}
-                product={formik.values}
+                sizes={formik.values.subProducts[0].sizes}
+                product={formik.values.subProducts[0]}
                 setProduct={(newValues) =>
-                  formik.setValues({ ...formik.values, ...newValues })
+                  formik.setFieldValue('subProducts[0]', {
+                    ...formik.values.subProducts[0],
+                    ...newValues,
+                  })
                 }
               />
             </div>
-
-            {/* <div className={styled.form__row_section}>
-              <div className={styled.subHeader}>
-                <span>Шаг 6:</span> &nbsp;Дополнительные детали
-              </div>
-              <Details
-                details={formik.values.details}
-                setProduct={(newValues) =>
-                  formik.setValues({ ...formik.values, ...newValues })
-                }
-              />
-            </div>
-
-            <div className={styled.form__row_section}>
-              <div className={styled.subHeader}>
-                <span>Шаг 7:</span> &nbsp;Часто задаваемые вопросы
-              </div>
-              <Questions
-                questions={formik.values.questions}
-                setProduct={(newValues) =>
-                  formik.setValues({ ...formik.values, ...newValues })
-                }
-              />
-            </div> */}
 
             <div className={`${styled.btn} ${styled.submit_btn}`}>
               <Button
@@ -928,7 +899,7 @@ export async function getServerSideProps() {
   await db.disConnectDb();
   return {
     props: {
-      categories,
+      categories: JSON.parse(JSON.stringify(categories)),
     },
   };
 }
