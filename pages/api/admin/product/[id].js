@@ -35,14 +35,10 @@ router.put(async (req, res) => {
       brand,
       category,
       subCategories,
-      images,
-      color,
-      sizes,
+      subProducts,
       details,
       questions,
       label,
-      sku,
-      discount,
     } = req.body;
 
     const updatedProduct = await Product.findById(productId);
@@ -51,25 +47,30 @@ router.put(async (req, res) => {
       return res.status(404).json({ message: 'Product not found!' });
     }
 
-    updatedProduct.name = name;
-    updatedProduct.description = description;
-    updatedProduct.brand = brand;
-    updatedProduct.label = label;
-    updatedProduct.category = category;
-    updatedProduct.subCategories = subCategories;
-    updatedProduct.details = details;
-    updatedProduct.questions = questions;
+    // Обновляем основные поля продукта
+    if (name) updatedProduct.name = name;
+    if (description) updatedProduct.description = description;
+    if (brand) updatedProduct.brand = brand;
+    if (label) updatedProduct.label = label;
+    if (category) updatedProduct.category = category;
+    if (subCategories) updatedProduct.subCategories = subCategories;
+    if (details) updatedProduct.details = details;
+    if (questions) updatedProduct.questions = questions;
 
-    updatedProduct.subProducts = updatedProduct.subProducts.map(
-      (subProduct) => {
-        subProduct.sku = sku;
-        subProduct.color = color;
-        subProduct.images = [...subProduct.images, ...images];
-        subProduct.sizes = sizes;
-        subProduct.discount = discount;
-        return subProduct;
-      }
-    );
+    // Обновляем subProducts, если они предоставлены
+    if (subProducts && subProducts.length > 0) {
+      updatedProduct.subProducts = subProducts.map((subProduct, index) => {
+        const existingSubProduct = updatedProduct.subProducts[index] || {};
+        return {
+          ...existingSubProduct,
+          sku: subProduct.sku || existingSubProduct.sku,
+          color: subProduct.color || existingSubProduct.color,
+          images: subProduct.images || existingSubProduct.images,
+          sizes: subProduct.sizes || existingSubProduct.sizes,
+          discount: subProduct.discount || existingSubProduct.discount,
+        };
+      });
+    }
 
     await updatedProduct.save();
     await db.disConnectDb();
@@ -79,6 +80,7 @@ router.put(async (req, res) => {
       product: updatedProduct,
     });
   } catch (error) {
+    console.error('Error updating product:', error);
     await db.disConnectDb();
     res.status(500).json({ message: error.message });
   }

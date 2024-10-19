@@ -670,22 +670,17 @@ export default function UpdateProductPage({ categories }) {
       setSubmitting(false);
       return;
     }
-
+  
     setLoading(true);
     let uploaded_images = [...images];
-
+  
     if (newImages.length > 0) {
       try {
         const formData = new FormData();
-        newImages.forEach((image) =>
-          formData.append('file', dataURItoBlob(image))
-        );
+        newImages.forEach((image) => formData.append('file', dataURItoBlob(image)));
         formData.append('path', 'product images');
         const newUploadedImages = await uploadHandler(formData);
-        uploaded_images = [
-          ...uploaded_images,
-          ...newUploadedImages.map((img) => img.url),
-        ];
+        uploaded_images = [...uploaded_images, ...newUploadedImages.map((img) => img.url)];
       } catch (error) {
         console.error('Error uploading images:', error);
         toast.error('Ошибка при загрузке изображений');
@@ -694,7 +689,7 @@ export default function UpdateProductPage({ categories }) {
         return;
       }
     }
-
+  
     let style_image = values.subProducts[0].color.image;
     if (typeof style_image === 'string' && style_image.startsWith('data:')) {
       try {
@@ -711,7 +706,7 @@ export default function UpdateProductPage({ categories }) {
         return;
       }
     }
-
+  
     const updatedProduct = {
       ...values,
       subProducts: [
@@ -722,19 +717,14 @@ export default function UpdateProductPage({ categories }) {
         },
       ],
     };
-
+  
     try {
-      const { data } = await axiosInstance.put(
-        `/admin/product/${id}`,
-        updatedProduct
-      );
+      const { data } = await axiosInstance.put(`/admin/product/${id}`, updatedProduct);
       toast.success(data.message);
       router.push('/admin/dashboard/product/all');
     } catch (error) {
       console.error('Error updating product:', error);
-      toast.error(
-        error.response?.data?.message || 'Ошибка при обновлении продукта'
-      );
+      toast.error(error.response?.data?.message || 'Ошибка при обновлении продукта');
     } finally {
       setLoading(false);
       setSubmitting(false);
