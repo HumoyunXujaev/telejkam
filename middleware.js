@@ -6,11 +6,11 @@ export async function middleware(req) {
   const session = await getToken({ req, secret: process.env.JWT_SECRET });
 
   const isAdminSubdomain = host.startsWith('admin.');
-
+  // https://admin.telejkam.uz/dashboard/product/67138b50710599da7cde125b
   // Set CORS headers for requests coming from 'https://admin.telejkam.uz'
   const corsHeaders = {
     'Access-Control-Allow-Origin': 'https://admin.telejkam.uz',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, DELETE',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, OPTIONS, DELETE',
     'Access-Control-Allow-Headers': 'Authorization, Content-Type',
     'Access-Control-Allow-Credentials': 'true',
   };
