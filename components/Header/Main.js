@@ -361,6 +361,7 @@ const Main = ({ searchHandler2 }) => {
             position: 'fixed',
             height: '90px',
             bottom: 0,
+            zIndex: 1000,
             width: '100%',
             backgroundColor: '#fff',
             borderTop: '1px solid #ccc',

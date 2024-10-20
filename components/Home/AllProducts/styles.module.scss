@@ -49,9 +49,6 @@
   &__moreBtn {
     padding: 0 0 20px;
 
-    :hover{
-      background-color: $admin-text;
-    }
     button {
       font-family: 'Poppins', sans-serif;
       height: 50px;
@@ -66,14 +63,8 @@
         width: 20px;
         height: 20px;
       }
-      :hover{
+      &__btn {
         background-color: $admin-text;
-      }
-      &__btn{
-        background-color: $admin-text;
-        :hover{
-          background-color: $admin-text;
-        }
       }
     }
   }
