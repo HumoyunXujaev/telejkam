@@ -80,11 +80,18 @@ export default function AllProducts({ products }) {
         </div>
         <h4 className={styled.allProducts__title}>{t('all_products')}</h4>
       </div>
-      <div className={styled.allProducts__moreBtn}>
+      {products.length > visible && (
+        <div className={styled.allProducts__moreBtn}>
+          <Button className={styled.allProducts__moreBtn__btn} onClick={showMoreHandler}>
+            {t('more')} <Icon.ChevronDown />
+          </Button>
+        </div>
+      )}
+      {/* <div className={styled.allProducts__moreBtn}>
         <Button className={styled.allProducts__moreBtn__btn} onClick={showMoreHandler}>
           {t('more')} <Icon.ChevronDown />
         </Button>
-      </div>
+      </div> */}
     </>
   );
 }
