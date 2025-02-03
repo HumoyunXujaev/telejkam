@@ -56,7 +56,7 @@ export default function MainSwiper() {
     const fetchSettings = async () => {
       try {
         const { data } = await axios.get('/api/admin/settings');
-        console.log(data, 'hero images')
+        console.log(data, 'hero images');
         setHeroImages(data.heroImages);
       } catch (error) {
         console.error('Error fetching hero images:', error);
@@ -65,6 +65,11 @@ export default function MainSwiper() {
 
     fetchSettings();
   }, []);
+
+  {
+    [...Array(heroImages).keys()].map((i) => console.log(i));
+  }
+  console.log(heroImages, 'imgs');
 
   return (
     <Swiper
