@@ -152,13 +152,15 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                       <span>{t('header.cart_subtotal')}:</span>
                       <br />
                       <hr />
-                      {(product.price * product.qty).toLocaleString('ru-RU')}
+                      {(product.price * product.qty).toLocaleString(
+                        'ru-RU'
+                      )}{' '}
+                      {t('price_month')}
                       <br />
                       <hr />
                       {(product.price_description * product.qty).toLocaleString(
                         'ru-RU'
-                      )}{' '}
-                      {t('price_month')}
+                      )}
                       <hr />
                     </div>
                     <br />
@@ -194,10 +196,16 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                         {t('header.cart_subtotal')} {t('price_month')}
                       </span>
                       <span>
-                        {/* {orderData.total.toLocaleString('ru-RU')}  */}
-                        {price_monthh}
-                        {t('price_month')}
+                        {orderData.total.toLocaleString('ru-RU')}
+                        <br />
                       </span>
+                      <hr />
+
+                      <span>
+                        {(orderData.total / 3).toLocaleString('ru-RU')}{' '}
+                        {t('price_month')}{' '}
+                      </span>
+                      <br />
                     </div>
                   </>
                 ) : (
@@ -205,10 +213,17 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                     <div className={styled.order__total_sub}>
                       <span>{t('header.cart_subtotal')}</span>
                       <span>
-                        {/* {orderData.total.toLocaleString('ru-RU')}  */}
-                        {price_monthh}
+                        {orderData.total.toLocaleString('ru-RU')}
+                        <br />
+                      </span>
+                      <hr />
+
+                      <span>
+                        {(orderData.total / 3).toLocaleString('ru-RU')}{' '}
                         {t('price_month')}
                       </span>
+                      <br />
+                      {/* </span> */}
                     </div>
                   </>
                 )}
