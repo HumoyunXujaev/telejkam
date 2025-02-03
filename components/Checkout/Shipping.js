@@ -200,7 +200,7 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
                   required
                   id='firstName'
                   name='firstName'
-                  label='First name'
+                  label={t('first_name')}
                   fullWidth
                   onChange={changeInputHandler}
                   icon='text'
@@ -209,7 +209,7 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
                   required
                   id='lastName'
                   name='lastName'
-                  label='Last name'
+                  label={t('last_name')}
                   fullWidth
                   onChange={changeInputHandler}
                   icon='text'
@@ -221,7 +221,7 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
                   required
                   id='phoneNumber'
                   name='phoneNumber'
-                  label='Phone number'
+                  label={t('phone')}
                   fullWidth
                   onChange={changeInputHandler}
                   icon='number'
@@ -233,7 +233,7 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
                   required
                   id='city'
                   name='city'
-                  label='City'
+                  label={t('city')}
                   fullWidth
                   onChange={changeInputHandler}
                   icon='text'
@@ -242,7 +242,7 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
                   required
                   id='state'
                   name='state'
-                  label='State/Province/Region'
+                  label={t('state')}
                   fullWidth
                   onChange={changeInputHandler}
                   icon='text'
@@ -255,7 +255,7 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
                   value={country}
                   name='country'
                   handleChange={selectHandleChange}
-                  placeholder='Country *'
+                  placeholder={t('country')}
                 />
               </div>
 
@@ -264,7 +264,7 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
                   required
                   id='address1'
                   name='address1'
-                  label='Address line 1'
+                  label={t('address') + ' 1'}
                   fullWidth
                   onChange={changeInputHandler}
                   icon='text'
@@ -274,7 +274,7 @@ const Shipping = ({ user, addresses, setAddresses, profile }) => {
                 <ShippingInput
                   id='address2'
                   name='address2'
-                  label='Address line 2'
+                  label={t('address') + ' 2'}
                   fullWidth
                   onChange={changeInputHandler}
                   icon='text'

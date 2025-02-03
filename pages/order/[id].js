@@ -8,7 +8,7 @@ import { Order } from '@/models/Order';
 import { User } from '@/models/User';
 import Header from '@/components/Cart/Header';
 import db from '@/utils/db';
-import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
+// import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 
 import StripePayment from '@/components/StripePayment';
 import axios from 'axios';
@@ -22,23 +22,24 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
   const { t } = useTranslation();
 
-  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+  // const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (orderData._id) {
-      paypalDispatch({
-        type: 'resetOptions',
-        value: {
-          'client-id': paypal_client_id,
-          currency: 'USD',
-        },
-      });
-      paypalDispatch({
-        type: 'setLoadingStatus',
-        value: 'pending',
-      });
-    }
+    // if (orderData._id) {
+    //   paypalDispatch({
+    //     type: 'resetOptions',
+    //     value: {
+    //       'client-id': paypal_client_id,
+    //       currency: 'USD',
+    //     },
+    //   });
+    //   paypalDispatch({
+    //     type: 'setLoadingStatus',
+    //     value: 'pending',
+    //   });
+    // }
+    console.log(orderData, 'orderdata');
   }, [OrderPage]);
 
   const createOrderHandler = (data, actions) => {
@@ -77,13 +78,14 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
     console.log(error);
   };
 
-  const price_description = orderData.products.map(
-    (product) => product.price_description
+  const price_monthh = orderData.products.map((product) =>
+    (product.price * product.qty).toLocaleString('ru-RU')
   );
-  console.log(orderData);
+
+  console.log(orderData, 'orderdata');
   return (
     <>
-      <Header link='/' text={t('return_to_products')} />
+      {/* <Header link='/' text={t('return_to_products')} /> */}
       <div className={styled.order}>
         <div className={styled.container}>
           <div className={`${styled.order__infos} ${styled.card}`}>
@@ -115,8 +117,8 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                 <Icon.Info /> {t('order_details')}
               </span>
               <span>
-                Включает {orderData.products.length}{' '}
-                {orderData?.products?.length > 1 ? 'продуктов' : 'продукт'}
+                {t('qty')} {orderData.products.length}{' '}
+                {/* {orderData?.products?.length > 1 ? 'продуктов' : 'продукт'} */}
               </span>
             </div>
             <div className={styled.order__products}>
@@ -148,7 +150,16 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                     </div>
                     <div className={styled.product__infos_total}>
                       <span>{t('header.cart_subtotal')}:</span>
+                      <br />
+                      <hr />
                       {(product.price * product.qty).toLocaleString('ru-RU')}
+                      <br />
+                      <hr />
+                      {(product.price_description * product.qty).toLocaleString(
+                        'ru-RU'
+                      )}{' '}
+                      {t('price_month')}
+                      <hr />
                     </div>
                     <br />
                   </div>
@@ -183,7 +194,8 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                         {t('header.cart_subtotal')} {t('price_month')}
                       </span>
                       <span>
-                        {orderData.total.toLocaleString('ru-RU')}{' '}
+                        {/* {orderData.total.toLocaleString('ru-RU')}  */}
+                        {price_monthh}
                         {t('price_month')}
                       </span>
                     </div>
@@ -193,7 +205,8 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                     <div className={styled.order__total_sub}>
                       <span>{t('header.cart_subtotal')}</span>
                       <span>
-                        {orderData.total.toLocaleString('ru-RU')}{' '}
+                        {/* {orderData.total.toLocaleString('ru-RU')}  */}
+                        {price_monthh}
                         {t('price_month')}
                       </span>
                     </div>
@@ -202,18 +215,22 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
 
                 <div className={styled.order__total_sub}>
                   <span>{t('payment_method')}</span>
-                  <span>{orderData.paymentMethod} </span>
+                  <span>
+                    {orderData.paymentMethod === 'cash'
+                      ? t('cash')
+                      : 'Uzum Nasiya'}{' '}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
           <div className={`${styled.order__actions} ${styled.card}`}>
-            <h2 className={styled.heading}>Покупатель</h2>
+            <h2 className={styled.heading}>{t('customer')}</h2>
             <div className={styled.order__address}>
               <div className={styled.order__address_shipping}>
                 <h3>{t('address')}</h3>
                 <div className={styled.order__address_line}>
-                  <span>Полное Имя : </span>
+                  <span>{t('fist_name')} </span>
                   <span>
                     {orderData.shippingAddress.firstName}{' '}
                     {orderData.shippingAddress.lastName}
@@ -221,12 +238,12 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                 </div>
 
                 <div className={styled.order__address_line}>
-                  <span>Адресс : </span>
+                  <span>{t('address')} </span>
                   <span>{orderData.shippingAddress.address1}</span>
                 </div>
 
                 <div className={styled.order__address_line}>
-                  <span>Штат/Город : </span>
+                  <span>{t('state')} </span>
                   <span>
                     {orderData.shippingAddress.state},{' '}
                     {orderData.shippingAddress.city}
@@ -234,7 +251,7 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                 </div>
               </div>
 
-              <div className={styled.order__address_shipping}>
+              {/* <div className={styled.order__address_shipping}>
                 <h3>Адресс доставки</h3>
                 <div className={styled.order__address_line}>
                   <span>Полное Имя : </span>
@@ -256,11 +273,11 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                     {orderData.shippingAddress.city}
                   </span>
                 </div>
-              </div>
+              </div> */}
             </div>
             {!orderData.isPaid ? (
               <div className={styled.order__payment}>
-                {orderData.paymentMethod == 'paypal' && (
+                {/* {orderData.paymentMethod == 'paypal' && (
                   <div>
                     {isPending ? (
                       <span>loading....</span>
@@ -272,7 +289,7 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                       ></PayPalButtons>
                     )}
                   </div>
-                )}
+                )} */}
 
                 {orderData.paymentMethod == 'credit_card' && (
                   <StripePayment
@@ -310,7 +327,7 @@ export async function getServerSideProps(context) {
     })
     .lean();
 
-  let paypal_client_id = process.env.PAYPAL_CLIENT_ID;
+  // let paypal_client_id = process.env.PAYPAL_CLIENT_ID;
   let stripe_public_key = process.env.STRIPE_PUBLIC_KEY;
 
   db.disConnectDb();
@@ -319,7 +336,7 @@ export async function getServerSideProps(context) {
     props: {
       ...(await serverSideTranslations(locale, ['common'])),
       orderData: JSON.parse(JSON.stringify(orderData)),
-      paypal_client_id,
+      // paypal_client_id,
       stripe_public_key,
     },
   };
