@@ -17,7 +17,7 @@ export default function FeaturedCategories({ featuredCategories }) {
   const { t } = useTranslation();
 
   const categories = featuredCategories?.map((category) => category);
-  console.log(categories);
+  // console.log(categories);
   return (
     <div className={styled.featuredCategories}>
       <div className={styled.featuredCategories__title}>

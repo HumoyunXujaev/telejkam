@@ -75,7 +75,10 @@ export const emptyCartHandler = (cart, dispatch) => {
 };
 
 export const calculateSubPrice = (items) => {
-  const newSubTotal = items.reduce((a, c) => a + Number(c.price) * c.qty, 0);
+  const newSubTotal = items.reduce(
+    (a, c) => a + Number(c.price_description) * c.qty,
+    0
+  );
   return Number(newSubTotal);
 };
 
@@ -86,7 +89,7 @@ export const calculateTotalShipping = (items) => {
 
 export const calculateTotal = (items) => {
   const newTotal = items.reduce(
-    (a, c) => a + Number(c.shipping) + Number(c.price) * c.qty,
+    (a, c) => a + Number(c.shipping) + Number(c.price_description) * c.qty,
     0
   );
   return Number(newTotal);

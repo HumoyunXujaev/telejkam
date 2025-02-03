@@ -90,7 +90,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
     );
   };
 
-  console.log(product);
+  // console.log(product);
   return (
     <div className={styled.infos}>
       <div className={styled.infos__container}>

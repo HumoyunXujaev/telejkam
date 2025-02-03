@@ -33,7 +33,7 @@ const Summary = ({
 
   const Router = useRouter();
 
-  console.log(cart);
+  // console.log(cart);
   const placeOrderHandler = async () => {
     setLoading(true);
     try {
@@ -115,9 +115,9 @@ const Summary = ({
         selectedAddress.country
       } %0A %0A 📞 <b>Номер:</b> ${selectedAddress.phoneNumber} `;
 
-      await axios.post('/api/telegram', {
-        message: message,
-      });
+      // await axios.post('/api/telegram', {
+      //   message: message,
+      // });
 
       // clear cart
       localStorage.removeItem('cart');
@@ -125,7 +125,7 @@ const Summary = ({
 
       Router.push(`/order/${data.order_id}`);
     } catch (error) {
-      console.log(error);
+      console.log(error, 'error');
 
       setOrderError(error);
     }
@@ -141,13 +141,19 @@ const Summary = ({
       ) : (
         <>
           <div className={styled.summary__infos_totalLine}>
-            <span>{t('header.cart_subtotal')} : </span>
-            {/* <span>
-              {calculateTotal(
-                cart.cartItems.map((product) => product)
-              ).toLocaleString('ru-RU')}{' '}
+            {/* <span>{t('header.cart_subtotal')} : </span> */}
+
+            <span>
+              {cart.cartItems
+                .map((product) => product.price)
+                .toLocaleString('ru-RU')}{' '}
               {t('price_month')}
-            </span> */}
+            </span>
+          </div>
+
+          <div className={styled.summary__infos_totalLine}>
+            <span>{t('header.cart_subtotal')} : </span>
+
             <span>
               {calculateTotalDescription(
                 cart.cartItems.map((product) => product)

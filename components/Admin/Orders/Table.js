@@ -71,7 +71,7 @@ function Row(props) {
       setIsEditing(false);
       Router.reload();
     } catch (error) {
-      console.log(error);
+      console.log(error, 'error');
     }
   };
 
@@ -359,7 +359,7 @@ Row.propTypes = {
 };
 
 export default function CollapsibleTable({ rows }) {
-  console.log(rows);
+  // console.log(rows);
   return (
     <TableContainer component={Paper}>
       <Table aria-label='collapsible table' className={styled.table}>

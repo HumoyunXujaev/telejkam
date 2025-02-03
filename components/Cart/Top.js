@@ -96,8 +96,9 @@ const Top = ({ cartItems, selected, setSelected }) => {
         {t('all')} {!isSuperSmall && `(${cartItems.length} )`}
       </span>
       <span className={styled.cart__top_label}>{t('one_price')}</span>
-      <span className={styled.cart__top_label}>{t('quantity')}</span>
       <span className={styled.cart__top_label}>{t('price')}</span>
+      <span className={styled.cart__top_label}>{t('quantity')}</span>
+
       <span className={styled.cart__top_label} onClick={showPopupHandler}>
         <Icon.Trash2 />
       </span>

@@ -7,7 +7,7 @@ export default function ProductCard({ product }) {
 
   const styles = product.subProducts.map((s) => s.color);
 
-  console.log(styles);
+  // console.log(styles);
 
   return (
     <div className={styled.product__item}>

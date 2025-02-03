@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { AiOutlineMinusSquare, AiOutlinePlusSquare } from 'react-icons/ai';
 import styled from './styles.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import { sizesList } from '@/data/sizes';
 import { toast } from 'react-toastify';
 
 export default function Sizes({ sizes, product, setProduct }) {

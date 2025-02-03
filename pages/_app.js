@@ -6,7 +6,7 @@ import { SessionProvider } from 'next-auth/react';
 import { ToastContainer } from 'react-toastify';
 import Router, { useRouter } from 'next/router';
 import '@/styles/globals.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import StyledDotLoader from '@/components/Loaders/DotLoader';
@@ -15,6 +15,7 @@ import { appWithTranslation } from 'next-i18next';
 import { persistStore } from 'redux-persist';
 import 'swiper/swiper-bundle.css';
 import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 NProgress.configure({
   minimum: 0.1,
   easing: 'ease',
@@ -57,7 +58,62 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
   const isAdminpath = router.pathname.startsWith('/admin');
 
-  const showHeaderFooter = router.pathname !== '/signin' && !isAdminpath;
+  const showHeaderFooter =
+    router.pathname !== '/signin' &&
+    !isAdminpath &&
+    router.pathname !== '/browse';
+
+  const filter = useCallback(
+    ({
+      search,
+      category,
+      brand,
+      style,
+      pattern,
+      material,
+      size,
+      color,
+      gender,
+      price,
+      shipping,
+      rating,
+      sort,
+      page,
+    }) => {
+      const path = router.pathname;
+      if (search) router.query.search = search;
+      if (category) router.query.category = category;
+      if (brand) router.query.brand = brand;
+      if (style) router.query.style = style;
+      if (pattern) router.query.pattern = pattern;
+      if (material) router.query.material = material;
+      if (size) router.query.size = size;
+      if (color) router.query.color = color;
+      if (gender) router.query.gender = gender;
+      if (price) router.query.price = price;
+      if (shipping) router.query.shipping = shipping;
+      if (rating) router.query.rating = rating;
+      if (sort) router.query.sort = sort;
+      if (page) router.query.page = page;
+
+      router.push({ pathname: path, query: router.query }, undefined, {
+        scroll: false,
+      });
+    },
+    [router]
+  );
+
+  const searchHandler = useCallback(
+    (search) => {
+      if (search === '') {
+        filter({ search: '' });
+      } else {
+        filter({ search });
+      }
+    },
+    [filter]
+  );
+
   return (
     <>
       <Head>
@@ -87,6 +143,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
                 pauseOnHover
                 theme='colored'
               />
+              {showHeaderFooter && <Header searchHandler={searchHandler} />}
               <Component {...pageProps} />
               {showHeaderFooter && <Footer />}
               <Analytics />

@@ -4,7 +4,7 @@ import React from 'react';
 import styled from './styles.module.scss';
 
 const Links = () => {
-  return <div className={styled.footer__links}>©2024</div>;
+  return <div className={styled.footer__links}>©2025</div>;
 };
 
 //

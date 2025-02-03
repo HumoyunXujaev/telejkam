@@ -14,21 +14,28 @@ import * as Icon from 'react-feather';
 
 export default function MultiSelect({ header, data, handleChange, disabled }) {
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setSelectedOptions([]);
   }, [data]);
+
+  const handleSelectionChange = (e) => {
+    setSelectedOptions(e.target.value);
+    handleChange(e);
+    setOpen(false); // Закрываем Select после выбора
+  };
 
   return (
     <FormControl sx={{ width: '100%', padding: 0 }}>
       <InputLabel>{header}</InputLabel>
       <Select
         multiple
+        open={open}
+        onOpen={() => setOpen(true)}
+        onClose={() => setOpen(false)}
         value={selectedOptions}
-        onChange={(e) => {
-          setSelectedOptions(e.target.value);
-          handleChange(e);
-        }}
+        onChange={handleSelectionChange}
         disabled={disabled}
         input={<OutlinedInput label={header} />}
         renderValue={(selected) => (

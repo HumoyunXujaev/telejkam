@@ -37,7 +37,7 @@ const Checkout = ({ user }) => {
 
   return (
     <>
-      <Header link='/cart' text={t('return_to_products')} />
+      {/* <Header link='/cart' text={t('return_to_products')} /> */}
       <div className={styled.checkout}>
         <div className={styled.checkout__left_side}>
           <Shipping

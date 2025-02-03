@@ -80,9 +80,10 @@ const Cart = () => {
     }
   };
 
+  // console.log(cart)
   return (
     <div>
-      <CartHeader text={t('return_to_products')} link='/browse' />
+      {/* <CartHeader text={t('return_to_products')} link='/browse' /> */}
       <div className={styled.cart}>
         <h1>{t('header.cart')}</h1>
         {cart.cartItems.length > 0 ? (

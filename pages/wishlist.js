@@ -41,7 +41,7 @@ export default function Wishlist() {
 
   return (
     <div className={styled.browse}>
-      <Header />
+      {/* <Header /> */}
       <div className={styled.browse__container}>
         <AnimateWrapper>
           <div className={styled.browse__path}>

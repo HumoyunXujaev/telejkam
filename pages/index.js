@@ -42,60 +42,9 @@ export default function Home({
     fetchData();
   }, []);
 
-  const filter = useCallback(
-    ({
-      search,
-      category,
-      brand,
-      style,
-      pattern,
-      material,
-      size,
-      color,
-      gender,
-      price,
-      shipping,
-      rating,
-      sort,
-      page,
-    }) => {
-      const path = router.pathname;
-      if (search) router.query.search = search;
-      if (category) router.query.category = category;
-      if (brand) router.query.brand = brand;
-      if (style) router.query.style = style;
-      if (pattern) router.query.pattern = pattern;
-      if (material) router.query.material = material;
-      if (size) router.query.size = size;
-      if (color) router.query.color = color;
-      if (gender) router.query.gender = gender;
-      if (price) router.query.price = price;
-      if (shipping) router.query.shipping = shipping;
-      if (rating) router.query.rating = rating;
-      if (sort) router.query.sort = sort;
-      if (page) router.query.page = page;
-
-      router.push({ pathname: path, query: router.query }, undefined, {
-        scroll: false,
-      });
-    },
-    [router]
-  );
-
-  const searchHandler = useCallback(
-    (search) => {
-      if (search === '') {
-        filter({ search: '' });
-      } else {
-        filter({ search });
-      }
-    },
-    [filter]
-  );
-
   return (
     <>
-      <MemoizedHeader country={country} searchHandler={searchHandler} />
+      {/* <MemoizedHeader country={country} searchHandler={searchHandler} /> */}
       <div className={styled.home}>
         <div className={styled.container}>
           <Main

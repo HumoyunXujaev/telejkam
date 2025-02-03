@@ -647,7 +647,7 @@ export default function UpdateProductPage({ categories }) {
       });
       setImages(data.subProducts[0].images.map((img) => img.url));
       setColorImage(data.subProducts[0].color.image);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       console.error('Error fetching product:', error);
       toast.error('Ошибка при загрузке продукта');

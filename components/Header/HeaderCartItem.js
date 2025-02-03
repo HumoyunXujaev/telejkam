@@ -21,7 +21,7 @@ export default function HeaderCartItem({ item }) {
         <p>{item.name.substring(0, 40) + '...'}</p>
         <p>
           <span>{item.price?.toLocaleString('ru-RU')}</span>
-          <strike>{item.priceBefore?.toLocaleString('ru-RU')}</strike>
+          {/* <strike>{item.priceBefore?.toLocaleString('ru-RU')}</strike> */}
         </p>
       </div>
       <div className={styled.cart__item_amount}>

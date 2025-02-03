@@ -4,7 +4,11 @@
 /node_modules
 /.pnp
 .pnp.js
-
+.aidigestignore
+codebase
+.codebase
+codebase.md
+.codebase.md
 # testing
 /coverage
 

@@ -53,7 +53,7 @@ const SubCreate = ({ categories, setSubCategories }) => {
       setSubCategories(data.subCategories);
       setName('');
       setParent('');
-      console.log(data);
+      // console.log(data);
       toast.success(data.message);
     } catch (error) {
       toast.error(error.response.data.message);

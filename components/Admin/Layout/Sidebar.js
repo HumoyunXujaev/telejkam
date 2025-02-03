@@ -181,7 +181,21 @@ const Sidebar = () => {
             </li>
           </ul>
         </div>
-
+        <div className={styled.sidebar__dropdown}>
+          <div className={styled.sidebar__dropdown_heading}>
+            <div className={styled.show}>Настройки сайта</div>
+          </div>
+          <ul className={styled.sidebar__list}>
+            <li
+              className={route.includes('/dashboard/settings') && styled.active}
+            >
+              <Link href='/dashboard/settings'>
+                <FcSettings />
+                <span className={styled.show}>Управление сайтом</span>
+              </Link>
+            </li>
+          </ul>
+        </div>
         {/* Section 4 */}
         <div className={styled.sidebar__dropdown}>
           <div className={styled.sidebar__dropdown_heading}>

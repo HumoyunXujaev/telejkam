@@ -184,12 +184,19 @@ const Product = ({ product, selected, setSelected }) => {
           )}
 
           <div className={styled.price__number}>
-            {product.price && (
-              <span>{product.price.toLocaleString('ru-RU')}</span>
+            {/* <div> */}
+            {product.price_description && (
+              <span>{product.price_description.toLocaleString('ru-RU')}</span>
             )}
+            {/* <br /> */}
+            {/* <span>
+                {product.price.toLocaleString('ru-RU')} {t('price_month')}
+              </span> */}
+            {/* </div> */}
+
             {product.price !== product.priceBefore && !isSmall && (
               <del>
-                {product?.priceBefore?.toLocaleString('ru-RU')}{' '}
+                {product?.price_description?.toLocaleString('ru-RU')}{' '}
                 {t('price_month')}
               </del>
             )}
@@ -197,6 +204,12 @@ const Product = ({ product, selected, setSelected }) => {
         </div>
 
         {/* Col 3 */}
+        <span className={styled.amount}>
+          {(product.price * product.qty).toLocaleString('ru-RU')}{' '}
+          {t('price_month')}
+        </span>
+
+        {/* Col 4 */}
         <div className={styled.quantity}>
           <button
             disabled={product.qty < 2}
@@ -212,12 +225,6 @@ const Product = ({ product, selected, setSelected }) => {
             +
           </button>
         </div>
-
-        {/* Col 4 */}
-        <span className={styled.amount}>
-          {(product.price * product.qty).toLocaleString('ru-RU')}{' '}
-          {t('price_month')}
-        </span>
 
         {/* Col 5 */}
         <div className={styled.action}>

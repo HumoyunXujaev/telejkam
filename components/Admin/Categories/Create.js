@@ -27,7 +27,7 @@ const Create = ({ setCategories }) => {
     try {
       const { data } = await axios.post('/api/admin/category', { name });
       setCategories(data.categories); // Update the categories state immediately
-      console.log(data);
+      // console.log(data);
 
       setName('')
       toast.success(data.message);

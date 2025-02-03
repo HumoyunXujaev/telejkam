@@ -28,7 +28,7 @@ export default function ListItem({ category, setCategories }) {
         try {
           const { data } = await axios.put('/api/admin/category', { id, name });
           setCategories(data.categories);
-          console.log(data);
+          // console.log(data);
           setOpen(false);
         } catch (error) {
           toast.error(error?.response?.data.message);
@@ -49,7 +49,7 @@ export default function ListItem({ category, setCategories }) {
         try {
           const { data } = await axios.delete(`/api/admin/category?id=${id}`);
           setCategories(data.categories);
-          console.log(data);
+          // console.log(data);
         } catch (error) {
           toast.error(error?.response?.data.message);
         }
