@@ -127,10 +127,10 @@ export default function Accordian({ details, product }) {
             </thead>
 
             <tbody>
-              {product?.questions.map((question, index) => (
+              {product?.questions?.map((question, index) => (
                 <tr key={index}>
-                  <td>{question.question}</td>
-                  <td>{question.answer}</td>
+                  <td>{question?.question}</td>
+                  <td>{question?.answer}</td>
                 </tr>
               ))}
             </tbody>

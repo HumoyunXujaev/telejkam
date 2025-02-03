@@ -100,31 +100,31 @@ const Infos = ({ product, setActiveImg, setImages }) => {
         </h2>
 
         <div className={styled.infos__price}>
-          {product.discount > 0 && size && (
+          {product?.discount > 0 && size && (
             <span className={styled.infos__price_before}>
-              {product.priceBefore.toLocaleString('ru-RU')}
+              {product?.priceBefore?.toLocaleString('ru-RU')}
             </span>
           )}
           {!size ? (
             <h3 className={styled.infos__price_range}>
-              {product.priceRange.toLocaleString('ru-RU')} {t('price_def')}
+              {product?.priceRange?.toLocaleString('ru-RU')} {t('price_def')}
             </h3>
           ) : (
             <h3 className={styled.infos__price_single}>
               {product?.price?.toLocaleString('ru-RU')} {t('price_def')}
             </h3>
           )}
-          {product.discount > 0 && size && (
+          {product?.discount > 0 && size && (
             <>
               <span
                 className={`${styled.infos__price_discount2} ${styled.lift}`}
               >
                 <Icon.Gift />
-                {product.discount}% {t('discount')}
+                {product?.discount}% {t('discount')}
               </span>
             </>
           )}
-          {product.discount > 0 && !size && (
+          {product?.discount > 0 && !size && (
             <span className={styled.infos__price_range_discount}>
               {t('buy_now')}
               <span className={styled.infos__price_discount}>
@@ -149,9 +149,9 @@ const Infos = ({ product, setActiveImg, setImages }) => {
           {t('select_color')} <Icon.ChevronDown />
         </span>
         <div className={styled.infos__colors}>
-          {product.colors &&
-            product.colors.map((color, index) =>
-              color.colorImg ? (
+          {product?.colors &&
+            product?.colors.map((color, index) =>
+              color?.colorImg ? (
                 <button
                   key={index}
                   className={
@@ -159,7 +159,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
                   }
                   onClick={() => changeStyleHandler(index)}
                 >
-                  <img src={color.colorImg} alt={color.colorImg} />
+                  <img src={color?.colorImg} alt={color?.colorImg} />
                 </button>
               ) : (
                 <button
@@ -181,7 +181,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
             {t('select_size')} <Icon.ChevronDown />
           </span>
           <div className={styled.infos__sizes_wrapper}>
-            {product.sizes.map((size, index) => (
+            {product?.sizes?.map((size, index) => (
               <button
                 onClick={() => changeSizeHandler(size.size, index)}
                 key={index}
@@ -206,7 +206,9 @@ const Infos = ({ product, setActiveImg, setImages }) => {
           <span>{qty}</span>
           {/* Input value phải nhỏ hơn số lượng sp hiện có thì mới được cộng */}
           <button
-            onClick={() => qty < product.quantity && setQty((prev) => prev + 1)}
+            onClick={() =>
+              qty < product?.quantity && setQty((prev) => prev + 1)
+            }
           >
             <Icon.Plus />
           </button>
@@ -216,10 +218,10 @@ const Infos = ({ product, setActiveImg, setImages }) => {
           <span className={styled.infos__shipping}>
             {product.shipping > 0 && (
               <>
-                <Icon.Truck /> {product.shipping} {t('shipping_fee')}
+                <Icon.Truck /> {product?.shipping} {t('shipping_fee')}
               </>
             )}
-            {!product.shipping && (
+            {!product?.shipping && (
               <>
                 <Icon.Truck /> {t('free_shipping')}
               </>
@@ -228,8 +230,8 @@ const Infos = ({ product, setActiveImg, setImages }) => {
           <span className={styled.infos__available}>
             <Icon.Layers />
             {size
-              ? product.quantity
-              : product.sizes.reduce((acc, cur) => acc + cur.qty, 0)}
+              ? product?.quantity
+              : product?.sizes?.reduce((acc, cur) => acc + cur.qty, 0)}
             &nbsp;{t('in_stock')}
           </span>
         </div>
@@ -237,13 +239,13 @@ const Infos = ({ product, setActiveImg, setImages }) => {
         <div className={styled.infos__actions}>
           <Button
             variant='contained'
-            disabled={product.quantity < 1}
-            style={{ cursor: `${product.quantity < 1 ? 'not-allowed' : ''}` }}
+            disabled={product?.quantity < 1}
+            style={{ cursor: `${product?.quantity < 1 ? 'not-allowed' : ''}` }}
             onClick={(e) =>
               addToCartHandler(
                 e,
-                product._id,
-                product.style,
+                product?._id,
+                product?.style,
                 Router.query.size,
                 cart,
                 dispatch
@@ -271,7 +273,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
         )}
         <StyledAccordion
           product={product}
-          details={[product.description, ...product.details]}
+          details={[product?.description || '', ...(product?.details || [])]}
         />
       </div>
     </div>

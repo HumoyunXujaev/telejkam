@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 import React, { useEffect, useState } from 'react';
 
 import styled from '../styles/Cart.module.scss';

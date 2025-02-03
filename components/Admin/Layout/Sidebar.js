@@ -181,7 +181,7 @@ const Sidebar = () => {
             </li>
           </ul>
         </div>
-        <div className={styled.sidebar__dropdown}>
+        {/* <div className={styled.sidebar__dropdown}>
           <div className={styled.sidebar__dropdown_heading}>
             <div className={styled.show}>Настройки сайта</div>
           </div>
@@ -195,7 +195,7 @@ const Sidebar = () => {
               </Link>
             </li>
           </ul>
-        </div>
+        </div> */}
         {/* Section 4 */}
         <div className={styled.sidebar__dropdown}>
           <div className={styled.sidebar__dropdown_heading}>

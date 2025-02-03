@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 import AnimateWrapper from '@/components/AnimateWrapper';
 import BreadCrumb from '@/components/BreadCrumb';
 import Header from '@/components/Header';

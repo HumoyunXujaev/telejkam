@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable @next/next/no-img-element */
 
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
@@ -39,7 +40,7 @@ const ProductPage = ({ product }) => {
 
   useEffect(() => {
     let recentIds = JSON.parse(localStorage.getItem('recent-ids')) || [];
-    recentIds.unshift(product._id.toString());
+    recentIds.unshift(product?._id?.toString());
     const uniqueRecentIds = [...new Set(recentIds)];
     localStorage.setItem('recent-ids', JSON.stringify(uniqueRecentIds));
   }, [product?._id]);
@@ -47,16 +48,16 @@ const ProductPage = ({ product }) => {
   return (
     <div>
       <Head>
-        <title>{product.name}</title>
+        <title>{product?.name}</title>
         <meta name='description' content={product?.description} />
       </Head>
       {/* <Header /> */}
-      <CartHeader
+      {/* <CartHeader
         text={t('return_to_products')}
         link='/browse'
         link2='/cart'
         text2={t('header.cart')}
-      />
+      /> */}
       <div className={styled.product}>
         <div className={styled.container}>
           {/* BreadCrumb */}
