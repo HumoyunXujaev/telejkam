@@ -115,9 +115,9 @@ const Summary = ({
         selectedAddress.country
       } %0A %0A 📞 <b>Номер:</b> ${selectedAddress.phoneNumber} `;
 
-      // await axios.post('/api/telegram', {
-      //   message: message,
-      // });
+      await axios.post('/api/telegram', {
+        message: message,
+      });
 
       // clear cart
       localStorage.removeItem('cart');
