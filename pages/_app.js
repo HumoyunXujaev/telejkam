@@ -163,7 +163,7 @@ export async function getStaticProps() {
   await db.connectDb();
 
   // Fetch all required data
-  const settings = awaitSettings.findOne({}).lean();
+  const settings = await Settings.findOne({}).lean();
   await db.disConnectDb();
 
   return {
