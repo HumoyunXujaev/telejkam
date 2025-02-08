@@ -3,12 +3,12 @@ import Main from './Main';
 import styled from './styles.module.scss';
 import Top from './Top';
 
-const Header = ({ country, searchHandler }) => {
+const Header = ({ country, searchHandler, settings }) => {
   return (
     <>
       <header className={styled.header}>
-        <Top country={country} />
-        <Main searchHandler2={searchHandler} />
+        <Top country={country} settings={settings} />
+        <Main searchHandler2={searchHandler} settings={settings} />
       </header>
       <div className={styled.headerSpacer}></div>
     </>

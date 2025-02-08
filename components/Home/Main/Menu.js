@@ -66,7 +66,7 @@ const Menu = ({ categories, settings }) => {
                 </div>
 
                 <span>
-                  <a href='tel:+380000000000'>{t('phone')}</a>
+                  <a href={settings?.contacts?.phone}>{t('phone')}</a>
                 </span>
               </Link>
             </li>

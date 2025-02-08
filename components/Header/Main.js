@@ -421,7 +421,7 @@ import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import * as Icon from 'react-feather';
 
-const Main = ({ searchHandler2 }) => {
+const Main = ({ searchHandler2, settings }) => {
   const isSmall = useMediaQuery({ maxWidth: 950 });
   const { data: session } = useSession();
   const { cart } = useSelector((state) => ({ ...state }));
@@ -552,7 +552,7 @@ const Main = ({ searchHandler2 }) => {
                 </div>
                 <div className={styled.drawer__body}>
                   <h1>{t('header.contacts')}</h1>
-                  <Link href={`tel:+32213213312`}>
+                  <Link href={`${'tel:' + settings?.contacts?.phone}`}>
                     <div className={styled.drawer__item}>
                       <Image
                         src={`icons/phone.png`}
@@ -563,7 +563,7 @@ const Main = ({ searchHandler2 }) => {
                       <span>{t('header.phone')}</span>
                     </div>
                   </Link>
-                  <Link href={`https://www.google.com/maps/place/`}>
+                  <Link href={settings?.contacts?.location}>
                     <div className={styled.drawer__item}>
                       <Image
                         src={`icons/address.png`}
@@ -574,7 +574,7 @@ const Main = ({ searchHandler2 }) => {
                       <span>{t('header.address')}</span>
                     </div>
                   </Link>
-                  <Link href={`https://www.telegram.com/`}>
+                  <Link href={settings?.contacts?.telegram}>
                     <div className={styled.drawer__item}>
                       <Image
                         src={`icons/tg.png`}
@@ -585,7 +585,7 @@ const Main = ({ searchHandler2 }) => {
                       <span>Telegram</span>
                     </div>
                   </Link>
-                  <Link href={`https://www.instagram.com/telejkam.uz/`}>
+                  <Link href={settings?.contacts?.instagram}>
                     <div className={styled.drawer__item}>
                       <Image
                         src={`icons/insta.png`}

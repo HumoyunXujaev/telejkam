@@ -11,7 +11,7 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import * as Icon from 'react-feather';
 
-const Top = ({ country }) => {
+const Top = ({ country, settings }) => {
   const { t } = useTranslation();
 
   const { data: session } = useSession();
@@ -53,8 +53,8 @@ const Top = ({ country }) => {
             <>
               <li className={styled.li}>
                 <Icon.PhoneCall />
-                <a href='tel:+998991911136'>
-                  <span>+998 99 191 11 36</span>
+                <a href={`${'tel:' + settings?.contacts?.phone}`}>
+                  <span>{settings?.contacts?.phone}</span>
                 </a>
               </li>
               <li className={styled.li}>

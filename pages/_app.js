@@ -145,7 +145,9 @@ function App({ Component, pageProps: { session, ...pageProps }, settings }) {
                 pauseOnHover
                 theme='colored'
               />
-              {showHeaderFooter && <Header searchHandler={searchHandler} />}
+              {showHeaderFooter && (
+                <Header searchHandler={searchHandler} settings={settings} />
+              )}
               <Component {...pageProps} />
               {showHeaderFooter && <Footer settings={settings} />}
               <Analytics />
