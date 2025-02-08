@@ -1,9 +1,9 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import Main from '@/components/Home/Main';
-import { Settings } from '@/models/Settings';
 import { Product } from '@/models/Product';
 import db from '@/utils/db';
+import { Settings } from '@/models/Settings';
 import { Category } from '@/models/Category';
 import styled from '../styles/Home.module.scss';
 import AllProducts from '@/components/Home/AllProducts';
@@ -55,7 +55,7 @@ export default function Home({
             freeShippingProducts={freeShippingProducts}
             featuredCategories={featuredCategories}
             heroImages={settings?.heroImages || []}
-            settings
+            settings={settings}
           />
           <AnimateWrapper>
             <MemoizedAllProducts products={products} />
@@ -69,26 +69,20 @@ export default function Home({
 
 export async function getStaticProps({ locale }) {
   await db.connectDb();
+  const settings = await Settings.findOne({}).lean();
+  let products = await Product.find()
+    .sort({ createdAt: -1 })
+    .select('category brand name rating slug subProducts _id shipping')
+    .lean();
 
-  // Fetch all required data
-  const [products, categories, settings] = await Promise.all([
-    Product.find()
-      .sort({ createdAt: -1 })
-      .select('category brand name rating slug subProducts _id shipping')
-      .lean(),
-    Category.find().lean(),
-    Settings.findOne({}).lean(),
-  ]);
+  let categories = await Category.find().lean();
 
   const reduceImagesProducts = products.map((p) => {
     const newSubProducts = p.subProducts.map((s) => ({
       ...s,
       images: s.images.slice(0, 2),
     }));
-    return {
-      ...p,
-      subProducts: newSubProducts,
-    };
+    return { ...p, subProducts: newSubProducts };
   });
 
   const leanProducts = reduceImagesProducts.map((p) => ({
@@ -121,8 +115,6 @@ export async function getStaticProps({ locale }) {
   const freeShippingProducts = reduceImagesProducts
     .filter((p) => p.shipping === 0)
     .slice(0, 10);
-
-  await db.disConnectDb();
 
   return {
     props: {
