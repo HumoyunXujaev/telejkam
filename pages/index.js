@@ -1,6 +1,7 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import Main from '@/components/Home/Main';
+import { Settings } from '@/models/Settings';
 import { Product } from '@/models/Product';
 import db from '@/utils/db';
 import { Category } from '@/models/Category';

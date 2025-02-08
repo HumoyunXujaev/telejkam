@@ -46,7 +46,7 @@ const Main = ({
 
         <AnimateWrapper origin='left'>
           <div className={styled.main__left}>
-            <Menu categories={featuredCategories} settings />
+            <Menu categories={featuredCategories} settings={settings} />
           </div>
         </AnimateWrapper>
 

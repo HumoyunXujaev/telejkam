@@ -16,6 +16,8 @@ import { persistStore } from 'redux-persist';
 import 'swiper/swiper-bundle.css';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import { Settings } from '@/models/Settings';
+
 NProgress.configure({
   minimum: 0.1,
   easing: 'ease',
