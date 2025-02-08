@@ -22,6 +22,7 @@ export default function Home({
   featuredProducts,
   freeShippingProducts,
   featuredCategories,
+  settings,
 }) {
   const router = useRouter();
 
@@ -52,6 +53,8 @@ export default function Home({
             featuredProducts={featuredProducts}
             freeShippingProducts={freeShippingProducts}
             featuredCategories={featuredCategories}
+            heroImages={settings?.heroImages || []}
+            settings
           />
           <AnimateWrapper>
             <MemoizedAllProducts products={products} />
@@ -66,19 +69,25 @@ export default function Home({
 export async function getStaticProps({ locale }) {
   await db.connectDb();
 
-  let products = await Product.find()
-    .sort({ createdAt: -1 })
-    .select('category brand name rating slug subProducts _id shipping')
-    .lean();
-
-  let categories = await Category.find().lean();
+  // Fetch all required data
+  const [products, categories, settings] = await Promise.all([
+    Product.find()
+      .sort({ createdAt: -1 })
+      .select('category brand name rating slug subProducts _id shipping')
+      .lean(),
+    Category.find().lean(),
+    Settings.findOne({}).lean(),
+  ]);
 
   const reduceImagesProducts = products.map((p) => {
     const newSubProducts = p.subProducts.map((s) => ({
       ...s,
       images: s.images.slice(0, 2),
     }));
-    return { ...p, subProducts: newSubProducts };
+    return {
+      ...p,
+      subProducts: newSubProducts,
+    };
   });
 
   const leanProducts = reduceImagesProducts.map((p) => ({
@@ -112,6 +121,8 @@ export async function getStaticProps({ locale }) {
     .filter((p) => p.shipping === 0)
     .slice(0, 10);
 
+  await db.disConnectDb();
+
   return {
     props: {
       ...(await serverSideTranslations(locale, ['common'])),
@@ -120,6 +131,20 @@ export async function getStaticProps({ locale }) {
       featuredProducts: JSON.parse(JSON.stringify(featuredProducts)),
       freeShippingProducts: JSON.parse(JSON.stringify(freeShippingProducts)),
       featuredCategories: JSON.parse(JSON.stringify(categories)),
+      settings: JSON.parse(
+        JSON.stringify(
+          settings || {
+            heroImages: [],
+            contacts: {
+              phone: '',
+              address: '',
+              telegram: '',
+              instagram: '',
+              location: '',
+            },
+          }
+        )
+      ),
     },
     revalidate: 60,
   };

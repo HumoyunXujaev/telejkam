@@ -7,7 +7,7 @@ import { Fragment } from 'react';
 import { useTranslation } from 'next-i18next';
 import * as Icon from 'react-feather';
 
-const Menu = ({ categories }) => {
+const Menu = ({ categories, settings }) => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ const Menu = ({ categories }) => {
           <div className={styled.menu__list}>
             <li className={styled.menu__item}>
               <Link
-                href={`tel:+32213213312`}
+                href={settings?.contacts?.phone}
                 onClick={() => dispatch(toggleMobileCate())}
               >
                 <div className={styled.menu__item_img}>
@@ -73,7 +73,7 @@ const Menu = ({ categories }) => {
 
             <li className={styled.menu__item}>
               <Link
-                href={`https://www.google.com/maps/place/`}
+                href={settings?.contacts?.location}
                 onClick={() => dispatch(toggleMobileCate())}
               >
                 <div className={styled.menu__item_img}>
@@ -91,7 +91,7 @@ const Menu = ({ categories }) => {
 
             <li className={styled.menu__item}>
               <Link
-                href={`https://www.telegram.com/`}
+                href={settings?.contacts?.telegram}
                 onClick={() => dispatch(toggleMobileCate())}
               >
                 <div className={styled.menu__item_img}>
@@ -109,7 +109,7 @@ const Menu = ({ categories }) => {
 
             <li className={styled.menu__item}>
               <Link
-                href={`https://www.instagram.com/telejkam.uz/`}
+                href={settings?.contacts?.instagram}
                 onClick={() => dispatch(toggleMobileCate())}
               >
                 <div className={styled.menu__item_img}>

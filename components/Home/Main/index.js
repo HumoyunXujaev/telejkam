@@ -18,6 +18,8 @@ const Main = ({
   featuredProducts,
   freeShippingProducts,
   featuredCategories,
+  heroImages,
+  settings,
 }) => {
   const isSmallScreen = useMediaQuery({ query: '(max-width: 950px)' });
   const { showMobileCate } = useSelector((state) => ({ ...state }));
@@ -25,7 +27,7 @@ const Main = ({
 
   return (
     <>
-      <MainSwiper />
+      <MainSwiper heroImages={heroImages} />
 
       <div className={styled.main}>
         <div
@@ -44,7 +46,7 @@ const Main = ({
 
         <AnimateWrapper origin='left'>
           <div className={styled.main__left}>
-            <Menu categories={featuredCategories} />
+            <Menu categories={featuredCategories} settings />
           </div>
         </AnimateWrapper>
 

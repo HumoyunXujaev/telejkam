@@ -284,9 +284,9 @@ export default function CreateProductPage({ categories, allSubCategories }) {
             </div>
 
             <div className={styled.form__row_section}>
-              <div className={styled.subHeader}>
+              {/* <div className={styled.subHeader}>
                 <span>Шаг 3 :</span> &nbsp;Выберите цвет продукта (обязательно)
-              </div>
+              </div> */}
 
               {/* <Colors
                 name='color'

@@ -98,7 +98,7 @@ export default function AllProductsPage({ products }) {
           <thead>
             <th>Имя Продукта</th>
             <th>Категория</th>
-            <th>Стили</th>
+            {/* <th>Стили</th> */}
             <th>Склад</th>
             <th>Дата добавления</th>
           </thead>

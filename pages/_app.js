@@ -25,7 +25,7 @@ NProgress.configure({
 
 let persistor = persistStore(store);
 
-function App({ Component, pageProps: { session, ...pageProps } }) {
+function App({ Component, pageProps: { session, ...pageProps }, settings }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -145,7 +145,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
               />
               {showHeaderFooter && <Header searchHandler={searchHandler} />}
               <Component {...pageProps} />
-              {showHeaderFooter && <Footer />}
+              {showHeaderFooter && <Footer settings={settings} />}
               <Analytics />
             </PersistGate>
           </Provider>
@@ -156,3 +156,31 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
 }
 
 export default appWithTranslation(App);
+
+export async function getStaticProps() {
+  await db.connectDb();
+
+  // Fetch all required data
+  const [settings] = await Promise.all([Settings.findOne({}).lean()]);
+  await db.disConnectDb();
+
+  return {
+    props: {
+      settings: JSON.parse(
+        JSON.stringify(
+          settings || {
+            heroImages: [],
+            contacts: {
+              phone: '',
+              address: '',
+              telegram: '',
+              instagram: '',
+              location: '',
+            },
+          }
+        )
+      ),
+    },
+    revalidate: 60,
+  };
+}

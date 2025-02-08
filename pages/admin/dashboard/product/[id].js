@@ -801,9 +801,9 @@ export default function UpdateProductPage({ categories }) {
               />
             </div>
 
-            <div className={styled.subHeader}>
+            {/* <div className={styled.subHeader}>
               <span>ПРИ ОБНОВЛЕНИИ ПОЖАЛУЙСТА ВЫБЕРИТЕ ЦВЕТ</span> &nbsp;
-            </div>
+            </div> */}
             {/* <div className={styled.form__row_section}>
               <Colors
                 name='subProducts[0].color'
@@ -820,7 +820,7 @@ export default function UpdateProductPage({ categories }) {
               />
             </div> */}
 
-            <div className={styled.form__row_section}>
+            {/* <div className={styled.form__row_section}>
               <Styles
                 product={formik.values.subProducts[0]}
                 setProduct={(newValues) =>
@@ -831,7 +831,7 @@ export default function UpdateProductPage({ categories }) {
                 }
                 // colorImage={colorImage}
               />
-            </div>
+            </div> */}
 
             <div className={styled.form__row_section}>
               <AdminInput
