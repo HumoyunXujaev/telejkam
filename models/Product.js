@@ -65,14 +65,14 @@ const productSchema = new mongoose.Schema(
         sku: String,
         images: [],
         description_images: [],
-        color: {
-          color: {
-            type: String,
-          },
-          image: {
-            type: String,
-          },
-        },
+        // color: {
+        //   color: {
+        //     type: String,
+        //   },
+        //   image: {
+        //     type: String,
+        //   },
+        // },
         sizes: [
           {
             size: String,

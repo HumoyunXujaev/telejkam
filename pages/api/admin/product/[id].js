@@ -64,7 +64,7 @@ router.put(async (req, res) => {
         return {
           ...existingSubProduct,
           sku: subProduct.sku || existingSubProduct.sku,
-          color: subProduct.color || existingSubProduct.color,
+          // color: subProduct.color || existingSubProduct.color,
           images: subProduct.images || existingSubProduct.images,
           sizes: subProduct.sizes || existingSubProduct.sizes,
           discount:

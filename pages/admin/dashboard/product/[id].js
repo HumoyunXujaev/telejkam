@@ -539,7 +539,7 @@ import SingularSelect from '@/components/Select/SingularSelect';
 import MultipleSelect from '@/components/Select/MultipleSelect';
 import AdminInput from '@/components/Input/AdminInput';
 import Images from '@/components/Admin/CreateProduct/Images';
-import Colors from '@/components/Admin/CreateProduct/Colors';
+// import Colors from '@/components/Admin/CreateProduct/Colors';
 import Styles from '@/components/Admin/CreateProduct/Styles';
 import Sizes from '@/components/Admin/CreateProduct/Sizes';
 import Swal from 'sweetalert2';
@@ -563,10 +563,10 @@ const initialState = {
     {
       sku: '',
       discount: 0,
-      color: {
-        color: '',
-        image: '',
-      },
+      // color: {
+      //   color: '',
+      //   image: '',
+      // },
       sizes: [
         {
           size: '',
@@ -611,7 +611,7 @@ export default function UpdateProductPage({ categories }) {
   const { id } = router.query;
 
   const [product, setProduct] = useState(initialState);
-  const [colorImage, setColorImage] = useState('');
+  // const [colorImage, setColorImage] = useState('');
   const [images, setImages] = useState([]);
   const [newImages, setNewImages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -646,7 +646,7 @@ export default function UpdateProductPage({ categories }) {
         subCategories: data.subCategories,
       });
       setImages(data.subProducts[0].images.map((img) => img.url));
-      setColorImage(data.subProducts[0].color.image);
+      // setColorImage(data.subProducts[0].color.image);
       // console.log(data);
     } catch (error) {
       console.error('Error fetching product:', error);
@@ -700,7 +700,7 @@ export default function UpdateProductPage({ categories }) {
       }
     }
 
-    let style_image = values.subProducts[0].color.image;
+    // let style_image = values.subProducts[0].color.image;
     if (typeof style_image === 'string' && style_image.startsWith('data:')) {
       try {
         const formData = new FormData();
@@ -723,7 +723,7 @@ export default function UpdateProductPage({ categories }) {
         {
           ...values.subProducts[0],
           images: uploaded_images.map((url) => ({ url })),
-          color: { ...values.subProducts[0].color, image: style_image },
+          // color: { ...values.subProducts[0].color, image: style_image },
           discount:
             values.subProducts[0].discount === ''
               ? null
@@ -774,9 +774,7 @@ export default function UpdateProductPage({ categories }) {
                 }
               />
               <div className={styled.subHeader}>
-                <span>
-                  ПРИ ОБНОВЛЕНИИ ПОЖАЛУЙСТА ВЫБЕРИТЕ ПОДКАТЕГОРИЮ
-                </span>{' '}
+                <span>ПРИ ОБНОВЛЕНИИ ПОЖАЛУЙСТА ВЫБЕРИТЕ ПОДКАТЕГОРИЮ</span>{' '}
                 &nbsp;
               </div>
               <MultipleSelect
@@ -799,17 +797,14 @@ export default function UpdateProductPage({ categories }) {
                 setImages={setImages}
                 newImages={newImages}
                 setNewImages={setNewImages}
-                setColorImage={setColorImage}
+                // setColorImage={setColorImage}
               />
             </div>
 
             <div className={styled.subHeader}>
-                <span>
-                  ПРИ ОБНОВЛЕНИИ ПОЖАЛУЙСТА ВЫБЕРИТЕ ЦВЕТ
-                </span>{' '}
-                &nbsp;
-              </div>
-            <div className={styled.form__row_section}>
+              <span>ПРИ ОБНОВЛЕНИИ ПОЖАЛУЙСТА ВЫБЕРИТЕ ЦВЕТ</span> &nbsp;
+            </div>
+            {/* <div className={styled.form__row_section}>
               <Colors
                 name='subProducts[0].color'
                 product={formik.values.subProducts[0]}
@@ -823,7 +818,7 @@ export default function UpdateProductPage({ categories }) {
                 setColorImage={setColorImage}
                 images={images}
               />
-            </div>
+            </div> */}
 
             <div className={styled.form__row_section}>
               <Styles
@@ -834,7 +829,7 @@ export default function UpdateProductPage({ categories }) {
                     ...newValues,
                   })
                 }
-                colorImage={colorImage}
+                // colorImage={colorImage}
               />
             </div>
 
@@ -881,7 +876,8 @@ export default function UpdateProductPage({ categories }) {
             <div className={styled.form__row_section}>
               <div className={styled.subHeader}>
                 <span>
-                  ПРИ ОБНОВЛЕНИИ ПОЖАЛУЙСТА НАЖМИТЕ НИЖУ ЕСЛИ НЕТ РАЗМЕРА У ПРОДУКТА
+                  ПРИ ОБНОВЛЕНИИ ПОЖАЛУЙСТА НАЖМИТЕ НИЖУ ЕСЛИ НЕТ РАЗМЕРА У
+                  ПРОДУКТА
                 </span>{' '}
                 &nbsp;
               </div>

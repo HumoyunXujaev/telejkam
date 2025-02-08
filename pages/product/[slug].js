@@ -120,13 +120,13 @@ export async function getServerSideProps(context) {
     sizes: subProduct?.sizes,
     discount: subProduct?.discount,
     sku: subProduct?.sku,
-    colors: product?.subProducts?.map((p) => {
-      if (p?.color?.image && p?.color?.color) {
-        return { colorImg: p?.color?.image, color: p?.color?.color };
-      } else {
-        return { color: p?.color?.color };
-      }
-    }),
+    // colors: product?.subProducts?.map((p) => {
+    //   if (p?.color?.image && p?.color?.color) {
+    //     return { colorImg: p?.color?.image, color: p?.color?.color };
+    //   } else {
+    //     return { color: p?.color?.color };
+    //   }
+    // }),
 
     priceRange: subProduct?.discount
       ? `$${priceAfterDiscount(

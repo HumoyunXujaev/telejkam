@@ -138,7 +138,7 @@ const Product = ({ product, selected, setSelected }) => {
                 {product.size}
               </p>
             )}
-            <p>
+            {/* <p>
               <span>{t('color')} :&nbsp;</span>
               {product?.color?.image ? (
                 <img src={product?.color?.image} alt='' />
@@ -153,7 +153,7 @@ const Product = ({ product, selected, setSelected }) => {
                   }}
                 ></span>
               )}
-            </p>
+            </p> */}
             {!isSuperSmall && (
               <p>
                 <span>{t('shipping_fee')} :&nbsp;</span>

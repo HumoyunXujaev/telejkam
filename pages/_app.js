@@ -72,7 +72,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
       pattern,
       material,
       size,
-      color,
+      // color,
       gender,
       price,
       shipping,
@@ -88,7 +88,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
       if (pattern) router.query.pattern = pattern;
       if (material) router.query.material = material;
       if (size) router.query.size = size;
-      if (color) router.query.color = color;
+      // if (color) router.query.color = color;
       if (gender) router.query.gender = gender;
       if (price) router.query.price = price;
       if (shipping) router.query.shipping = shipping;

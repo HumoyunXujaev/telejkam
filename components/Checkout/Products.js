@@ -36,7 +36,7 @@ const Products = ({ cart }) => {
               <div className={styled.product__infos_wrapper}>
                 <h3>{product.name}</h3>
                 <div className={styled.product__infos}>
-                  <p>
+                  {/* <p>
                     <span>{t('color')} : </span>{' '}
                     {product.color.image ? (
                       <img src={product.color.image} alt='' />
@@ -51,7 +51,7 @@ const Products = ({ cart }) => {
                         }}
                       ></span>
                     )}
-                  </p>
+                  </p> */}
                   <p>
                     <span>{t('size')} : </span>
                     {product.size}

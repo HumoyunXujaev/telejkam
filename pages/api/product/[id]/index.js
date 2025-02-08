@@ -39,7 +39,7 @@ async function handler(req, res) {
         subCategories: product.subCategories,
         shipping: product.shipping,
         images: subProduct.images,
-        color: subProduct.color,
+        // color: subProduct.color,
         size: productSize?.size,
         price,
         price_description,

@@ -145,7 +145,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
           )}
         </div>
 
-        <span className={styled.infos__sizes_title}>
+        {/* <span className={styled.infos__sizes_title}>
           {t('select_color')} <Icon.ChevronDown />
         </span>
         <div className={styled.infos__colors}>
@@ -174,7 +174,7 @@ const Infos = ({ product, setActiveImg, setImages }) => {
                 ></button>
               )
             )}
-        </div>
+        </div> */}
 
         <div className={styled.infos__sizes}>
           <span className={styled.infos__sizes_title}>

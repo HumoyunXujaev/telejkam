@@ -15,10 +15,10 @@ const orderSchema = new mongoose.Schema(
         image: { type: String },
         size: { type: String },
         qty: { type: Number },
-        color: {
-          color: String,
-          image: String,
-        },
+        // color: {
+        //   color: String,
+        //   image: String,
+        // },
         price: { type: Number },
         price_description: { type: Number },
       },

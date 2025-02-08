@@ -133,14 +133,14 @@ const OrderPage = ({ orderData, paypal_client_id, stripe_public_key }) => {
                     </h3>
 
                     <div className={styled.product__infos_row}>
-                      <p>{t('color')}: </p>
+                      {/* <p>{t('color')}: </p>
                       {product.color.image ? (
                         <img src={product.color.image} alt='' />
                       ) : (
                         <span
                           style={{ backgroundColor: product.color.color }}
                         ></span>
-                      )}
+                      )} */}
                       <Icon.ChevronsRight /> <p>{t('size')} : </p>
                       {product.size} <Icon.ChevronsRight /> <p>{t('qty')} : </p>
                       {product.qty} <Icon.ChevronsRight />{' '}

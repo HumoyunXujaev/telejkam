@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import Swal from 'sweetalert2';
 import { GiExpand } from 'react-icons/gi';
 import { FiTrash2 } from 'react-icons/fi';
-import { CgColorPicker } from 'react-icons/cg';
+// import { CgColorPicker } from 'react-icons/cg';
 import { ImUpload2 } from 'react-icons/im';
 import { Button } from '@mui/material';
 
@@ -16,7 +16,7 @@ export default function Images({
   setImages,
   header,
   text,
-  setColorImage,
+  // setColorImage,
   ...props
 }) {
   const fileInput = useRef(null);
@@ -129,9 +129,9 @@ export default function Images({
                   <button onClick={() => removeImageHandler(img)} type='button'>
                     <FiTrash2 />
                   </button>
-                  <button onClick={() => setColorImage(img)} type='button'>
+                  {/* <button onClick={() => setColorImage(img)} type='button'>
                     <CgColorPicker />
-                  </button>
+                  </button> */}
                   <button type='button'>
                     <GiExpand />
                   </button>

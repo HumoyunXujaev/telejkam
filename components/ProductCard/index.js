@@ -28,11 +28,11 @@ const ProductCard = ({ product, className, remove }) => {
 
   const [images, setImages] = useState(product.subProducts[active]?.images);
 
-  const [styles, setStyles] = useState(
-    product.subProducts.map((p) => {
-      return p.color;
-    })
-  );
+  // const [styles, setStyles] = useState(
+  //   product.subProducts.map((p) => {
+  //     return p.color;
+  //   })
+  // );
 
   let prices = sortPricesArr(product.subProducts[active]?.sizes);
 
@@ -87,7 +87,7 @@ const ProductCard = ({ product, className, remove }) => {
 
           <div className={styled.product__infos}>
             <div className={styled.product__infos_colors}>
-              {styles &&
+              {/* {styles &&
                 styles.map((style, index) =>
                   style?.image ? (
                     <img
@@ -115,7 +115,7 @@ const ProductCard = ({ product, className, remove }) => {
                       }}
                     ></span>
                   )
-                )}
+                )} */}
             </div>
 
             <div className={styled.product__infos_sizes}>

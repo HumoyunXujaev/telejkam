@@ -31,10 +31,10 @@ async function handler(req, res) {
         let tempProduct = {};
         tempProduct.name = dbProduct.name;
         tempProduct.product = dbProduct._id;
-        tempProduct.color = {
-          color: cart[i].color.color,
-          image: cart[i].color.image,
-        };
+        // tempProduct.color = {
+        //   color: cart[i].color.color,
+        //   image: cart[i].color.image,
+        // };
         tempProduct.image = subProduct.images[0].url;
         tempProduct.qty = Number(cart[i].qty);
         tempProduct.size = cart[i].size;

@@ -22,10 +22,10 @@ const cartSchema = new mongoose.Schema(
         qty: {
           type: Number,
         },
-        color: {
-          color: String,
-          image: String,
-        },
+        // color: {
+        //   color: String,
+        //   image: String,
+        // },
         price: Number,
         shipping: Number,
       },

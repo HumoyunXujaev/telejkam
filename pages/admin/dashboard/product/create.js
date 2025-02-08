@@ -18,8 +18,8 @@ import SingularSelect from '@/components/Select/SingularSelect';
 import MultipleSelect from '@/components/Select/MultipleSelect';
 import AdminInput from '@/components/Input/AdminInput';
 import Images from '@/components/Admin/CreateProduct/Images';
-import Colors from '@/components/Admin/CreateProduct/Colors';
-import Styles from '@/components/Admin/CreateProduct/Styles';
+// import Colors from '@/components/Admin/CreateProduct/Colors';
+// import Styles from '@/components/Admin/CreateProduct/Styles';
 import Sizes from '@/components/Admin/CreateProduct/Sizes';
 import Details from '@/components/Admin/CreateProduct/Details';
 import Questions from '@/components/Admin/CreateProduct/Questions';
@@ -41,10 +41,10 @@ const initialState = {
   parent: '',
   category: '',
   subCategories: [],
-  color: {
-    color: '',
-    image: '',
-  },
+  // color: {
+  //   color: '',
+  //   image: '',
+  // },
   sizes: [
     {
       size: '',
@@ -71,7 +71,7 @@ const initialState = {
 export default function CreateProductPage({ categories, allSubCategories }) {
   const [product, setProduct] = useState(initialState);
   // const [subs, setSubs] = useState([]);
-  const [colorImage, setColorImage] = useState('');
+  // const [colorImage, setColorImage] = useState('');
   const [images, setImages] = useState([]);
   const [description_images, setDescription_images] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -86,7 +86,7 @@ export default function CreateProductPage({ categories, allSubCategories }) {
     label: Yup.string().required('Пожалуйста, добавьте метку'),
     category: Yup.string().required('Пожалуйста, выберите категорию.'),
     sku: Yup.string().required('Пожалуйста, добавьте sku/номер'),
-    color: Yup.string().required('Пожалуйста, добавьте цвет'),
+    // color: Yup.string().required('Пожалуйста, добавьте цвет'),
     description: Yup.string().required('Пожалуйста, добавьте описание'),
   });
 
@@ -125,16 +125,16 @@ export default function CreateProductPage({ categories, allSubCategories }) {
       return;
     }
 
-    if (product.color.color == '' && product.color.image == '') {
-      toast.error('Пожалуйста выберите основной цвет продукта (Шаг 3).');
+    // if (product.color.color == '' && product.color.image == '') {
+    //   toast.error('Пожалуйста выберите основной цвет продукта (Шаг 3).');
 
-      Swal.fire({
-        icon: 'error',
-        title: 'Не найдено цвета!',
-        text: 'Пожалуйста выберите основной цвет продукта (Шаг 3).',
-      });
-      return;
-    }
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Не найдено цвета!',
+    //     text: 'Пожалуйста выберите основной цвет продукта (Шаг 3).',
+    //   });
+    //   return;
+    // }
 
     for (let i = 0; i < product.sizes.length; i++) {
       if (
@@ -173,25 +173,25 @@ export default function CreateProductPage({ categories, allSubCategories }) {
       uploaded_images = await uploadHandler(formData);
     }
 
-    if (product.color.image) {
-      let temp = dataURItoBlob(product.color.image);
-      const path = 'product style images';
-      let formData = new FormData();
-      formData.append('path', path);
-      formData.append('file', temp);
-      //Upload Color image lên Cloudinary và nhận về URL
-      let cloudinary_style_img = await uploadHandler(formData);
-      style_image = cloudinary_style_img[0].url;
-    }
+    // if (product.color.image) {
+    //   let temp = dataURItoBlob(product.color.image);
+    //   const path = 'product style images';
+    //   let formData = new FormData();
+    //   formData.append('path', path);
+    //   formData.append('file', temp);
+    //   //Upload Color image lên Cloudinary và nhận về URL
+    //   let cloudinary_style_img = await uploadHandler(formData);
+    //   style_image = cloudinary_style_img[0].url;
+    // }
 
     try {
       const { data } = await axios.post('/api/admin/product', {
         ...product,
         images: uploaded_images,
-        color: {
-          image: style_image,
-          color: product.color.color,
-        },
+        // color: {
+        //   image: style_image,
+        //   color: product.color.color,
+        // },
         subCategories: product.subCategories,
       });
 
@@ -228,7 +228,7 @@ export default function CreateProductPage({ categories, allSubCategories }) {
           parent: product.parent,
           sku: product.sku,
           discount: product.discount,
-          color: product.color.color,
+          // color: product.color.color,
           imageInputFile: '',
           styleInput: '',
         }}
@@ -279,7 +279,7 @@ export default function CreateProductPage({ categories, allSubCategories }) {
                 text='добавить фото'
                 images={images}
                 setImages={setImages}
-                setColorImage={setColorImage}
+                // setColorImage={setColorImage}
               />
             </div>
 
@@ -288,15 +288,15 @@ export default function CreateProductPage({ categories, allSubCategories }) {
                 <span>Шаг 3 :</span> &nbsp;Выберите цвет продукта (обязательно)
               </div>
 
-              <Colors
+              {/* <Colors
                 name='color'
                 product={product}
                 setProduct={setProduct}
                 colorImage={colorImage}
                 setColorImage={setColorImage}
                 images={images}
-              />
-              <div className={styled.form__row_flex}>
+              /> */}
+              {/* <div className={styled.form__row_flex}>
                 {product.color.color && (
                   <div className={styled.color_span}>
                     <span>
@@ -307,23 +307,23 @@ export default function CreateProductPage({ categories, allSubCategories }) {
                     <span style={{ background: product.color.color }}></span>
                   </div>
                 )}
-              </div>
+              </div> */}
             </div>
 
-            <div className={styled.form__row_section}>
-              <Styles
+            {/* <div className={styled.form__row_section}> */}
+            {/* <Styles
                 product={product}
                 setProduct={setProduct}
                 colorImage={colorImage}
-              />
-              {product.color.image && (
+              /> */}
+            {/* {product.color.image && (
                 <img
                   src={product.color.image}
                   className={styled.image_span}
                   alt=''
                 />
-              )}
-            </div>
+              )} */}
+            {/* </div> */}
 
             <div className={styled.form__row_section}>
               <div className={styled.subHeader}>

@@ -12,7 +12,7 @@ router.post(async (req, res) => {
     const {
       parent,
       sku,
-      color,
+      // color,
       images,
       sizes,
       discount,
@@ -34,8 +34,9 @@ router.post(async (req, res) => {
         await parentProduct.updateOne(
           {
             $push: {
-              subProducts: { sku, color, images, sizes, discount },
+              subProducts: { sku, images, sizes, discount },
             },
+            // color
           },
           { new: true }
         );
@@ -53,8 +54,9 @@ router.post(async (req, res) => {
         slug,
         category,
         subCategories,
-        subProducts: [{ sku, color, images, sizes, discount }],
+        subProducts: [{ sku, images, sizes, discount }],
       });
+      // color
 
       await newProduct.save();
       res.status(201).json({ message: 'Product created successfully.' });

@@ -29,9 +29,9 @@ const CategoryFilter = dynamic(
     suspense: true,
   }
 );
-const ColorsFilter = dynamic(() => import('@/components/Browse/ColorsFilter'), {
-  suspense: true,
-});
+// const ColorsFilter = dynamic(() => import('@/components/Browse/ColorsFilter'), {
+//   suspense: true,
+// });
 const BrandsFilter = dynamic(() => import('@/components/Browse/BrandsFilter'), {
   suspense: true,
 });
@@ -56,7 +56,7 @@ export default function BrowsePage({
   products,
   subCategories,
   sizes,
-  colors,
+  // colors,
   brands,
   styles,
   paginationCount,
@@ -80,7 +80,7 @@ export default function BrowsePage({
     pattern,
     material,
     size,
-    color,
+    // color,
     gender,
     price,
     shipping,
@@ -96,7 +96,7 @@ export default function BrowsePage({
     if (pattern) router.query.pattern = pattern;
     if (material) router.query.material = material;
     if (size) router.query.size = size;
-    if (color) router.query.color = color;
+    // if (color) router.query.color = color;
     if (gender) router.query.gender = gender;
     if (price) router.query.price = price;
     if (shipping) router.query.shipping = shipping;
@@ -141,9 +141,9 @@ export default function BrowsePage({
     filter({ size });
   };
 
-  const colorHandler = (color) => {
-    filter({ color });
-  };
+  // const colorHandler = (color) => {
+  //   filter({ color });
+  // };
 
   const genderHandler = (gender) => {
     filter({ gender });
@@ -285,11 +285,11 @@ export default function BrowsePage({
                       checkChecked={checkChecked}
                     />
 
-                    <ColorsFilter
+                    {/* <ColorsFilter
                       colors={colors}
                       colorHandler={colorHandler}
                       checkChecked={checkChecked}
-                    />
+                    /> */}
 
                     <BrandsFilter
                       brands={brands}
@@ -375,11 +375,11 @@ export default function BrowsePage({
                 checkChecked={checkChecked}
               /> */}
 
-              <ColorsFilter
+              {/* <ColorsFilter
                 colors={colors}
                 colorHandler={colorHandler}
                 checkChecked={checkChecked}
-              />
+              /> */}
 
               <BrandsFilter
                 brands={brands}
@@ -489,9 +489,9 @@ export async function getServerSideProps(ctx) {
   const sizeRegex = `^${sizeQuery[0]}`;
   const sizeMultiRegex = createRegex(sizeQuery, sizeRegex);
 
-  const colorQuery = ctx.query.color?.split('_') || '';
-  const colorRegex = `^${colorQuery[0]}`;
-  const colorMultiRegex = createRegex(colorQuery, colorRegex);
+  // const colorQuery = ctx.query.color?.split('_') || '';
+  // const colorRegex = `^${colorQuery[0]}`;
+  // const colorMultiRegex = createRegex(colorQuery, colorRegex);
 
   //------------------
 
@@ -520,12 +520,12 @@ export async function getServerSideProps(ctx) {
       ? { 'subProducts.sizes.size': { $regex: sizeMultiRegex, $options: 'i' } }
       : {};
 
-  const colorOptions =
-    colorQuery && colorQuery.length > 0
-      ? {
-          'subProducts.color.color': { $regex: colorMultiRegex, $options: 'i' },
-        }
-      : {};
+  // const colorOptions =
+  //   colorQuery && colorQuery.length > 0
+  //     ? {
+  //         'subProducts.color.color': { $regex: colorMultiRegex, $options: 'i' },
+  //       }
+  //     : {};
 
   const priceOptions =
     priceQuery && priceQuery.length > 0
@@ -579,7 +579,7 @@ export async function getServerSideProps(ctx) {
     ...brandOptions,
     ...styleOptions,
     ...sizeOptions,
-    ...colorOptions,
+    // ...colorOptions,
     ...priceOptions,
     ...shippingOptions,
     ...ratingOptions,
@@ -608,9 +608,9 @@ export async function getServerSideProps(ctx) {
     .lean();
 
   //Dùng distinct để nhận về mảng chỉ chứa các value tương ứng với key
-  let colors = await Product.find({ ...categoryOptions }).distinct(
-    'subProducts.color.color'
-  );
+  // let colors = await Product.find({ ...categoryOptions }).distinct(
+  //   'subProducts.color.color'
+  // );
   let brandsDb = await Product.find({ ...categoryOptions }).distinct('brand');
   let sizes = await Product.find({ ...categoryOptions }).distinct(
     'subProducts.sizes.size'
@@ -631,7 +631,7 @@ export async function getServerSideProps(ctx) {
     ...brandOptions,
     ...styleOptions,
     ...sizeOptions,
-    ...colorOptions,
+    // ...colorOptions,
     ...priceOptions,
     ...shippingOptions,
     ...ratingOptions,
@@ -644,7 +644,7 @@ export async function getServerSideProps(ctx) {
       subCategories: JSON.parse(JSON.stringify(subCategories)),
       products: JSON.parse(JSON.stringify(products)),
       sizes,
-      colors,
+      // colors,
       brands,
       styles,
       paginationCount: Math.ceil(totalProducts.length / pageSize),
