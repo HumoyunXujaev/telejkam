@@ -17,6 +17,7 @@ import 'swiper/swiper-bundle.css';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { Settings } from '@/models/Settings';
+import db from '@/utils/db';
 
 NProgress.configure({
   minimum: 0.1,
@@ -164,6 +165,7 @@ App.getInitialProps = async (ctx) => {
   await db.connectDb();
 
   // Fetch settings
+  db.connectDb;
   const settings = await Settings.findOne({}).lean();
   await db.disConnectDb();
 
