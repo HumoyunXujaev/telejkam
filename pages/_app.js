@@ -34,6 +34,7 @@ function App({ Component, pageProps: { session, ...pageProps }, settings }) {
     import('sweetalert2').then((Swal) => {
       window.Swal = Swal.default;
     });
+    console.log(settings, 'settings');
   }, []);
 
   useEffect(() => {
@@ -148,7 +149,7 @@ function App({ Component, pageProps: { session, ...pageProps }, settings }) {
               {showHeaderFooter && (
                 <Header searchHandler={searchHandler} settings={settings} />
               )}
-              <Component {...pageProps} />
+              <Component {...pageProps} settings={settings} />
               {showHeaderFooter && <Footer settings={settings} />}
               <Analytics />
             </PersistGate>
@@ -159,32 +160,34 @@ function App({ Component, pageProps: { session, ...pageProps }, settings }) {
   );
 }
 
-export default appWithTranslation(App);
-
-export async function getStaticProps() {
+App.getInitialProps = async (ctx) => {
   await db.connectDb();
 
-  // Fetch all required data
+  // Fetch settings
   const settings = await Settings.findOne({}).lean();
   await db.disConnectDb();
 
-  return {
-    props: {
-      settings: JSON.parse(
-        JSON.stringify(
-          settings || {
-            heroImages: [],
-            contacts: {
-              phone: '',
-              address: '',
-              telegram: '',
-              instagram: '',
-              location: '',
-            },
-          }
-        )
-      ),
+  const defaultSettings = {
+    heroImages: [],
+    contacts: {
+      phone: '',
+      address: '',
+      telegram: '',
+      instagram: '',
+      location: '',
     },
-    revalidate: 60,
   };
-}
+
+  // Get the existing pageProps from any page's getInitialProps/getStaticProps/getServerSideProps
+  let pageProps = {};
+  if (ctx.Component.getInitialProps) {
+    pageProps = await ctx.Component.getInitialProps(ctx);
+  }
+
+  return {
+    pageProps,
+    settings: JSON.parse(JSON.stringify(settings || defaultSettings)),
+  };
+};
+
+export default appWithTranslation(App);
