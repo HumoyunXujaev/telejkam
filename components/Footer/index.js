@@ -5,8 +5,6 @@ import Socials from './Socials';
 import Copyright from './Copyright';
 import AnimateWrapper from '../AnimateWrapper';
 import Image from 'next/image';
-import db from '@/utils/db';
-import { Settings } from '@/models/Settings';
 
 const Footer = ({ settings }) => {
   return (
@@ -36,31 +34,3 @@ const Footer = ({ settings }) => {
 };
 
 export default Footer;
-
-export async function getStaticProps() {
-  await db.connectDb();
-
-  // Fetch all required data
-  const settings = await Settings.findOne({}).lean();
-  await db.disConnectDb();
-
-  return {
-    props: {
-      settings: JSON.parse(
-        JSON.stringify(
-          settings || {
-            heroImages: [],
-            contacts: {
-              phone: '',
-              address: '',
-              telegram: '',
-              instagram: '',
-              location: '',
-            },
-          }
-        )
-      ),
-    },
-    revalidate: 60,
-  };
-}

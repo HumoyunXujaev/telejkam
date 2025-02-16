@@ -16,6 +16,8 @@ import { persistStore } from 'redux-persist';
 import 'swiper/swiper-bundle.css';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import db from '@/utils/db';
+import { Settings } from '@/models/Settings';
 
 NProgress.configure({
   minimum: 0.1,
@@ -26,7 +28,7 @@ NProgress.configure({
 
 let persistor = persistStore(store);
 
-function App({ Component, pageProps: { session, ...pageProps } }) {
+function App({ Component, pageProps: { session, settings, ...pageProps } }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -144,9 +146,11 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
                 pauseOnHover
                 theme='colored'
               />
-              {showHeaderFooter && <Header searchHandler={searchHandler} />}
+              {showHeaderFooter && (
+                <Header searchHandler={searchHandler} settings={settings} />
+              )}
               <Component {...pageProps} />
-              {showHeaderFooter && <Footer />}
+              {showHeaderFooter && <Footer settings={settings} />}
               <Analytics />
             </PersistGate>
           </Provider>
@@ -157,3 +161,31 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
 }
 
 export default appWithTranslation(App);
+
+// Add this at the bottom of your _app.js file or in a separate page file
+export async function getStaticProps() {
+  await db.connectDb();
+
+  const settings = await Settings.findOne({}).lean();
+  await db.disConnectDb();
+
+  return {
+    props: {
+      settings: JSON.parse(
+        JSON.stringify(
+          settings || {
+            heroImages: [],
+            contacts: {
+              phone: '',
+              address: '',
+              telegram: '',
+              instagram: '',
+              location: '',
+            },
+          }
+        )
+      ),
+    },
+    revalidate: 60,
+  };
+}
