@@ -16,8 +16,6 @@ import { persistStore } from 'redux-persist';
 import 'swiper/swiper-bundle.css';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import { Settings } from '@/models/Settings';
-import db from '@/utils/db';
 
 NProgress.configure({
   minimum: 0.1,
@@ -28,14 +26,13 @@ NProgress.configure({
 
 let persistor = persistStore(store);
 
-function App({ Component, pageProps: { session, ...pageProps }, settings }) {
+function App({ Component, pageProps: { session, ...pageProps } }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     import('sweetalert2').then((Swal) => {
       window.Swal = Swal.default;
     });
-    console.log(settings, 'settings');
   }, []);
 
   useEffect(() => {
@@ -147,11 +144,9 @@ function App({ Component, pageProps: { session, ...pageProps }, settings }) {
                 pauseOnHover
                 theme='colored'
               />
-              {showHeaderFooter && (
-                <Header searchHandler={searchHandler} settings={settings} />
-              )}
-              <Component {...pageProps} settings={settings} />
-              {showHeaderFooter && <Footer settings={settings} />}
+              {showHeaderFooter && <Header searchHandler={searchHandler} />}
+              <Component {...pageProps} />
+              {showHeaderFooter && <Footer />}
               <Analytics />
             </PersistGate>
           </Provider>
@@ -160,36 +155,5 @@ function App({ Component, pageProps: { session, ...pageProps }, settings }) {
     </>
   );
 }
-
-App.getInitialProps = async (ctx) => {
-  await db.connectDb();
-
-  // Fetch settings
-  db.connectDb;
-  const settings = await Settings.findOne({}).lean();
-  await db.disConnectDb();
-
-  const defaultSettings = {
-    heroImages: [],
-    contacts: {
-      phone: '',
-      address: '',
-      telegram: '',
-      instagram: '',
-      location: '',
-    },
-  };
-
-  // Get the existing pageProps from any page's getInitialProps/getStaticProps/getServerSideProps
-  let pageProps = {};
-  if (ctx.Component.getInitialProps) {
-    pageProps = await ctx.Component.getInitialProps(ctx);
-  }
-
-  return {
-    pageProps,
-    settings: JSON.parse(JSON.stringify(settings || defaultSettings)),
-  };
-};
 
 export default appWithTranslation(App);

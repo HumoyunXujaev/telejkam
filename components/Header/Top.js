@@ -11,7 +11,7 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import * as Icon from 'react-feather';
 
-const Top = ({ country, settings }) => {
+const Top = ({ settings }) => {
   const { t } = useTranslation();
 
   const { data: session } = useSession();
