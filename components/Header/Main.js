@@ -516,11 +516,11 @@ const Main = ({ searchHandler2, settings }) => {
                     height='85'
                   />
                   <br />
-                  <Link href={router.pathname} locale='ru'>
+                  <Link href={router?.pathname} locale='ru'>
                     <span>Рус</span>
                   </Link>
                   <Icon.Globe />
-                  <Link href={router.pathname} locale='uz'>
+                  <Link href={router?.pathname} locale='uz'>
                     <span>O`zb</span>
                   </Link>
                   <IconButton onClick={() => setDrawerOpen(false)}>
@@ -710,6 +710,7 @@ const Main = ({ searchHandler2, settings }) => {
         <BottomNavigation
           value={value}
           onChange={handleChange}
+          key={'somthing'}
           showLabels
           className={styled.navigation}
           style={{

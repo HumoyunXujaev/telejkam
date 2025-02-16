@@ -9,7 +9,7 @@ export default function NextImage({ src, alt, ...rest }) {
       fill={true}
       style={{ objectFit: 'cover' }}
       src={src}
-      alt={alt}
+      alt={alt | 'no alt'}
       placeholder='blur'
       loading='lazy'
       blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}

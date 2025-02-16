@@ -78,10 +78,7 @@ function App({ Component, pageProps }) {
   const router = useRouter();
   const isAdminpath = router.pathname.startsWith('/admin');
 
-  const showHeaderFooter =
-    router.pathname !== '/signin' &&
-    !isAdminpath &&
-    router.pathname !== '/browse';
+  const showHeaderFooter = router.pathname !== '/signin' && !isAdminpath;
 
   const filter = useCallback(
     ({

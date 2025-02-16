@@ -23,7 +23,7 @@ const Menu = ({ categories, settings }) => {
             {categories?.map((item, index) => (
               <li className={styled.menu__item} key={index}>
                 <Link
-                  href={`/browse?category=${item._id}`}
+                  href={`/browse?category=${item?._id}`}
                   onClick={() => dispatch(toggleMobileCate())}
                   key={index}
                 >
@@ -52,7 +52,7 @@ const Menu = ({ categories, settings }) => {
           </a>
           <div className={styled.menu__list}>
             <li className={styled.menu__item}>
-              <Link
+              <a
                 href={`${'tel:' + settings?.contacts?.phone}`}
                 onClick={() => dispatch(toggleMobileCate())}
               >
@@ -70,11 +70,11 @@ const Menu = ({ categories, settings }) => {
                     {t('phone')}
                   </a>
                 </span>
-              </Link>
+              </a>
             </li>
 
             <li className={styled.menu__item}>
-              <Link
+              <a
                 href={settings?.contacts?.location}
                 onClick={() => dispatch(toggleMobileCate())}
               >
@@ -88,11 +88,11 @@ const Menu = ({ categories, settings }) => {
                 </div>
 
                 <span>{t('address')}</span>
-              </Link>
+              </a>
             </li>
 
             <li className={styled.menu__item}>
-              <Link
+              <a
                 href={settings?.contacts?.telegram}
                 onClick={() => dispatch(toggleMobileCate())}
               >
@@ -106,11 +106,11 @@ const Menu = ({ categories, settings }) => {
                 </div>
 
                 <span>TELEGRAM</span>
-              </Link>
+              </a>
             </li>
 
             <li className={styled.menu__item}>
-              <Link
+              <a
                 href={settings?.contacts?.instagram}
                 onClick={() => dispatch(toggleMobileCate())}
               >
@@ -124,7 +124,7 @@ const Menu = ({ categories, settings }) => {
                 </div>
 
                 <span>INSTAGRAM</span>
-              </Link>
+              </a>
             </li>
           </div>
         </ul>
