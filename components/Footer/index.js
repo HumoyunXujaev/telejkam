@@ -20,10 +20,10 @@ const Footer = ({ settings }) => {
           <div className={styled.footer__right}>
             <Socials
               contacts={settings?.contacts}
-              image1={'icons/insta.png'}
-              image2={'icons/tg.png'}
-              image3={'icons/telephone.png'}
-              image4={'icons/address.png'}
+              image1={'/icons/insta.png'}
+              image2={'/icons/tg.png'}
+              image3={'/icons/telephone.png'}
+              image4={'/icons/address.png'}
             />
           </div>
         </div>
