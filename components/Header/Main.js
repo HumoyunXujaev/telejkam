@@ -552,18 +552,21 @@ const Main = ({ searchHandler2, settings }) => {
                 </div>
                 <div className={styled.drawer__body}>
                   <h1>{t('header.contacts')}</h1>
-                  <Link href={`${'tel:' + settings?.contacts?.phone}`}>
-                    <div className={styled.drawer__item}>
-                      <Image
-                        src={`icons/phone.png`}
-                        alt='phone'
-                        width='85'
-                        height='85'
-                      />
-                      <span>{t('header.phone')}</span>
-                    </div>
-                  </Link>
-                  <Link href={settings?.contacts?.location}>
+                  <a href={`${'tel:' + settings?.contacts?.phone}`}>
+                    <span>{settings?.contacts?.phone}</span>
+                  </a>
+                  {/* <Link href={`${'tel:' + settings?.contacts?.phone}`}> */}
+                  <div className={styled.drawer__item}>
+                    <Image
+                      src={`icons/phone.png`}
+                      alt='phone'
+                      width='85'
+                      height='85'
+                    />
+                    <span>{t('header.phone')}</span>
+                  </div>
+                  {/* </Link> */}
+                  <a href={settings?.contacts?.location}>
                     <div className={styled.drawer__item}>
                       <Image
                         src={`icons/address.png`}
@@ -573,8 +576,8 @@ const Main = ({ searchHandler2, settings }) => {
                       />
                       <span>{t('header.address')}</span>
                     </div>
-                  </Link>
-                  <Link href={settings?.contacts?.telegram}>
+                  </a>
+                  <a href={settings?.contacts?.telegram}>
                     <div className={styled.drawer__item}>
                       <Image
                         src={`icons/tg.png`}
@@ -584,8 +587,8 @@ const Main = ({ searchHandler2, settings }) => {
                       />
                       <span>Telegram</span>
                     </div>
-                  </Link>
-                  <Link href={settings?.contacts?.instagram}>
+                  </a>
+                  <a href={settings?.contacts?.instagram}>
                     <div className={styled.drawer__item}>
                       <Image
                         src={`icons/insta.png`}
@@ -595,7 +598,7 @@ const Main = ({ searchHandler2, settings }) => {
                       />
                       <span>Instagram</span>
                     </div>
-                  </Link>
+                  </a>
                 </div>
               </div>
             </Drawer>
