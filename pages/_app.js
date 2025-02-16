@@ -16,9 +16,9 @@ import { persistStore } from 'redux-persist';
 import 'swiper/swiper-bundle.css';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import db from '@/utils/db';
 import { Settings } from '@/models/Settings';
 
+import db from '@/utils/db';
 NProgress.configure({
   minimum: 0.1,
   easing: 'ease',
@@ -28,8 +28,24 @@ NProgress.configure({
 
 let persistor = persistStore(store);
 
-function App({ Component, pageProps: { session, settings, ...pageProps } }) {
+function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
+
+  // Safely destructure pageProps with default values
+  const {
+    session,
+    settings = {
+      heroImages: [],
+      contacts: {
+        phone: '',
+        address: '',
+        telegram: '',
+        instagram: '',
+        location: '',
+      },
+    },
+    ...restPageProps
+  } = pageProps || {};
 
   useEffect(() => {
     import('sweetalert2').then((Swal) => {
@@ -58,6 +74,7 @@ function App({ Component, pageProps: { session, settings, ...pageProps } }) {
       Router.events.off('routeChangeError', handleRouteComplete);
     };
   }, []);
+
   const router = useRouter();
   const isAdminpath = router.pathname.startsWith('/admin');
 
@@ -75,7 +92,6 @@ function App({ Component, pageProps: { session, settings, ...pageProps } }) {
       pattern,
       material,
       size,
-      // color,
       gender,
       price,
       shipping,
@@ -91,7 +107,6 @@ function App({ Component, pageProps: { session, settings, ...pageProps } }) {
       if (pattern) router.query.pattern = pattern;
       if (material) router.query.material = material;
       if (size) router.query.size = size;
-      // if (color) router.query.color = color;
       if (gender) router.query.gender = gender;
       if (price) router.query.price = price;
       if (shipping) router.query.shipping = shipping;
@@ -149,7 +164,7 @@ function App({ Component, pageProps: { session, settings, ...pageProps } }) {
               {showHeaderFooter && (
                 <Header searchHandler={searchHandler} settings={settings} />
               )}
-              <Component {...pageProps} />
+              <Component {...restPageProps} settings={settings} />
               {showHeaderFooter && <Footer settings={settings} />}
               <Analytics />
             </PersistGate>
@@ -162,30 +177,47 @@ function App({ Component, pageProps: { session, settings, ...pageProps } }) {
 
 export default appWithTranslation(App);
 
-// Add this at the bottom of your _app.js file or in a separate page file
 export async function getStaticProps() {
   await db.connectDb();
-
-  const settings = await Settings.findOne({}).lean();
-  await db.disConnectDb();
-
-  return {
-    props: {
-      settings: JSON.parse(
-        JSON.stringify(
-          settings || {
-            heroImages: [],
-            contacts: {
-              phone: '',
-              address: '',
-              telegram: '',
-              instagram: '',
-              location: '',
-            },
-          }
-        )
-      ),
-    },
-    revalidate: 60,
-  };
+  try {
+    const settings = await Settings.findOne({}).lean();
+    return {
+      props: {
+        settings: JSON.parse(
+          JSON.stringify(
+            settings || {
+              heroImages: [],
+              contacts: {
+                phone: '',
+                address: '',
+                telegram: '',
+                instagram: '',
+                location: '',
+              },
+            }
+          )
+        ),
+      },
+      revalidate: 60,
+    };
+  } catch (error) {
+    console.error('Error fetching settings:', error);
+    return {
+      props: {
+        settings: {
+          heroImages: [],
+          contacts: {
+            phone: '',
+            address: '',
+            telegram: '',
+            instagram: '',
+            location: '',
+          },
+        },
+      },
+      revalidate: 60,
+    };
+  } finally {
+    await db.disConnectDb();
+  }
 }
