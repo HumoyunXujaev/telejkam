@@ -8,6 +8,7 @@ import AllProducts from '@/components/Home/AllProducts';
 import AnimateWrapper from '@/components/AnimateWrapper';
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export default function Home({
   products,
