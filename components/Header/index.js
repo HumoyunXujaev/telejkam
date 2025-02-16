@@ -4,6 +4,7 @@ import styled from './styles.module.scss';
 import Top from './Top';
 
 const Header = ({ country, searchHandler, settings }) => {
+  console.log(settings, 'header settings');
   return (
     <>
       <header className={styled.header}>

@@ -203,7 +203,7 @@ export default function BrowsePage({
 
   return (
     <div className={styled.browse}>
-      <Header searchHandler={searchHandler} />
+      {/* <Header searchHandler={searchHandler} /> */}
       <div className={styled.browse__container}>
         <AnimateWrapper>
           <div className={styled.browse__path}>

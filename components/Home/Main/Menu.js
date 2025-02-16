@@ -53,7 +53,7 @@ const Menu = ({ categories, settings }) => {
           <div className={styled.menu__list}>
             <li className={styled.menu__item}>
               <Link
-                href={settings?.contacts?.phone}
+                href={`${'tel:' + settings?.contacts?.phone}`}
                 onClick={() => dispatch(toggleMobileCate())}
               >
                 <div className={styled.menu__item_img}>
@@ -66,7 +66,9 @@ const Menu = ({ categories, settings }) => {
                 </div>
 
                 <span>
-                  <a href={settings?.contacts?.phone}>{t('phone')}</a>
+                  <a href={`${'tel:' + settings?.contacts?.phone}`}>
+                    {t('phone')}
+                  </a>
                 </span>
               </Link>
             </li>
