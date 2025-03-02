@@ -23,8 +23,12 @@ router.use(fileUpload({ useTempFiles: true, tempFileDir: tempDir }));
 router.use(imgMiddleware);
 
 export const config = {
-  //Tắt bodyParser tự động của NextJS
-  api: { bodyParser: false },
+  api: {
+    bodyParser: {
+        sizeLimit: '100mb' // Set desired value here
+    }
+}
+  // api: { bodyParser: false },
 };
 
 //Handle request upload ảnh
