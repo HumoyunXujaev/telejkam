@@ -2,7 +2,9 @@
 
 /* eslint-disable @next/next/no-img-element */
 import styles from './styles.module.scss';
-import { Swiper, SwiperSlide } from 'swiper/react';
+// import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper } from 'swiper/react';
+import { SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import Link from 'next/link';

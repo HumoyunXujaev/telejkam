@@ -20,11 +20,11 @@ import {
   FaEdit,
 } from 'react-icons/fa';
 import styled from './styles.module.scss';
-import { Button, MenuItem, Select, TextField } from '@mui/material';
+import Button from '@mui/material';
+import MenuItem from '@mui/material';
+import Select from '@mui/material';
 import { useState } from 'react';
 import axios from 'axios';
-import { ca } from 'date-fns/locale';
-import { toast } from 'react-toastify';
 import Router from 'next/router';
 
 function Row(props) {

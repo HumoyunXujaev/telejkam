@@ -1,9 +1,8 @@
 import React from 'react';
 import { toast } from 'react-toastify';
-import { Tooltip, createSvgIcon } from '@mui/material';
+import Tooltip from '@mui/material';
 import { useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import * as Icon from 'react-feather';
 import styled from './styles.module.scss';
 import 'react-toastify/dist/ReactToastify.css';

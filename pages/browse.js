@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Drawer, IconButton, Pagination } from '@mui/material';
-
+import Button from '@mui/material';
+import Drawer from '@mui/material';
+import Pagination from '@mui/material';
+import IconButton from '@mui/material';
 import styled from '@/styles/Browse.module.scss';
 import db from '@/utils/db';
 import { Product } from '@/models/Product';
@@ -18,38 +20,29 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import dynamic from 'next/dynamic';
 import * as Icon from 'react-feather';
-
-// Lazy load components
-const ProductCard = dynamic(() => import('@/components/ProductCard'), {
-  suspense: true,
-});
-const CategoryFilter = dynamic(
-  () => import('@/components/Browse/CategoryFilter'),
-  {
-    suspense: true,
-  }
-);
-// const ColorsFilter = dynamic(() => import('@/components/Browse/ColorsFilter'), {
-//   suspense: true,
-// });
-const BrandsFilter = dynamic(() => import('@/components/Browse/BrandsFilter'), {
-  suspense: true,
-});
-const SortFilter = dynamic(() => import('@/components/Browse/PriceFilter'), {
-  suspense: true,
-});
 const AnimateWrapper = dynamic(() => import('@/components/AnimateWrapper'), {
   suspense: true,
 });
-const HeadingFilters = dynamic(
-  () => import('@/components/Browse/HeadingFilters'),
-  {
-    suspense: true,
-  }
-);
-const NextImage = dynamic(() => import('@/components/NextImage'), {
-  suspense: true,
-});
+import NextImage from '@/components/NextImage';
+import HeadingFilters from '@/components/Browse/HeadingFilters';
+import SortFilter from '@/components/Browse/PriceFilter';
+import BrandsFilter from '@/components/Browse/BrandsFilter';
+import CategoryFilter from '@/components/Browse/CategoryFilter';
+import ProductCard from '@/components/ProductCard';
+
+/* 
+  The long cold start issue fix
+  Relative issues: 
+  #1 https://github.com/denvudd/react-dbmovies.github.io/issues/2
+  #2 https://github.com/vercel/next.js/discussions/50783#discussioncomment-6139352
+  #3 https://github.com/vercel/vercel/discussions/7961
+  Documentation links:
+  #1 https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props#getserversideprops-with-edge-api-routes
+  !! Doesn't work in dev mode !!
+*/
+export const config = {
+  runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
+};
 
 export default function BrowsePage({
   categories,

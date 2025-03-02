@@ -1,29 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
-import { Button } from "@mui/material";
-import Link from "next/link";
+import React, { useState } from 'react';
+import { Button } from '@mui/material';
+import Link from 'next/link';
 import {
   AiOutlineHome,
   AiOutlineUser,
   AiOutlineBell,
   AiOutlineSetting,
-} from "react-icons/ai";
-import { signOut } from "next-auth/react";
-import {
-  FcCurrencyExchange,
-  FcList,
-  FcParallelTasks,
-  FcPlus,
-  FcPortraitMode,
-  FcPuzzle,
-  FcSalesPerformance,
-  FcShop,
-  FcSms,
-  FcTimeline,
-} from "react-icons/fc";
-import { FaSignOutAlt } from "react-icons/fa";
+} from 'react-icons/ai';
+import { signOut } from 'next-auth/react';
+import { FcCurrencyExchange } from 'react-icons/fc';
+import { FcList } from 'react-icons/fc';
+import { FcParallelTasks } from 'react-icons/fc';
+import { FcPlus } from 'react-icons/fc';
+import { FcPortraitMode } from 'react-icons/fc';
+import { FcSalesPerformance } from 'react-icons/fc';
+import { FcShop } from 'react-icons/fc';
+import { FcSms } from 'react-icons/fc';
+import { FcTimeline } from 'react-icons/fc';
+import { FaSignOutAlt } from 'react-icons/fa';
 
-import styled from "./styles.module.scss";
+import styled from './styles.module.scss';
 
 export default function Dropdown({ userImage }) {
   const [show, setShow] = useState(false);
@@ -35,55 +32,55 @@ export default function Dropdown({ userImage }) {
       onMouseLeave={() => setShow(false)}
     >
       <div className={styled.dropdown__toggle}>
-        <img src={userImage} alt="" />
+        <img src={userImage} alt='' />
       </div>
 
       <div
-        className={`${styled.dropdown__content} ${show ? styled.active : ""}`}
+        className={`${styled.dropdown__content} ${show ? styled.active : ''}`}
       >
         <div className={styled.dropdown__content_icons}>
           <div className={styled.dropdown__content_icons_icon}>
-            <Link href="/admin/dashboard">
+            <Link href='/admin/dashboard'>
               <FcList />
             </Link>
           </div>
           <div className={styled.dropdown__content_icons_icon}>
-            <Link href="/admin/dashboard/sales">
+            <Link href='/admin/dashboard/sales'>
               <FcSalesPerformance />
             </Link>
           </div>
           <div className={styled.dropdown__content_icons_icon}>
-            <Link href="/admin/dashboard/orders">
+            <Link href='/admin/dashboard/orders'>
               <FcCurrencyExchange />
             </Link>
           </div>
           <div className={styled.dropdown__content_icons_icon}>
-            <Link href="/admin/dashboard/users">
+            <Link href='/admin/dashboard/users'>
               <FcPortraitMode />
             </Link>
           </div>
           <div className={styled.dropdown__content_icons_icon}>
-            <Link href="/admin/dashboard/messages">
+            <Link href='/admin/dashboard/messages'>
               <FcSms />
             </Link>
           </div>
           <div className={styled.dropdown__content_icons_icon}>
-            <Link href="/admin/dashboard/product/all">
+            <Link href='/admin/dashboard/product/all'>
               <FcShop />
             </Link>
           </div>
           <div className={styled.dropdown__content_icons_icon}>
-            <Link href="/admin/dashboard/product/create">
+            <Link href='/admin/dashboard/product/create'>
               <FcPlus />
             </Link>
           </div>
           <div className={styled.dropdown__content_icons_icon}>
-            <Link href="/admin/dashboard/categories">
+            <Link href='/admin/dashboard/categories'>
               <FcParallelTasks />
             </Link>
           </div>
           <div className={styled.dropdown__content_icons_icon}>
-            <Link href="/admin/dashboard/subcategories">
+            <Link href='/admin/dashboard/subcategories'>
               <FcTimeline />
             </Link>
           </div>
@@ -91,23 +88,23 @@ export default function Dropdown({ userImage }) {
 
         <div className={styled.dropdown__content_items}>
           <div className={styled.dropdown__content_items_item}>
-            <Link href="/">
+            <Link href='/'>
               <AiOutlineHome />
             </Link>
           </div>
           <div className={styled.dropdown__content_items_item}>
-            <Link href="/">
+            <Link href='/'>
               <AiOutlineUser />
             </Link>
           </div>
           <div className={styled.dropdown__content_items_item}>
-            <Link href="/">
+            <Link href='/'>
               <AiOutlineBell />
             </Link>
           </div>
 
           <div className={styled.dropdown__content_items_item}>
-            <Link href="/">
+            <Link href='/'>
               <AiOutlineSetting />
             </Link>
           </div>
@@ -116,7 +113,7 @@ export default function Dropdown({ userImage }) {
         <div className={`${styled.btn} ${styled.dropdown__logout}`}>
           <Button
             endIcon={<FaSignOutAlt />}
-            variant="contained"
+            variant='contained'
             onClick={() => signOut()}
           >
             Log out
