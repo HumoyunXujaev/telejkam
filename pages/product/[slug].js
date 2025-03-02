@@ -31,24 +31,12 @@ import { SubCategory } from '@/models/SubCategory';
 import Header from '@/components/Header';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import ProductCard from '@/components/ProductCard';
+import { useRouter } from 'next/navigation';
 
-/* 
-  The long cold start issue fix
-  Relative issues: 
-  #1 https://github.com/denvudd/react-dbmovies.github.io/issues/2
-  #2 https://github.com/vercel/next.js/discussions/50783#discussioncomment-6139352
-  #3 https://github.com/vercel/vercel/discussions/7961
-  Documentation links:
-  #1 https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props#getserversideprops-with-edge-api-routes
-  !! Doesn't work in dev mode !!
-*/
-export const config = {
-  runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
-};
-
-const ProductPage = ({ product }) => {
+const ProductPage = ({ product: initialProduct }) => {
   const { t } = useTranslation();
-
+  const router = useRouter();
+  const [product, setProduct] = useState(initialProduct);
   const [activeImg, setActiveImg] = useState('');
   const [images, setImages] = useState(product?.images);
 
@@ -58,6 +46,39 @@ const ProductPage = ({ product }) => {
     const uniqueRecentIds = [...new Set(recentIds)];
     localStorage.setItem('recent-ids', JSON.stringify(uniqueRecentIds));
   }, [product?._id]);
+
+  useEffect(() => {
+    if (router.isReady) {
+      const { style, size } = router.query;
+
+      if (style !== undefined || size !== undefined) {
+        // Create updated product with selected style/size
+        const selectedStyle = style || 0;
+        const selectedSize = size || 0;
+        const subProduct = initialProduct.subProducts[selectedStyle];
+        const prices = sortPricesArr(subProduct?.sizes);
+
+        setProduct({
+          ...initialProduct,
+          style: selectedStyle,
+          images: subProduct?.images,
+          sizes: subProduct?.sizes,
+          discount: subProduct?.discount,
+          sku: subProduct?.sku,
+          // ... other calculations
+          price:
+            subProduct?.discount > 0
+              ? priceAfterDiscount(
+                  subProduct?.sizes[selectedSize]?.price_description,
+                  subProduct?.discount
+                )
+              : subProduct?.sizes[selectedSize]?.price_description,
+          priceBefore: subProduct?.sizes[selectedSize]?.price_description,
+          quantity: subProduct?.sizes[selectedSize]?.qty,
+        });
+      }
+    }
+  }, [router.isReady, router.query]);
 
   return (
     <div>
@@ -108,25 +129,114 @@ const ProductPage = ({ product }) => {
 
 export default ProductPage;
 
-export async function getServerSideProps(context) {
-  const { query } = context;
-  const { locale } = context;
+// export async function getServerSideProps(context) {
+//   const { query } = context;
+//   const { locale } = context;
 
-  const slug = query.slug;
-  const style = query.style;
-  const size = query.size || 0;
+//   const slug = query.slug;
+//   const style = query.style;
+//   const size = query.size || 0;
+
+//   await db.connectDb();
+//   let product = await Product.findOne({ slug })
+//     //path là property category cần điền thông tin
+//     .populate({ path: 'category', model: Category })
+//     .populate({ path: 'subCategories', model: SubCategory })
+//     .lean();
+
+//   let subProduct = product?.subProducts[style];
+
+//   let prices = sortPricesArr(subProduct?.sizes);
+
+//   let newProduct = {
+//     ...product,
+//     style,
+//     images: subProduct?.images,
+//     sizes: subProduct?.sizes,
+//     discount: subProduct?.discount,
+//     sku: subProduct?.sku,
+//     // colors: product?.subProducts?.map((p) => {
+//     //   if (p?.color?.image && p?.color?.color) {
+//     //     return { colorImg: p?.color?.image, color: p?.color?.color };
+//     //   } else {
+//     //     return { color: p?.color?.color };
+//     //   }
+//     // }),
+
+//     priceRange: subProduct?.discount
+//       ? `$${priceAfterDiscount(
+//           prices[0],
+//           subProduct?.discount
+//         )} ~ $${priceAfterDiscount(
+//           prices?.[prices?.length - 1],
+//           subProduct?.discount
+//         )}`
+//       : `$${prices?.[0]} ~ $${prices?.[prices?.length - 1]}`,
+
+//     price:
+//       subProduct?.discount > 0
+//         ? priceAfterDiscount(
+//             subProduct?.sizes[size]?.price_description,
+//             subProduct?.discount
+//           )
+//         : subProduct?.sizes[size]?.price_description,
+//     priceBefore: subProduct?.sizes[size]?.price_description,
+//     quantity: subProduct?.sizes[size]?.qty,
+//     allSizes: findAllSizes(product?.subProducts),
+//   };
+
+//   console.log(subProduct?.sizes[size]?.price_description);
+//   await db.disConnectDb();
+
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, ['common'])),
+//       product: JSON.parse(JSON.stringify(newProduct)),
+//     },
+//   };
+// }
+
+export async function getStaticPaths() {
+  await db.connectDb();
+
+  // Get all product slugs for pre-rendering
+  const products = await Product.find({}).select('slug').lean();
+  const paths = products.map((product) => ({
+    params: { slug: product.slug },
+  }));
+
+  await db.disConnectDb();
+
+  return {
+    paths,
+    // "blocking" means pages not generated at build time will be generated on first request
+    fallback: 'blocking',
+  };
+}
+
+export async function getStaticProps({ params, locale }) {
+  const slug = params.slug;
+
+  // Default values for style and size (will be overridden client-side based on query params)
+  const style = 0;
+  const size = 0;
 
   await db.connectDb();
   let product = await Product.findOne({ slug })
-    //path là property category cần điền thông tin
     .populate({ path: 'category', model: Category })
     .populate({ path: 'subCategories', model: SubCategory })
     .lean();
 
+  // Handle case where product doesn't exist
+  if (!product) {
+    return {
+      notFound: true,
+    };
+  }
+
+  // Process product data with default style and size
   let subProduct = product?.subProducts[style];
-
   let prices = sortPricesArr(subProduct?.sizes);
-
   let newProduct = {
     ...product,
     style,
@@ -134,14 +244,6 @@ export async function getServerSideProps(context) {
     sizes: subProduct?.sizes,
     discount: subProduct?.discount,
     sku: subProduct?.sku,
-    // colors: product?.subProducts?.map((p) => {
-    //   if (p?.color?.image && p?.color?.color) {
-    //     return { colorImg: p?.color?.image, color: p?.color?.color };
-    //   } else {
-    //     return { color: p?.color?.color };
-    //   }
-    // }),
-
     priceRange: subProduct?.discount
       ? `$${priceAfterDiscount(
           prices[0],
@@ -151,7 +253,6 @@ export async function getServerSideProps(context) {
           subProduct?.discount
         )}`
       : `$${prices?.[0]} ~ $${prices?.[prices?.length - 1]}`,
-
     price:
       subProduct?.discount > 0
         ? priceAfterDiscount(
@@ -164,7 +265,6 @@ export async function getServerSideProps(context) {
     allSizes: findAllSizes(product?.subProducts),
   };
 
-  console.log(subProduct?.sizes[size]?.price_description);
   await db.disConnectDb();
 
   return {
@@ -172,5 +272,7 @@ export async function getServerSideProps(context) {
       ...(await serverSideTranslations(locale, ['common'])),
       product: JSON.parse(JSON.stringify(newProduct)),
     },
+    // Revalidate every hour
+    revalidate: 1200,
   };
 }

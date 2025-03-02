@@ -3,7 +3,6 @@ const path = require('node:path');
 
 const nextConfig = {
   experimental: {
-    runtime: 'experimental-edge',
     esmExternals: true,
   },
   reactStrictMode: true,
