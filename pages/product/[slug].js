@@ -129,114 +129,25 @@ const ProductPage = ({ product: initialProduct }) => {
 
 export default ProductPage;
 
-// export async function getServerSideProps(context) {
-//   const { query } = context;
-//   const { locale } = context;
+export async function getServerSideProps(context) {
+  const { query } = context;
+  const { locale } = context;
 
-//   const slug = query.slug;
-//   const style = query.style;
-//   const size = query.size || 0;
-
-//   await db.connectDb();
-//   let product = await Product.findOne({ slug })
-//     //path là property category cần điền thông tin
-//     .populate({ path: 'category', model: Category })
-//     .populate({ path: 'subCategories', model: SubCategory })
-//     .lean();
-
-//   let subProduct = product?.subProducts[style];
-
-//   let prices = sortPricesArr(subProduct?.sizes);
-
-//   let newProduct = {
-//     ...product,
-//     style,
-//     images: subProduct?.images,
-//     sizes: subProduct?.sizes,
-//     discount: subProduct?.discount,
-//     sku: subProduct?.sku,
-//     // colors: product?.subProducts?.map((p) => {
-//     //   if (p?.color?.image && p?.color?.color) {
-//     //     return { colorImg: p?.color?.image, color: p?.color?.color };
-//     //   } else {
-//     //     return { color: p?.color?.color };
-//     //   }
-//     // }),
-
-//     priceRange: subProduct?.discount
-//       ? `$${priceAfterDiscount(
-//           prices[0],
-//           subProduct?.discount
-//         )} ~ $${priceAfterDiscount(
-//           prices?.[prices?.length - 1],
-//           subProduct?.discount
-//         )}`
-//       : `$${prices?.[0]} ~ $${prices?.[prices?.length - 1]}`,
-
-//     price:
-//       subProduct?.discount > 0
-//         ? priceAfterDiscount(
-//             subProduct?.sizes[size]?.price_description,
-//             subProduct?.discount
-//           )
-//         : subProduct?.sizes[size]?.price_description,
-//     priceBefore: subProduct?.sizes[size]?.price_description,
-//     quantity: subProduct?.sizes[size]?.qty,
-//     allSizes: findAllSizes(product?.subProducts),
-//   };
-
-//   console.log(subProduct?.sizes[size]?.price_description);
-//   await db.disConnectDb();
-
-//   return {
-//     props: {
-//       ...(await serverSideTranslations(locale, ['common'])),
-//       product: JSON.parse(JSON.stringify(newProduct)),
-//     },
-//   };
-// }
-
-export async function getStaticPaths() {
-  await db.connectDb();
-
-  // Get all product slugs for pre-rendering
-  const products = await Product.find({}).select('slug').lean();
-  const paths = products.map((product) => ({
-    params: { slug: product.slug },
-  }));
-
-  await db.disConnectDb();
-
-  return {
-    paths,
-    // "blocking" means pages not generated at build time will be generated on first request
-    fallback: 'blocking',
-  };
-}
-
-export async function getStaticProps({ params, locale }) {
-  const slug = params.slug;
-
-  // Default values for style and size (will be overridden client-side based on query params)
-  const style = 0;
-  const size = 0;
+  const slug = query.slug;
+  const style = query.style;
+  const size = query.size || 0;
 
   await db.connectDb();
   let product = await Product.findOne({ slug })
+    //path là property category cần điền thông tin
     .populate({ path: 'category', model: Category })
     .populate({ path: 'subCategories', model: SubCategory })
     .lean();
 
-  // Handle case where product doesn't exist
-  if (!product) {
-    return {
-      notFound: true,
-    };
-  }
-
-  // Process product data with default style and size
   let subProduct = product?.subProducts[style];
+
   let prices = sortPricesArr(subProduct?.sizes);
+
   let newProduct = {
     ...product,
     style,
@@ -244,6 +155,14 @@ export async function getStaticProps({ params, locale }) {
     sizes: subProduct?.sizes,
     discount: subProduct?.discount,
     sku: subProduct?.sku,
+    // colors: product?.subProducts?.map((p) => {
+    //   if (p?.color?.image && p?.color?.color) {
+    //     return { colorImg: p?.color?.image, color: p?.color?.color };
+    //   } else {
+    //     return { color: p?.color?.color };
+    //   }
+    // }),
+
     priceRange: subProduct?.discount
       ? `$${priceAfterDiscount(
           prices[0],
@@ -253,6 +172,7 @@ export async function getStaticProps({ params, locale }) {
           subProduct?.discount
         )}`
       : `$${prices?.[0]} ~ $${prices?.[prices?.length - 1]}`,
+
     price:
       subProduct?.discount > 0
         ? priceAfterDiscount(
@@ -265,6 +185,7 @@ export async function getStaticProps({ params, locale }) {
     allSizes: findAllSizes(product?.subProducts),
   };
 
+  console.log(subProduct?.sizes[size]?.price_description);
   await db.disConnectDb();
 
   return {
@@ -272,7 +193,86 @@ export async function getStaticProps({ params, locale }) {
       ...(await serverSideTranslations(locale, ['common'])),
       product: JSON.parse(JSON.stringify(newProduct)),
     },
-    // Revalidate every hour
-    revalidate: 1200,
   };
 }
+
+// export async function getStaticPaths() {
+//   await db.connectDb();
+
+//   // Get all product slugs for pre-rendering
+//   const products = await Product.find({}).select('slug').lean();
+//   const paths = products.map((product) => ({
+//     params: { slug: product.slug },
+//   }));
+
+//   await db.disConnectDb();
+
+//   return {
+//     paths,
+//     // "blocking" means pages not generated at build time will be generated on first request
+//     fallback: 'blocking',
+//   };
+// }
+
+// export async function getStaticProps({ params, locale }) {
+//   const slug = params.slug;
+
+//   // Default values for style and size (will be overridden client-side based on query params)
+//   const style = 0;
+//   const size = 0;
+
+//   await db.connectDb();
+//   let product = await Product.findOne({ slug })
+//     .populate({ path: 'category', model: Category })
+//     .populate({ path: 'subCategories', model: SubCategory })
+//     .lean();
+
+//   // Handle case where product doesn't exist
+//   if (!product) {
+//     return {
+//       notFound: true,
+//     };
+//   }
+
+//   // Process product data with default style and size
+//   let subProduct = product?.subProducts[style];
+//   let prices = sortPricesArr(subProduct?.sizes);
+//   let newProduct = {
+//     ...product,
+//     style,
+//     images: subProduct?.images,
+//     sizes: subProduct?.sizes,
+//     discount: subProduct?.discount,
+//     sku: subProduct?.sku,
+//     priceRange: subProduct?.discount
+//       ? `$${priceAfterDiscount(
+//           prices[0],
+//           subProduct?.discount
+//         )} ~ $${priceAfterDiscount(
+//           prices?.[prices?.length - 1],
+//           subProduct?.discount
+//         )}`
+//       : `$${prices?.[0]} ~ $${prices?.[prices?.length - 1]}`,
+//     price:
+//       subProduct?.discount > 0
+//         ? priceAfterDiscount(
+//             subProduct?.sizes[size]?.price_description,
+//             subProduct?.discount
+//           )
+//         : subProduct?.sizes[size]?.price_description,
+//     priceBefore: subProduct?.sizes[size]?.price_description,
+//     quantity: subProduct?.sizes[size]?.qty,
+//     allSizes: findAllSizes(product?.subProducts),
+//   };
+
+//   await db.disConnectDb();
+
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, ['common'])),
+//       product: JSON.parse(JSON.stringify(newProduct)),
+//     },
+//     // Revalidate every hour
+//     revalidate: 1200,
+//   };
+// }
