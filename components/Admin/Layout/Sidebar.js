@@ -5,19 +5,25 @@ import { FaAngleDoubleRight } from 'react-icons/fa';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FcSynchronize } from 'react-icons/fc';
-import { FcCustomerSupport } from 'react-icons/fc';
-import { FcCurrencyExchange } from 'react-icons/fc';
-import { FcList } from 'react-icons/fc';
-import { FcParallelTasks } from 'react-icons/fc';
-import { FcPlus } from 'react-icons/fc';
-import { FcPortraitMode } from 'react-icons/fc';
-import { FcSalesPerformance } from 'react-icons/fc';
-import { FcShop } from 'react-icons/fc';
-import { FcTimeline } from 'react-icons/fc';
-import { FcSettings } from 'react-icons/fc';
 import styled from './styles.module.scss';
 import { toggleSidebar } from '@/store/expandSlice';
+
+import {
+  FcCurrencyExchange,
+  FcPortraitMode,
+  FcSms,
+  FcShop,
+  FcPlus,
+  FcList,
+  FcParallelTasks,
+  FcTimeline,
+  FcPuzzle,
+  FcSalesPerformance,
+  FcSettings,
+  FcCustomerSupport,
+  FcAdvertising,
+  FcSynchronize,
+} from 'react-icons/fc';
 
 const Sidebar = () => {
   const { expandSidebar } = useSelector((state) => ({ ...state }));

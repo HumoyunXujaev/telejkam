@@ -1,9 +1,7 @@
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
-import Button from '@mui/material';
-import Drawer from '@mui/material';
-import Pagination from '@mui/material';
-import IconButton from '@mui/material';
+import { Button, Drawer, IconButton, Pagination } from '@mui/material';
+
 import styled from '@/styles/Browse.module.scss';
 import db from '@/utils/db';
 import { Product } from '@/models/Product';

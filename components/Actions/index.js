@@ -1,6 +1,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
-import Tooltip from '@mui/material';
+import { Tooltip } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Icon from 'react-feather';

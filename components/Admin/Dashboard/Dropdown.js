@@ -9,17 +9,19 @@ import {
   AiOutlineSetting,
 } from 'react-icons/ai';
 import { signOut } from 'next-auth/react';
-import { FcCurrencyExchange } from 'react-icons/fc';
-import { FcList } from 'react-icons/fc';
-import { FcParallelTasks } from 'react-icons/fc';
-import { FcPlus } from 'react-icons/fc';
-import { FcPortraitMode } from 'react-icons/fc';
-import { FcSalesPerformance } from 'react-icons/fc';
-import { FcShop } from 'react-icons/fc';
-import { FcSms } from 'react-icons/fc';
-import { FcTimeline } from 'react-icons/fc';
+import {
+  FcCurrencyExchange,
+  FcList,
+  FcParallelTasks,
+  FcPlus,
+  FcPortraitMode,
+  FcPuzzle,
+  FcSalesPerformance,
+  FcShop,
+  FcSms,
+  FcTimeline,
+} from 'react-icons/fc';
 import { FaSignOutAlt } from 'react-icons/fa';
-
 import styled from './styles.module.scss';
 
 export default function Dropdown({ userImage }) {

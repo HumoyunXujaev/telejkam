@@ -12,6 +12,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
+
+import { Button, MenuItem, Select, TextField } from '@mui/material';
+
 import {
   FaCaretDown,
   FaCaretUp,
@@ -20,9 +23,6 @@ import {
   FaEdit,
 } from 'react-icons/fa';
 import styled from './styles.module.scss';
-import Button from '@mui/material';
-import MenuItem from '@mui/material';
-import Select from '@mui/material';
 import { useState } from 'react';
 import axios from 'axios';
 import Router from 'next/router';

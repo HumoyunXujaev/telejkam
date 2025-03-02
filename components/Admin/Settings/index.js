@@ -1,15 +1,12 @@
 import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { DragDropContext } from 'react-beautiful-dnd';
-import { Droppable } from 'react-beautiful-dnd';
-import { Draggable } from 'react-beautiful-dnd';
-import Button from '@mui/material';
-import TextField from '@mui/material';
-import IconButton from '@mui/material';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import * as Icon from 'react-feather';
 import styled from './styles.module.scss';
+
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { TextField, Button, IconButton } from '@mui/material';
 
 export default function Settings({ initialSettings }) {
   const [settings, setSettings] = useState(
