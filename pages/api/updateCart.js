@@ -1,11 +1,10 @@
-import { Product } from "@/models/Product";
-import db from "@/utils/db";
+import { Product } from '@/models/Product';
+import db from '@/utils/db';
 
 async function handler(req, res) {
-  if (req.method === "POST") {
+  if (req.method === 'POST') {
     try {
       await db.connectDb();
-      //Vòng lặp này sẽ về 1 mảng gồm các Promise
       const promises = req.body.products.map(async (p) => {
         let dbProduct = await Product.findById(p._id).lean();
         let originalPrice = dbProduct.subProducts[p.style].sizes.find(
