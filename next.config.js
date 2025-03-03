@@ -2,6 +2,12 @@ const { i18n } = require('./next-i18next.config');
 const path = require('node:path');
 
 const nextConfig = {
+  api: {
+    bodyParser: {
+      sizeLimit: '20mb', // Increase to 10MB or higher based on your needs
+    },
+    responseLimit: false,
+  },
   experimental: {
     esmExternals: true,
   },

@@ -24,14 +24,23 @@ router.use(imgMiddleware);
 
 export const config = {
   api: {
-    responseLimit: false,
-
     bodyParser: {
-      responseLimit: false,
-      // sizeLimit: '20mb',
+      sizeLimit: '20mb', // Increase to 10MB or adjust as needed
     },
+    responseLimit: false,
   },
 };
+
+// export const config = {
+//   api: {
+//     responseLimit: false,
+
+//     bodyParser: {
+//       responseLimit: false,
+//       // sizeLimit: '20mb',
+//     },
+//   },
+// };
 
 // export const config = {
 //   api: {
