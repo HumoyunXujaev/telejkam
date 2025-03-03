@@ -6,6 +6,17 @@ import db from '@/utils/db';
 import { createRouter } from 'next-connect';
 const router = createRouter().use(auth).use(admin);
 
+export const config = {
+  api: {
+    responseLimit: false,
+
+    bodyParser: {
+      responseLimit: false,
+      // sizeLimit: '20mb',
+    },
+  },
+};
+
 router.get(async (req, res) => {
   try {
     await db.connectDb();
