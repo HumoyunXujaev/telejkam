@@ -172,26 +172,33 @@ export default function CreateProductPage({ categories, allSubCategories }) {
     //   //Upload ảnh product lên Cloudinary và nhận về mảng chứa các URL
     //   uploaded_images = await uploadHandler(formData);
     // }
-    if (images) {
+    if (images && images.length > 0) {
       try {
         let temp = images.map((img) => dataURItoBlob(img));
         const path = 'product images';
         let formData = new FormData();
         formData.append('path', path);
 
-        // This is key - make sure you're correctly appending each file
+        // Simple check if we have any valid images after conversion
+        let validImageCount = 0;
+
         temp.forEach((image) => {
-          // Check if image is valid before appending
           if (image && image instanceof Blob) {
             formData.append('file', image);
+            validImageCount++;
           }
         });
 
-        // Check if formData actually contains files
-        if (formData.has('file')) {
+        // Check if we have any valid images
+        if (validImageCount > 0) {
           uploaded_images = await uploadHandler(formData);
         } else {
-          throw new Error('No files were chosen.');
+          console.log(
+            new Error('No valid files were chosen. Please check your images.')
+          );
+          throw new Error(
+            'No valid files were chosen. Please check your images.'
+          );
         }
       } catch (error) {
         toast.error(error.message);
