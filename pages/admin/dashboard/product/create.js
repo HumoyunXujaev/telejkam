@@ -195,6 +195,7 @@ export default function CreateProductPage({ categories, allSubCategories }) {
         }
       } catch (error) {
         toast.error(error.message);
+        console.log(error);
         setLoading(false);
         return;
       }
