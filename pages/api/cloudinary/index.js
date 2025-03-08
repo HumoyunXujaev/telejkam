@@ -22,12 +22,17 @@ router.use(fileUpload({ useTempFiles: true, tempFileDir: tempDir }));
 //Dùng middleware imgMiddleware
 router.use(imgMiddleware);
 
+// export const config = {
+//   api: {
+//     bodyParser: {
+//       sizeLimit: '20mb', // Increase to 10MB or adjust as needed
+//     },
+//     responseLimit: false,
+//   },
+// };
 export const config = {
   api: {
-    bodyParser: {
-      sizeLimit: '20mb', // Increase to 10MB or adjust as needed
-    },
-    responseLimit: false,
+    bodyParser: false, // Disable built-in body parser
   },
 };
 
