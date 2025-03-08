@@ -161,16 +161,43 @@ export default function CreateProductPage({ categories, allSubCategories }) {
     let uploaded_images = [];
     let style_image = '';
 
+    // if (images) {
+    //   let temp = images.map((img) => dataURItoBlob(img));
+    //   const path = 'product images';
+    //   let formData = new FormData();
+    //   formData.append('path', path);
+    //   temp.forEach((image) => {
+    //     formData.append('file', image);
+    //   });
+    //   //Upload ảnh product lên Cloudinary và nhận về mảng chứa các URL
+    //   uploaded_images = await uploadHandler(formData);
+    // }
     if (images) {
-      let temp = images.map((img) => dataURItoBlob(img));
-      const path = 'product images';
-      let formData = new FormData();
-      formData.append('path', path);
-      temp.forEach((image) => {
-        formData.append('file', image);
-      });
-      //Upload ảnh product lên Cloudinary và nhận về mảng chứa các URL
-      uploaded_images = await uploadHandler(formData);
+      try {
+        let temp = images.map((img) => dataURItoBlob(img));
+        const path = 'product images';
+        let formData = new FormData();
+        formData.append('path', path);
+
+        // This is key - make sure you're correctly appending each file
+        temp.forEach((image) => {
+          // Check if image is valid before appending
+          if (image && image instanceof Blob) {
+            formData.append('file', image);
+          }
+        });
+
+        // Check if formData actually contains files
+        if (formData.has('file')) {
+          uploaded_images = await uploadHandler(formData);
+        } else {
+          throw new Error('No files were chosen.');
+        }
+      } catch (error) {
+        toast.error(error.message);
+        setLoading(false);
+        return;
+      }
     }
 
     // if (product.color.image) {

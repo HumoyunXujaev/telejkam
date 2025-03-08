@@ -31,27 +31,6 @@ export const config = {
   },
 };
 
-// export const config = {
-//   api: {
-//     responseLimit: false,
-
-//     bodyParser: {
-//       responseLimit: false,
-//       // sizeLimit: '20mb',
-//     },
-//   },
-// };
-
-// export const config = {
-//   api: {
-//     responseLimit: false,
-//     // bodyParser: {
-//     //     sizeLimit: '100mb' // Set desired value here
-//     // }
-// }
-//   // api: { bodyParser: false },
-// };
-
 //Handle request upload ảnh
 router.post(async (req, res) => {
   try {
